@@ -608,4 +608,5 @@ initMenu.setData = (m, cfg, dat) => {
       }}
     ]
   });
+        })
 }
