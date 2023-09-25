@@ -74,6 +74,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
+                sData: dat,
                 type: 'subsite'
               });
             }
@@ -105,6 +106,7 @@ initMenu.setData = (m, cfg, dat) => {
                     return sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
+                sData: dat,
                 type: 'subsite'
               });
       
@@ -214,6 +216,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
+                sData: dat,
                 type: 'user'
               });
             }
@@ -244,7 +247,8 @@ initMenu.setData = (m, cfg, dat) => {
                     return this.sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
-                type: 'user'
+                type: 'user',
+                sData: dat
               });
       
             }
@@ -359,6 +363,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
+                sData: dat,
                 type: 'feed'
               });
             }
@@ -425,6 +430,7 @@ initMenu.setData = (m, cfg, dat) => {
                     }) : true)
                   })
                 })(),
+                sData: dat,
                 type: 'feed'
               });
       
