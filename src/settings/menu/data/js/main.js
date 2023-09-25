@@ -74,7 +74,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
-                mainCfg: dat,
+                mainCfg: cfg,
                 type: 'subsite'
               });
             }
@@ -106,7 +106,7 @@ initMenu.setData = (m, cfg, dat) => {
                     return sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
-                mainCfg: dat,
+                mainCfg: cfg,
                 type: 'subsite'
               });
       
@@ -216,7 +216,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
-                mainCfg: dat,
+                mainCfg: cfg,
                 type: 'user'
               });
             }
@@ -248,7 +248,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 type: 'user',
-                mainCfg: dat
+                mainCfg: cfg
               });
       
             }
@@ -363,7 +363,7 @@ initMenu.setData = (m, cfg, dat) => {
                   })
                 })(),
                 db: db,
-                mainCfg: dat,
+                mainCfg: cfg,
                 type: 'feed'
               });
             }
@@ -430,7 +430,7 @@ initMenu.setData = (m, cfg, dat) => {
                     }) : true)
                   })
                 })(),
-                mainCfg: dat,
+                mainCfg: cfg,
                 type: 'feed'
               });
       
