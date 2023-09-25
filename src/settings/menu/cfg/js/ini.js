@@ -1,3 +1,4 @@
+let mainCfg;
 const defaultCfg = {
     'main': {
         'working mode': 'panels',
@@ -153,4 +154,3 @@ const defaultCfg = {
       'id': 'test'
   }
 };
-let mainCfg;
