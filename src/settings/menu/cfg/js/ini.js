@@ -145,4 +145,4 @@ const defaultCfg = {
       'name': 'DTF SuperFeeds',
       'id': 'test'
   }
-}
+}, mainCfg = {};
