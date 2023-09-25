@@ -3,12 +3,12 @@ const defaultCfg = {
         'working mode': 'panels',
         'database': {
             'settings': {
-                'online': false,
-                'db': 'mongoDB'
+                'online': true,
+                'db': 'supabase'
             },
             'data': {
-                'online': false,
-                'db': 'mongoDB'
+                'online': true,
+                'db': 'supabase'
             }
         }
     },
