@@ -1,4 +1,4 @@
-initMenu.setData = (m, cfg) => {
+initMenu.setData = (m, cfg, dat) => {
 
   class Types{
     rewriteText({target, text, mode}){
@@ -68,8 +68,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.subsites);
-                  else return (items||mainData.subsites).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||dat.subsites);
+                  else return (items||dat.subsites).filter(i => {
                     return this.sortie(search.sort, i.flags);
                   })
                 })(),
@@ -100,8 +100,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||mainData.subsites);
-                  else return (items||mainData.subsites).filter(i => {
+                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||dat.subsites);
+                  else return (items||dat.subsites).filter(i => {
                     return sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
@@ -208,8 +208,8 @@ initMenu.setData = (m, cfg) => {
                 path: e.children[0],
                 target: (() => {
                   if(e.children[0].children[1].children.length > 0) e.children[0].children[1].replaceChildren();
-                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.users);
-                  else return (items||mainData.users).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||dat.users);
+                  else return (items||dat.users).filter(i => {
                     return this.sortie(search.sort, i.flags);
                   })
                 })(),
@@ -239,8 +239,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||mainData.users);
-                  else return (items||mainData.users).filter(i => {
+                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||dat.users);
+                  else return (items||dat.users).filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
@@ -353,8 +353,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.feeds);
-                  else return (items||mainData.feeds).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||dat.feeds);
+                  else return (items||dat.feeds).filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id));
                   })
                 })(),
@@ -416,8 +416,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return mainData.feeds;
-                  else return mainData.feeds.filter(i => {
+                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return dat.feeds;
+                  else return dat.feeds.filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
                       return i.info.keywords.some(t => t.name === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
