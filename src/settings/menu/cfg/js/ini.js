@@ -14,7 +14,7 @@ const defaultCfg = {
               'settings': true,
               'feeds': false,
               'comments': false,
-              'subsites': true,
+              'subsites': false,
               'users': true
             }
         }
