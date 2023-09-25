@@ -9,6 +9,13 @@ const defaultCfg = {
             'data': {
                 'online': true,
                 'db': 'supabase'
+            },
+            'keepVars': {
+              'settings': true,
+              'feeds': false,
+              'comments': false,
+              'subsites': true,
+              'users': true
             }
         }
     },
@@ -59,33 +66,33 @@ const defaultCfg = {
     },
     'feeds': {
         'interface': {
-        'feedButtons': {
-            'readed': true,
-            'author actions': true,
-            'subsite actions': false
-        }
+            'feedButtons': {
+                'readed': true,
+                'author actions': true,
+                'subsite actions': false
+            }
         },
         'what to show': {
-        'popular': {
-            'topics': true,
-            'blogs': true
-        },
-        'new': {
-            'topics': true,
-            'blogs': true
-        },
-        'my new': {
-            'topics': true,
-            'blogs': true
-        },
-        'bookmarks': {
-            'topics': true,
-            'blogs': true
-        },
-        'topic': {
-            'topics': true,
-            'blogs': true
-        }
+            'popular': {
+                'topics': true,
+                'blogs': true
+            },
+            'new': {
+                'topics': true,
+                'blogs': true
+            },
+            'my new': {
+                'topics': true,
+                'blogs': true
+            },
+            'bookmarks': {
+                'topics': true,
+                'blogs': true
+            },
+            'topic': {
+                'topics': true,
+                'blogs': true
+            }
         },
         'attachments': {
         'video': {
