@@ -540,7 +540,7 @@ initMenu.setData = (m, cfg, dat) => {
     title: 'SAVED INFO',
     tabs: [
       {text:'Фиды', name:'feeds', onclick:() => {
-        if(p.children[0].children[3].children.length > 0) p.children[0].children[3].replaceChildren();
+        if(m.children[0].children[3].children.length > 0) m.children[0].children[3].replaceChildren();
         if(db.name){
           new Odb()[db.name]({
             run: 'get all',
@@ -550,20 +550,20 @@ initMenu.setData = (m, cfg, dat) => {
             console.log(res);
             if(res.length === 0){
               console.log(`There's no saved feeds...`);
-              new Types().feeds(p.children[0].children[3]);
+              new Types().feeds(m.children[0].children[3]);
             }else{
               console.log(`Founded saved feeds, loading...`, res[0]);
-              new Types().feeds(p.children[0].children[3], res, db);
+              new Types().feeds(m.children[0].children[3], res, db);
             }
           }).catch(err => console.log(err));
         }else{
           console.log(`Loading local data...`);
-          new Types().feeds(p.children[0].children[3]);
+          new Types().feeds(m.children[0].children[3]);
         }
-        // new Types().feeds(p.children[0].children[3]);
+        // new Types().feeds(m.children[0].children[3]);
       }},
       {text:'Подсайты', name:'subsites', onclick:() => {
-        if(p.children[0].children[3].children.length > 0) p.children[0].children[3].replaceChildren();
+        if(m.children[0].children[3].children.length > 0) m.children[0].children[3].replaceChildren();
         if(db.name){
           new Odb()[db.name]({
             run: 'get all',
@@ -573,19 +573,19 @@ initMenu.setData = (m, cfg, dat) => {
             console.log(res);
             if(res.length === 0){
               console.log(`There's no saved subsites...`);
-              new Types().subsites(p.children[0].children[3]);
+              new Types().subsites(m.children[0].children[3]);
             }else{
               console.log(`Founded saved subsites, loading...`, res[0]);
-              new Types().subsites(p.children[0].children[3], res, db);
+              new Types().subsites(m.children[0].children[3], res, db);
             }
           }).catch(err => console.log(err));
         }else{
           console.log(`Loading local data...`);
-          new Types().subsites(p.children[0].children[3]);
+          new Types().subsites(m.children[0].children[3]);
         }
       }},
       {text:'Пользователи', name:'users', onclick:() => {
-        if(p.children[0].children[3].children.length > 0) p.children[0].children[3].replaceChildren();
+        if(m.children[0].children[3].children.length > 0) m.children[0].children[3].replaceChildren();
         if(db.name){
           new Odb()[db.name]({
             run: 'get all',
@@ -595,15 +595,15 @@ initMenu.setData = (m, cfg, dat) => {
             console.log(res);
             if(res.length === 0){
               console.log(`There's no saved users...`);
-              new Types().users(p.children[0].children[3]);
+              new Types().users(m.children[0].children[3]);
             }else{
               console.log(`Founded saved users, loading...`, res[0]);
-              new Types().users(p.children[0].children[3], res, db);
+              new Types().users(m.children[0].children[3], res, db);
             }
           }).catch(err => console.log(err));
         }else{
           console.log(`Loading local data...`);
-          new Types().users(p.children[0].children[3]);
+          new Types().users(m.children[0].children[3]);
         }
       }}
     ]
