@@ -1,22 +1,39 @@
 let mainCfg;
 const defaultCfg = {
     'main': {
-        'working mode': 'panels',
-        'database': {
-            'settings': {
-                'online': true,
-                'db': 'supabase'
-            },
-            'data': {
-                'online': true,
-                'db': 'supabase'
-            },
-            'keepVars': {
-              'settings': true,
-              'feeds': false,
-              'comments': false,
-              'subsites': false,
-              'users': true
+        'working mode': 'panels'
+    },
+    'database': {
+        'settings': {
+            'online': true,
+            'db': 'mongoDB'
+        },
+        'data': {
+            'online': true,
+            'db': 'mongoDB'
+        },
+        'saving': {
+            'feeds': {
+                'attachments': {
+                    'items': {
+                        'max sz': 2
+                    },
+                    'albums': {
+                        'max sz': 2
+                    }
+                }
+            }
+        },
+        feeds: {
+            attachments: {
+                visual: {
+                    size: {
+                        image: '50'
+                    },
+                    color: {
+                        tag: '#c9b7eb'
+                    }
+                }
             }
         }
     },
@@ -67,33 +84,33 @@ const defaultCfg = {
     },
     'feeds': {
         'interface': {
-            'feedButtons': {
-                'readed': true,
-                'author actions': true,
-                'subsite actions': false
-            }
+        'feedButtons': {
+            'readed': true,
+            'author actions': true,
+            'subsite actions': false
+        }
         },
         'what to show': {
-            'popular': {
-                'topics': true,
-                'blogs': true
-            },
-            'new': {
-                'topics': true,
-                'blogs': true
-            },
-            'my new': {
-                'topics': true,
-                'blogs': true
-            },
-            'bookmarks': {
-                'topics': true,
-                'blogs': true
-            },
-            'topic': {
-                'topics': true,
-                'blogs': true
-            }
+        'popular': {
+            'topics': true,
+            'blogs': true
+        },
+        'new': {
+            'topics': true,
+            'blogs': true
+        },
+        'my new': {
+            'topics': true,
+            'blogs': true
+        },
+        'bookmarks': {
+            'topics': true,
+            'blogs': true
+        },
+        'topic': {
+            'topics': true,
+            'blogs': true
+        }
         },
         'attachments': {
         'video': {
@@ -107,20 +124,6 @@ const defaultCfg = {
             }
         }
         }
-    },
-    'database': {
-      'adding': {
-        'feeds': {
-          'attachments': {
-            'items': {
-              'sz': 2
-            },
-            'albums': {
-              'sz': 2
-            }
-          }
-        }
-      }
     },
     'usercard': {
       'avatar': {
@@ -143,7 +146,10 @@ const defaultCfg = {
   },
   'menu': {
     'feed': {
-      'sz': 5
+        'size': {
+            'max height': '200'
+        },
+        'sz': 5
     },
     'user': {
       'sz': 5
@@ -153,4 +159,4 @@ const defaultCfg = {
       'name': 'DTF SuperFeeds',
       'id': 'test'
   }
-};
+}
