@@ -1,4 +1,4 @@
-initMenu.setData = (m, cfg, dat) => {
+initMenu.setData = (m, cfg) => {
 
   class Types{
     rewriteText({target, text, mode}){
@@ -44,7 +44,7 @@ initMenu.setData = (m, cfg, dat) => {
             text: 'Загрузить список',
             onclick: async () => {
               this.clear(e, true);
-              if(e.parentNode.getAttribute('reload')){
+              if(e.previousElementSibling.getAttribute('reload')){
                 if(db.name)
                   try{
                     items = await new Odb()[db.name]({
@@ -55,10 +55,10 @@ initMenu.setData = (m, cfg, dat) => {
                   }catch{
                     console.log('Nooooooooope', items);
                   }
-                e.parentNode.removeAttribute('reload');
+                e.previousElementSibling.removeAttribute('reload');
               }
               const search = {
-                sort: e.parentNode.getAttribute('picked'),
+                sort: e.previousElementSibling.getAttribute('picked'),
                 type: panel.children[1].children[0].value
               }
               if(!search.sort) return;
@@ -67,14 +67,14 @@ initMenu.setData = (m, cfg, dat) => {
       
               new BookMenu().itemList({
                 path: e.children[0],
+                iName: 'subsites',
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all') return (items||dat.subsites);
-                  else return (items||dat.subsites).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.subsites);
+                  else return (items||mainData.subsites).filter(i => {
                     return this.sortie(search.sort, i.flags);
                   })
                 })(),
                 db: db,
-                mainCfg: cfg,
                 type: 'subsite'
               });
             }
@@ -101,12 +101,11 @@ initMenu.setData = (m, cfg, dat) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||dat.subsites);
-                  else return (items||dat.subsites).filter(i => {
+                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||mainData.subsites);
+                  else return (items||mainData.subsites).filter(i => {
                     return sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
-                mainCfg: cfg,
                 type: 'subsite'
               });
       
@@ -187,7 +186,7 @@ initMenu.setData = (m, cfg, dat) => {
             text: 'Загрузить список',
             onclick: async () => {
               this.clear(e, true);
-              if(e.parentNode.getAttribute('reload')){
+              if(e.previousElementSibling.getAttribute('reload')){
                 if(db.name) try{
                   items = await new Odb()[db.name]({
                     run: 'get all',
@@ -197,9 +196,10 @@ initMenu.setData = (m, cfg, dat) => {
                 }catch{
                   console.log('Nooooooooope', items);
                 }
+                e.previousElementSibling.removeAttribute('reload');
               }
               const search = {
-                sort: e.parentNode.getAttribute('picked'),
+                sort: e.previousElementSibling.getAttribute('picked'),
                 type: panel.children[1].children[0].value
               }
               if(!search.sort) return;
@@ -210,13 +210,12 @@ initMenu.setData = (m, cfg, dat) => {
                 path: e.children[0],
                 target: (() => {
                   if(e.children[0].children[1].children.length > 0) e.children[0].children[1].replaceChildren();
-                  if(search.sort === 'all' && search.type === 'all') return (items||dat.users);
-                  else return (items||dat.users).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.users);
+                  else return (items||mainData.users).filter(i => {
                     return this.sortie(search.sort, i.flags);
                   })
                 })(),
                 db: db,
-                mainCfg: cfg,
                 type: 'user'
               });
             }
@@ -242,13 +241,12 @@ initMenu.setData = (m, cfg, dat) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||dat.users);
-                  else return (items||dat.users).filter(i => {
+                  if(search.sort === 'all' && !search.name && !search.desc && !search.date && !search.time && !search.dateFrom) return (items||mainData.users);
+                  else return (items||mainData.users).filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.name ? this.id(search.name, false, i.info.name) : true) && (search.desc ? i.info.description : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   })
                 })(),
-                type: 'user',
-                mainCfg: cfg
+                type: 'user'
               });
       
             }
@@ -314,6 +312,7 @@ initMenu.setData = (m, cfg, dat) => {
     feeds(path, items){
       new Tabber().tabList({
         path: path,
+        cName: 'hor',
         title: 'FEEDS',
         titleBtn: true,
         tabs: [
@@ -332,7 +331,7 @@ initMenu.setData = (m, cfg, dat) => {
             text: 'Загрузить список',
             onclick: async () => {
               this.clear(e, true);
-              if(e.parentNode.getAttribute('reload')){
+              if(e.previousElementSibling.getAttribute('reload')){
                 if(db.name)
                   try{
                     items = await new Odb()[db.name]({
@@ -343,10 +342,10 @@ initMenu.setData = (m, cfg, dat) => {
                   }catch{
                     console.log('Nooooooooope', items);
                   }
-                e.parentNode.removeAttribute('reload');
+                e.previousElementSibling.removeAttribute('reload');
               }
               const search = {
-                sort: e.parentNode.getAttribute('picked'),
+                sort: e.previousElementSibling.getAttribute('picked'),
                 type: panel.children[1].children[0].value
               }
               if(!search.sort) return;
@@ -357,13 +356,12 @@ initMenu.setData = (m, cfg, dat) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all') return (items||dat.feeds);
-                  else return (items||dat.feeds).filter(i => {
+                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.feeds);
+                  else return (items||mainData.feeds).filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id));
                   })
                 })(),
                 db: db,
-                mainCfg: cfg,
                 type: 'feed'
               });
             }
@@ -384,7 +382,7 @@ initMenu.setData = (m, cfg, dat) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch',
+            cName: 'search',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -421,8 +419,8 @@ initMenu.setData = (m, cfg, dat) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return dat.feeds;
-                  else return dat.feeds.filter(i => {
+                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return mainData.feeds;
+                  else return mainData.feeds.filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
                       return i.info.keywords.some(t => t.name === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
@@ -430,7 +428,6 @@ initMenu.setData = (m, cfg, dat) => {
                     }) : true)
                   })
                 })(),
-                mainCfg: cfg,
                 type: 'feed'
               });
       
@@ -529,7 +526,8 @@ initMenu.setData = (m, cfg, dat) => {
           })
       
           new BookMenu().build({
-            path: e
+            path: e,
+            iName: 'feeds'
           })
         }
       })
@@ -540,7 +538,13 @@ initMenu.setData = (m, cfg, dat) => {
     title: 'SAVED INFO',
     tabs: [
       {text:'Фиды', name:'feeds', onclick:() => {
-        if(m.children[0].children[3].children.length > 0) m.children[0].children[3].replaceChildren();
+        console.log('Main', m)
+        // new El().Div({
+        //   path: m,
+        //   text: 'TEST'
+        // })
+        // return;
+        if(m.children[0].children[1].children.length > 0) m.children[0].children[1].replaceChildren();
         if(db.name){
           new Odb()[db.name]({
             run: 'get all',
@@ -550,15 +554,15 @@ initMenu.setData = (m, cfg, dat) => {
             console.log(res);
             if(res.length === 0){
               console.log(`There's no saved feeds...`);
-              new Types().feeds(m.children[0].children[3]);
+              new Types().feeds(m.children[0].children[1]);
             }else{
               console.log(`Founded saved feeds, loading...`, res[0]);
-              new Types().feeds(m.children[0].children[3], res, db);
+              new Types().feeds(m.children[0].children[1], res, db);
             }
           }).catch(err => console.log(err));
         }else{
           console.log(`Loading local data...`);
-          new Types().feeds(m.children[0].children[3]);
+          new Types().feeds(m.children[0].children[1]);
         }
         // new Types().feeds(m.children[0].children[3]);
       }},
@@ -607,5 +611,5 @@ initMenu.setData = (m, cfg, dat) => {
         }
       }}
     ]
-  });
+  })
 }
