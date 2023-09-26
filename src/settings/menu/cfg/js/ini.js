@@ -15,7 +15,7 @@ const defaultCfg = {
         'keepVars': {
             'subsites': false,
             'users': false,
-            'feeds': false
+            'feeds': false,
             'comments': false
         },
         'saving': {
