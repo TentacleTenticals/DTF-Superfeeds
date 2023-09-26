@@ -1,4 +1,4 @@
-const feedsCss = () => `
+const feedsCss = (c) => `
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu400:wght@400&display=swap');
 
@@ -6,34 +6,38 @@ const feedsCss = () => `
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
-.savedFeed {
+.itemsList.feeds {
+  max-height: ${c.menu.feed.size['max height']}px;
+}
+
+.db-feed {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   box-shadow: 0 0 2px 1px rgb(0,0,0);
 }
-.savedFeed.picked {
+.db-feed.picked {
   background-color: rgb(200,100,100);
 }
 
-.savedFeed .header {
+.db-feed .header {
   display: flex;
   gap: 0 10px;
   height: 45px;
   flex-shrink: 0;
   padding: 0 4px 5px 4px;
 }
-.savedFeed .header :is(.subsite, .author) {
+.db-feed .header :is(.subsite, .author) {
   display: flex;
   gap: 0 3px;
   align-items: flex-end;
   white-space: nowrap;
   margin: 11px 0 0 0;
 }
-.savedFeed .header :is(.subsite, .author) .name {
+.db-feed .header :is(.subsite, .author) .name {
   white-space: nowrap;
 }
-.savedFeed .header .time {
+.db-feed .header .time {
   display: flex;
   gap: 0 3px;
   align-items: flex-end;
@@ -42,7 +46,7 @@ const feedsCss = () => `
   opacity: 0.7;
 }
 
-.savedFeed .header .mask {
+.db-feed .header .mask {
   display: flex;
   background-color: rgb(0,0,0);
   width: 20px;
@@ -52,14 +56,12 @@ const feedsCss = () => `
   box-shadow: 0 0 3px 0 rgb(0,0,0);
   overflow: hidden;
 }
-.savedFeed .header .mask img {
-  width: 100%;
+.db-feed .header .mask img {
   aspect-ratio: 1/1;
-  margin: auto;
   border-radius: 50%;
 }
 
-.savedFeed .title {
+.db-feed .title {
   font-size: 20px;
   font-family: 'Philosopher', sans-serif;
   font-family: 'Merriweather', serif;
@@ -68,24 +70,24 @@ const feedsCss = () => `
   text-align: center;
 }
 
-.savedFeed .description {
+.db-feed .description {
   font-size: 14px;
   font-weight: 500;
   padding: 5px;
   text-align: center;
 }
 
-.savedFeed .attachments {
+.db-feed .attachments {
   display: flex;
   flex-direction: column;
   gap: 10px 0;
   margin: 10px auto 10px auto;
 }
-.savedFeed .attachments .text {
+.db-feed .attachments .text {
   text-align: center;
 }
 
-.savedFeed .attachments .mask {
+.db-feed .attachments .mask {
   display: flex;
   background-color: rgb(0,0,0);
   width: 95%;
@@ -94,24 +96,24 @@ const feedsCss = () => `
   padding: 3px;
   border-radius: 2px;
 }
-.savedFeed .attachments .mask .attach {
-  width: 100%;
-  margin: auto;
+
+.db-feed .attachments .mask:is(.png, .jpg, .jpeg, .gif) {
+  max-width: ${c.database.feeds.attachments.visual.size.image}%;
 }
 
-.savedFeed .tags {
+.db-feed .tags {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0 5px;
   padding: 5px;
 }
-.savedFeed .tags .tag {
+.db-feed .tags .tag {
   display: flex;
-  color: rgb(88 41 177);
+  color: ${c.database.feeds.attachments.visual.color.tag};
   cursor: pointer;
 }
-.savedFeed .tags .tag::before {
+.db-feed .tags .tag::before {
   display: block;
   content: '#';
 }
