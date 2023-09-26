@@ -111,7 +111,7 @@ class MenuItem{
 
     const main=new El().Div({
       path: path,
-      cName: `savedFeed${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
+      cName: `db-feed${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
       attr: ['item-id', num],
       rtn: true
     });
@@ -169,18 +169,19 @@ class MenuItem{
       func: (a) => item.info.attachments.forEach(e => {
         if(e.type === 'media'){
           e.items.forEach(i => {
-            if(i.type === 'image'){
-              const mask=new El().Div({
-                path: a,
-                cName: `mask${e.hidden ? ' spoiler' : ''}`,
-                rtn: true
-              });
-              if(i.type === 'image' && i.data.type.match(/png|jpg/)) new El().Image({
-                path: mask,
-                cName: 'attach',
-                url: `https://leonardo.osnova.io/${i.data.uuid}`
-              });
-            }
+            attachment({path:a, type:'subsite', i:i});
+            // if(i.type === 'image'){
+            //   const mask=new El().Div({
+            //     path: a,
+            //     cName: `mask${e.hidden ? ' spoiler' : ''}`,
+            //     rtn: true
+            //   });
+            //   if(i.type === 'image' && i.data.type.match(/png|jpg/)) new El().Image({
+            //     path: mask,
+            //     cName: 'attach',
+            //     url: `https://leonardo.osnova.io/${i.data.uuid}`
+            //   });
+            // }
           })
         }else
         if(e.type === 'text'){
@@ -207,11 +208,12 @@ class MenuItem{
           onclick: (e) => {
             if(e.button !== 0) return;
             let check;
-            for(let i = 0, arr = path.parentNode.parentNode.previousElementSibling.children[11].children[0].children, len = arr.length; i < len; i++){
+            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[11].children[0];
+            for(let i = 0, arr = tags.children, len = arr.length; i < len; i++){
               if(arr[i].getAttribute('value') === e.target.textContent) check = true;
             };
             if(!check) new El().iList({
-              path: path.parentNode.parentNode.previousElementSibling.children[11].children[0],
+              path: tags,
               mode: 'all',
               focus: true,
               canDel: true,
@@ -222,11 +224,12 @@ class MenuItem{
             if(e.button !== 2) return;
             e.preventDefault();
             let check;
-            for(let i = 0, arr = path.parentNode.parentNode.previousElementSibling.children[12].children[0].children, len = arr.length; i < len; i++){
+            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[12].children[0];
+            for(let i = 0, arr = tags.children, len = arr.length; i < len; i++){
               if(arr[i].getAttribute('value') === e.target.textContent) check = true;
             };
             if(!check) new El().iList({
-              path: path.parentNode.parentNode.previousElementSibling.children[12].children[0],
+              path: tags,
               mode: 'all',
               focus: true,
               canDel: true,
