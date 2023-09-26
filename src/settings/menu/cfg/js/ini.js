@@ -12,6 +12,12 @@ const defaultCfg = {
             'online': true,
             'db': 'mongoDB'
         },
+        'keepVars': {
+            'subsites': false,
+            'users': false,
+            'feeds': false
+            'comments': false
+        },
         'saving': {
             'feeds': {
                 'attachments': {
