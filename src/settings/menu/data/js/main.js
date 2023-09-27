@@ -4,6 +4,11 @@ initMenu.setData = (m, cfg) => {
     rewriteText({target, text, mode}){
       target.textContent = text ? text : (mode === '++' ? ++target.textContent : --target.textContent);
     }
+    sortByValue(a, b, value, search){
+      if(!search) return a.info[value] > b.info[value] ? -1 : 1;
+      else
+      return a.info[value] > b.info[value] ? 1 : -1;
+    }
     clear(e, full){
       if(e.children[0].children[1].children.length > 0) e.children[0].children[1].replaceChildren();
       if(full){
@@ -346,7 +351,8 @@ initMenu.setData = (m, cfg) => {
               }
               const search = {
                 sort: e.previousElementSibling.getAttribute('picked'),
-                type: panel.children[1].children[0].value
+                type: panel.children[1].children[0].value,
+                sortByDate: panel.children[2].children[0].value
               }
               if(!search.sort) return;
       
@@ -356,9 +362,9 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.feeds);
+                  if(search.sort === 'all' && search.type === 'all') return (items||mainData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                   else return (items||mainData.feeds).filter(i => {
-                    return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id));
+                    return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                   })
                 })(),
                 db: db,
@@ -380,6 +386,12 @@ initMenu.setData = (m, cfg) => {
               });
             }
           });
+          new El().Input({
+            path: panel,
+            type: 'checkbox',
+            label: 'По возрастанию',
+            lName: 'full'
+          });
           new El().Button({
             path: panel,
             cName: 'srch',
@@ -390,28 +402,29 @@ initMenu.setData = (m, cfg) => {
               const search = {
                 sort: e.parentNode.getAttribute('picked'),
                 type: panel.children[1].children[0].value,
+                sortByDate: panel.children[2].children[0].value,
+                tTitle: panel.children[4].children[0].value && new RegExp(panel.children[2].children[0].value, 'i'),
+                subsite: panel.children[5].children[0].value && new RegExp(panel.children[4].children[0].value, 'i'),
+                sType: panel.children[6].children[0].checked,
+                author: panel.children[7].children[0].value && new RegExp(panel.children[6].children[0].value, 'i'),
+                aType: panel.children[8].children[0].checked,
+                date: panel.children[9].children[0].value,
+                time: panel.children[10].children[0].value,
+                dateFrom: Date.parse(`${panel.children[11].children[0].value} 00:00`),
                 tags: (() => {
-                  const res = [];
-                  for(let i = 0, arr = panel.children[11].children[0].children, length = arr.length; i < length; i++){
-                    if(arr[i].getAttribute('value')) res.push(arr[i].getAttribute('value'));
-                  }
-                  return res;
-                })(),
-                ignoreTags: (() => {
                   const res = [];
                   for(let i = 0, arr = panel.children[12].children[0].children, length = arr.length; i < length; i++){
                     if(arr[i].getAttribute('value')) res.push(arr[i].getAttribute('value'));
                   }
                   return res;
                 })(),
-                tTitle: panel.children[3].children[0].value && new RegExp(panel.children[2].children[0].value, 'i'),
-                subsite: panel.children[4].children[0].value && new RegExp(panel.children[4].children[0].value, 'i'),
-                sType: panel.children[5].children[0].checked,
-                author: panel.children[6].children[0].value && new RegExp(panel.children[6].children[0].value, 'i'),
-                aType: panel.children[7].children[0].checked,
-                date: panel.children[8].children[0].value,
-                time: panel.children[9].children[0].value,
-                dateFrom: Date.parse(`${panel.children[10].children[0].value} 00:00`)
+                ignoreTags: (() => {
+                  const res = [];
+                  for(let i = 0, arr = panel.children[13].children[0].children, length = arr.length; i < length; i++){
+                    if(arr[i].getAttribute('value')) res.push(arr[i].getAttribute('value'));
+                  }
+                  return res;
+                })()
               };
       
               console.log(search);
@@ -419,14 +432,14 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return mainData.feeds;
+                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return mainData.feeds.sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                   else return mainData.feeds.filter(i => {
                     return this.sortie(search.sort, i.flags) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
                       return i.info.keywords.some(t => t.name === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
                       return !i.info.keywords.some(t => t.name === s)
                     }) : true)
-                  })
+                  }).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                 })(),
                 type: 'feed'
               });
