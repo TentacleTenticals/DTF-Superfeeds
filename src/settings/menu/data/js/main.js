@@ -5,9 +5,9 @@ initMenu.setData = (m, cfg) => {
       target.textContent = text ? text : (mode === '++' ? ++target.textContent : --target.textContent);
     }
     sortByValue(a, b, value, search){
-      if(!search) return a.info[value] > b.info[value] ? -1 : 1;
+      if(!search) return a.info[value] > b.info[value] ? 1 : -1;
       else
-      return a.info[value] > b.info[value] ? 1 : -1;
+      if(search) return a.info[value] < b.info[value] ? 1 : -1;
     }
     clear(e, full){
       if(e.children[0].children[1].children.length > 0) e.children[0].children[1].replaceChildren();
@@ -352,11 +352,11 @@ initMenu.setData = (m, cfg) => {
               const search = {
                 sort: e.previousElementSibling.getAttribute('picked'),
                 type: panel.children[1].children[0].value,
-                sortByDate: panel.children[2].children[0].value
+                sortByDate: panel.children[2].children[0].checked
               }
               if(!search.sort) return;
       
-              console.log(search);
+              console.log(search);;
               // 46807
       
               new BookMenu().itemList({
@@ -390,6 +390,7 @@ initMenu.setData = (m, cfg) => {
             path: panel,
             type: 'checkbox',
             label: 'По возрастанию',
+            name: 'sort',
             lName: 'full'
           });
           new El().Button({
