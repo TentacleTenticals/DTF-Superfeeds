@@ -7,7 +7,7 @@ const feedsCss = (c) => `
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
 .itemsList.feeds {
-  max-height: ${c.menu.feed.size['max height']}px;
+  max-height: ${c.bookMenu.visual.feeds['max height']}px;
 }
 
 .db-feed {
