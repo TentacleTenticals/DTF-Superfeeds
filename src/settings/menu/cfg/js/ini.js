@@ -152,7 +152,7 @@ const sData = {},
     'bookMenu': {
         'visual': {
             'feeds': {
-                'max height': '500'
+                'max height': '720'
             }
         },
         'size': {
