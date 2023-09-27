@@ -1,5 +1,6 @@
 let mainCfg;
-const defaultCfg = {
+const sData = {},
+  defaultCfg = {
     'main': {
         'working mode': 'panels'
     },
