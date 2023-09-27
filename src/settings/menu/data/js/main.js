@@ -382,7 +382,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'search',
+            cName: 'srch',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
