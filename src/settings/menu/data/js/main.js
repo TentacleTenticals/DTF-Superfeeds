@@ -389,9 +389,12 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: 'По возрастанию',
+            label: '🔃',
             name: 'sort',
-            lName: 'full'
+            lName: 'full',
+            onchange: (e) => {
+              e.target.parentNode.classList.toggle('active');
+            }
           });
           new El().Button({
             path: panel,
