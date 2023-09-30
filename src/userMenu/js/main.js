@@ -621,7 +621,7 @@ class UserMenu{
                 text: '✔️',
                 onclick: () => {
                   this.findOrAdd({id:fID, type:'feeds', key:'readed'}).then(res => {
-                    const page = checkPageType(document.location.href);
+                    const page = getPageType(document.location.href);
                     if(res && page.type.match(/popular|^new$|^my new$|bookmarks|topic/)){
                       if(mainCfg.feeds['where to react'][page.type]) checkFeeds({fullCheck:true});
                     }
@@ -772,7 +772,7 @@ class UserMenu{
                 text: '💘',
                 onclick: () => {
                   this.findOrAdd({id:uID, name:uName, type:'users', r:'topics', key:'favorite'}).then(res => {
-                    const page = checkPageType(document.location.href);
+                    const page = getPageType(document.location.href);
                     if(res && page && mainCfg.feeds['where to react'][page.type]) checkFeeds({fullCheck:true});
                     console.log('User', sData.users);
                   });
