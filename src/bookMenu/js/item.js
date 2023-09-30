@@ -1,4 +1,4 @@
-class MenuItem{
+class BookItem{
   getTime(d){
     let t = new Date(d * 1000);
     return `${t.getFullYear()}/${t.getMonth()+1 < 10 ? `0${t.getMonth()+1}` : t.getMonth()+1}/${t.getDate() < 10 ? `0${t.getDate()}` : t.getDate()} ${t.getHours() < 10 ? `0${t.getHours()}` : t.getHours()}:${t.getMinutes() < 10 ? `0${t.getMinutes()}` : t.getMinutes()}:${t.getSeconds() < 10 ? `0${t.getSeconds()}` : t.getSeconds()}`
@@ -120,7 +120,19 @@ class MenuItem{
       path: main,
       cName: 'header',
       rtn: true,
-      onclick: () => this.picked(path, main, item, num),
+      onRclick: (e) => {
+        if(e.button !== 2) return;
+        e.preventDefault();
+        new UserMenu().build({
+          t: e.target.getBoundingClientRect(),
+          offset: e.target.offsetHeight,
+          uID: item.info.author.id,
+          sID: item.info.subsite.id,
+          fID: item.id,
+          uName: item.info.author.name,
+          type: 'db-feed'
+        });
+      },
       func: (h) => {
         if(item.info.author.id !== item.info.subsite.id){
           new El().Div({
@@ -153,6 +165,18 @@ class MenuItem{
           path: h,
           cName: 'time',
           text: this.getTime(item.info.date)
+        });
+
+        new El().Button({
+          path: h,
+          text: 'Save',
+          onclick: (c) => new Adding()['feed']({coord:c.target.getBoundingClientRect(), item:item})
+        });
+
+        new El().Button({
+          path: h,
+          text: 'Test',
+          onclick: () => this.picked(path, main, item, num)
         });
       }
     });
