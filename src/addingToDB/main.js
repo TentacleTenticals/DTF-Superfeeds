@@ -75,14 +75,8 @@ class Adding{
         info.comment = p.children[1].value||false;
         console.log('INFO', info);
         setTimeout(() => {
-          // this.findOrAdd({id:fID, type:'feeds', info:info}).then(res => {
-          //   const page = checkPageType(document.location.href);
-          //   if(res && page.type.match(/popular|^new$|^my new$|bookmarks|topic/)){
-          //     if(mainCfg.feeds['where to react'][page.type]) checkFeeds({fullCheck:true});
-          //   }
-          //   console.log('Feeds', sData.feeds);
-          // });
-          m.remove();
+          p.parentNode.parentNode.remove();
+          return info;
         }, 500);
       }
     })
