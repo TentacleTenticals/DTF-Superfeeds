@@ -176,4 +176,4 @@ const sData = {
         'name': 'DTF SuperFeeds',
         'id': 'dtf-superFeeds'
     }
-}
+};
