@@ -1,5 +1,9 @@
 let mainCfg;
-const sData = {},
+const sData = {
+    subsites: [],
+    users: [],
+    feeds: []
+},
   defaultCfg = {
     'main': {
         'working mode': 'panels'
@@ -17,7 +21,7 @@ const sData = {},
         },
         'keepVars': {
             'subsites': false,
-            'users': false,
+            'users': true,
             'feeds': false,
             'comments': false
         },
@@ -121,6 +125,13 @@ const sData = {},
                 'blogs': true
             }
         },
+        'where to react': {
+            'popular': true,
+            'new': true,
+            'my new': true,
+            'bookmarks': true,
+            'topic': true
+        },
         'attachments': {
             'video': {
                 'replace': true,
@@ -138,13 +149,13 @@ const sData = {},
         'avatar': {
             'search': {
                 'list': [// Список поисковиков.
-                {url:'http://saucenao.com/search.php?db=999&url=', name:'Saucenao', use:true},
-                {url:'https://www.bing.com/images/search?view=detailv2&iss=sbi&FORM=SBIHMP&sbisrc=UrlPaste&q=imgurl:', name:'Bing', use:true},
-                {url:'https://www.google.com/searchbyimage?sbisrc=4chanx&safe=off&image_url=', name:'Google', use:true},
-                {url:'https://lens.google.com/uploadbyurl?url=', name:'Google Lens', use:true},
-                {url:'https://yandex.ru/images/search?rdrnd=296405&rpt=imageview&url=', name:'Yandex', use:true},
-                {url:'http://tineye.com/search/?url=', name:'TinEye', use:true},
-                {url:'http://iqdb.org/?url=', name:'IQDB', use:true}
+                    {url:'http://saucenao.com/search.php?db=999&url=', name:'Saucenao', use:true},
+                    {url:'https://www.bing.com/images/search?view=detailv2&iss=sbi&FORM=SBIHMP&sbisrc=UrlPaste&q=imgurl:', name:'Bing', use:true},
+                    {url:'https://www.google.com/searchbyimage?sbisrc=4chanx&safe=off&image_url=', name:'Google', use:true},
+                    {url:'https://lens.google.com/uploadbyurl?url=', name:'Google Lens', use:true},
+                    {url:'https://yandex.ru/images/search?rdrnd=296405&rpt=imageview&url=', name:'Yandex', use:true},
+                    {url:'http://tineye.com/search/?url=', name:'TinEye', use:true},
+                    {url:'http://iqdb.org/?url=', name:'IQDB', use:true}
                 ]
             }
         }
