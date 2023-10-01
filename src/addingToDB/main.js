@@ -1,7 +1,7 @@
 class Adding{
   feed(c){
     console.log('C', c);
-    new Dialog().build({
+    return new Dialog().build({
       path: document.body,
       coord: c.coord,
       autohide: false,
