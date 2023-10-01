@@ -79,7 +79,7 @@ class Adding{
         }
         setTimeout(() => {
           p.parentNode.remove();
-          c.res(info);
+          c.res(data);
         }, 500);
       }
     })
