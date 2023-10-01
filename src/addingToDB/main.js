@@ -21,7 +21,8 @@ class Adding{
               ['Прочтено', 'readed'],
               ['Прочту', 'planToRead'],
               ['Читаю', 'onHold'],
-              ['Брошено', 'dropped']
+              ['Брошено', 'dropped'],
+              ['Ничего', 'null']
             ].forEach(e => {
               new El().Input({
                 path: i,
@@ -42,7 +43,8 @@ class Adding{
             [
               ['Избранное', 'favorite'],
               ['Игнорируемое', 'ignored'],
-              ['Заблокированное', 'blocked']
+              ['Заблокированное', 'blocked'],
+              ['Ничего', 'null']
             ].forEach(e => {
               new El().Input({
                 path: i,
@@ -64,16 +66,17 @@ class Adding{
       },
       submitText: 'Save/Update',
       submit: (p) => {
-        const info = {
-          flags: {}
+        const data = {
+          flags: {},
+          info: {
+            comment: p.children[1].value||false
+          }
         };
         for(let i = 0, arr = p.children[0].children, len = arr.length; i < len; i++){
           if(arr[i].tagName !== 'LABEL') continue;
-          info.flags[arr[i].children[0].value] = arr[i].children[0].checked;
-          // console.log(arr[i].children[0].value, arr[i].children[0].checked)
+          if(arr[i].children[0].value === 'null') continue;
+          data.flags[arr[i].children[0].value] = arr[i].children[0].checked;
         }
-        info.comment = p.children[1].value||false;
-        // console.log('INFO', info);
         setTimeout(() => {
           p.parentNode.remove();
           c.res(info);
