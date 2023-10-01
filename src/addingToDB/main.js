@@ -1,7 +1,7 @@
 class Adding{
   feed(c){
     console.log('C', c);
-    return new Dialog().build({
+    new Dialog().build({
       path: document.body,
       coord: c.coord,
       autohide: false,
@@ -73,10 +73,10 @@ class Adding{
           // console.log(arr[i].children[0].value, arr[i].children[0].checked)
         }
         info.comment = p.children[1].value||false;
-        console.log('INFO', info);
+        // console.log('INFO', info);
         setTimeout(() => {
-          p.parentNode.parentNode.remove();
-          return info;
+          p.parentNode.remove();
+          c.res(info);
         }, 500);
       }
     })
