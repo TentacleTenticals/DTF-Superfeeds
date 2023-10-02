@@ -1,6 +1,5 @@
 class Adding{
   feed(c){
-    console.log('C', c);
     new Dialog().build({
       path: document.body,
       coord: c.coord,
@@ -30,7 +29,7 @@ class Adding{
                 name: 'flags 1',
                 label: e[0],
                 value: e[1],
-                checked: c.item.info && c.item.flags[e[1]]
+                checked: c.item.flags && c.item.flags[e[1]]
               });
             });
     
@@ -52,7 +51,7 @@ class Adding{
                 name: 'flags 2',
                 label: e[0],
                 value: e[1],
-                checked: c.item.info && c.item.flags[e[1]]
+                checked: c.item.flags && c.item.flags[e[1]]
               });
             });
           }
