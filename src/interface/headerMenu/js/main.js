@@ -1,7 +1,7 @@
 class HeaderMenu{
-  dtfApi({type, value, v, token}){
+  dtfApi(o){
     let s;
-    switch(type){
+    switch(o.type){
       case 'news':{
         s = 'news';
       }
@@ -30,16 +30,489 @@ class HeaderMenu{
         s = 'bookmarks';
       }
     }
-    return fetch(`https://api.dtf.ru/v2.31/${s && s+'?'||''}${v||''}${value && '='+value||''}`, {
+    return fetch(`https://api.dtf.ru/v2.31/${s && s+'?'||''}${o.v||''}${o.value && '='+o.value||''}`, {
       headers: {
         'accept': 'application/json',
-        ...(token ? {'X-Device-Token':`'${token}'`} : {})
+        ...(o.token ? {'X-Device-Token':`'${o.token}'`} : {})
       }
     }).then(r => r.json().then(rr => rr.result)).catch(err => err);
   }
   getTime(d){
     const t = new Date(d);
     return `${t.getFullYear()}/${t.getMonth()+1 < 10 ? `0${t.getMonth()+1}` : t.getMonth()+1}/${t.getDate() < 10 ? `0${t.getDate()}` : t.getDate()} ${t.getHours() < 10 ? `0${t.getHours()}` : t.getHours()}:${t.getMinutes() < 10 ? `0${t.getMinutes()}` : t.getMinutes()}:${t.getSeconds() < 10 ? `0${t.getSeconds()}` : t.getSeconds()}`
+  }
+  add(o){
+    return new Promise((result, error) => {
+      if(o.type.match(/users|subsites/)){
+        let obj;
+        this.dtfApi({type:o.type, value:o.id}).then(res => {
+          if(o.type === 'users') obj = {
+            id: o.id,
+            info: {
+              name: res.subsite.name,
+              created: res.subsite.created,
+              description: res.subsite.description,
+              avatar: res.subsite.avatar && {
+                type: res.subsite.avatar.type,
+                data: {
+                  type: res.subsite.avatar.data.type,
+                  uuid: res.subsite.avatar.data.uuid
+                }
+              }||''
+              ,
+              ...o.card ? o.card.info : {}
+            },
+            flags:{
+              topics:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              },
+              blogs:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              },
+              comments:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              }
+            },
+            ...o.card ? o.card.flags : {}
+          };
+          else
+          if(o.type === 'subsites') obj = {
+            id: o.id,
+            info: {
+              name: res.subsite.name,
+              created: res.subsite.created,
+              description: res.subsite.description,
+              avatar: res.subsite.avatar && {
+                type: res.subsite.avatar.type,
+                data: {
+                  type: res.subsite.avatar.data.type,
+                  uuid: res.subsite.avatar.data.uuid
+                }
+              }||'',
+              ...o.card ? o.card.info : {}
+            },
+            flags:{
+              topics:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              },
+              comments:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              }
+            },
+            ...o.card ? o.card.flags : {}
+          };
+          if(!o.card) obj.flags[o.r][o.key] ? obj.flags[o.r][o.key] = false : obj.flags[o.r][o.key] = true;
+          if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
+          result({status:'success', process:'adding item', type:o.type, id:o.id, item:obj});
+        });
+      }else
+      if(o.type.match(/feeds/)){
+        this.dtfApi({type:o.type, value:o.id}).then(res => {
+          const obj = {
+            id: o.id,
+            flags: {
+              readed: false,
+              planToRead: false,
+              onHold: false,
+              dropped: false,
+              favorite: false,
+              ignored: false,
+              blocked: false
+            },
+            info: {
+              author: {
+                id: res.author.o.id,
+                name: res.author.name,
+                avatar: res.author.avatar && {
+                  type: res.author.avatar.type,
+                  data: {
+                    type: res.author.avatar.data.type,
+                    uuid: res.author.avatar.data.uuid
+                  }
+                }||''
+              },
+              subsite: {
+                id: res.subsite.id,
+                name: res.subsite.name,
+                avatar: res.subsite.avatar && {
+                  type: res.subsite.avatar.type,
+                  data: {
+                    type: res.subsite.avatar.data.type,
+                    uuid: res.subsite.avatar.data.uuid
+                  }
+                }||''
+              },
+              title: res.title,
+              text: undefined,
+              date: res.date,
+              isBlur: res.isBlur,
+              keywords: res.keywords,
+              attachments: (() => {
+                if(res.blocks.length > 0){
+                  // console.log('BLOCKS', res.blocks);
+                  const list = [];
+                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
+                    if(arr[i].type.match(/media|text/)){
+                      list.push(this.getAttach(arr[i]));
+                    }else continue;
+                  }
+                  return list;
+                }
+              })(),
+              ...o.card ? o.card.info : {}
+            },
+            ...o.card ? {flags:o.card.flags} : {}
+          }
+          if(!o.card) obj.flags[o.key] ? obj.flags[o.key] = false : obj.flags[o.key] = true;
+          if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
+          result({status:'success', process:'adding item', type:o.type, id:o.id, item:obj});
+          // checkFeeds({fullCheck:true});
+        });
+      }else
+      if(o.type.match(/comments/)){
+        console.log('IDs', o.id);
+        this.dtfApi({type:o.type, value:o.id}).then(res => {
+          console.log('RES', res);
+          const cmt = res.items.find(e => e.id === o.tId);
+          console.log('COMMENT', cmt);
+          const obj = {
+            id: cmt.id,
+            flags: {
+              readed: false,
+              planToRead: false,
+              onHold: false,
+              dropped: false,
+              favorite: false,
+              ignored: false,
+              blocked: false
+            },
+            info: {
+              author: {
+                id: cmt.author.id,
+                name: cmt.author.name,
+                avatar: cmt.author.avatar && {
+                  type: cmt.author.avatar.type,
+                  data: {
+                    type: cmt.author.avatar.data.type,
+                    uuid: cmt.author.avatar.data.uuid
+                  }
+                }||''
+              },
+              text: cmt.text,
+              date: cmt.date,
+              attachments: (() => {
+                if(cmt.media.length > 0){
+                  // console.log('BLOCKS', cmt.blocks);
+                  const list = [];
+                  for(let i = 0, arr = cmt.media, arrLen = arr.length, len = (mainCfg.database.adding.comments.attachments.items.sz >= arrLen ? arrLen : mainCfg.database.adding.comments.attachments.items.sz); i < len; i++){
+                    if(arr[i].type.match(/media|text/)){
+                      list.push(this.getAttach(arr[i]));
+                    }else continue;
+                  }
+                  return list;
+                }
+              })()
+            }
+          }
+          obj.flags[o.key] ? obj.flags[o.key] = false : obj.flags[o.key] = true;
+          console.log('DATA', o.data);
+          console.log('DATA TYPE', o.data[o.type]);
+          if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
+          result({status:'success', type:o.type, run:'add', id:o.tId, item:obj});
+          // checkFeeds({fullCheck:true});
+        });
+      }
+    });
+  }
+  update(o){
+    function flagsCheck(){
+      if(o.type.match(/users|subsites/)){
+        if(!o.item.flags[o.r][o.key]) return;
+        // console.log('ITEM RULES', o.item.flags[o.r]);
+        switch(o.key){
+          case 'favorite':{
+            o.item.flags[o.r].ignored = false;
+            o.item.flags[o.r].blocked = false;
+          }
+          break;
+          case 'ignored':{
+            o.item.flags[o.r].favorite = false;
+            o.item.flags[o.r].blocked = false;
+          }
+          break;
+          case 'blocked':{
+            o.item.flags[o.r].favorite = false;
+            o.item.flags[o.r].ignored = false;
+          }
+          break;
+        }
+      }else
+      if(o.type.match(/feeds/)){
+        // console.log('ITEM RULES', o.item.flags);
+        if(!o.item.flags[o.key]) return;
+        switch(o.key){
+          case 'favorite':{
+            o.item.flags.ignored = false;
+            o.item.flags.blocked = false;
+          }
+          break;
+          case 'ignored':{
+            o.item.flags.favorite = false;
+            o.item.flags.blocked = false;
+          }
+          break;
+          case 'blocked':{
+            o.item.flags.favorite = false;
+            o.item.flags.ignored = false;
+          }
+          break;
+          case 'readed':{
+            o.item.flags.planToRead = false;
+            o.item.flags.onHold = false;
+            o.item.flags.dropped = false;
+          }
+          break;
+          case 'planToRead':{
+            o.item.flags.readed = false;
+            o.item.flags.onHold = false;
+            o.item.flags.dropped = false;
+          }
+          break;
+          case 'onHold':{
+            o.item.flags.readed = false;
+            o.item.flags.planToRead = false;
+            o.item.flags.dropped = false;
+          }
+          break;
+          case 'dropped':{
+            o.item.flags.readed = false;
+            o.item.flags.planToRead = false;
+            o.item.flags.onHold = false;
+          }
+          break;
+        }
+      }
+    }
+    return new Promise((result, error) => {
+      if(o.type.match(/users|subsites/)){
+        let obj;
+        this.getUser(o.id).then(res => {
+          if(o.type === 'users'){
+            obj = {
+              id: o.id,
+              flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+              info: {
+                name: res.subsite.name,
+                created: res.subsite.created,
+                description: res.subsite.description,
+                avatar: res.subsite.avatar ? {
+                  type: res.subsite.avatar.type,
+                  data: {
+                    type: res.subsite.avatar.data.type,
+                    uuid: res.subsite.avatar.data.uuid
+                  }
+                } : '',
+                ...o.card ? o.card.info : {}
+              }
+            };
+          }else{
+            obj = {
+              id: o.id,
+              flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+              info: {
+                name: res.subsite.name,
+                created: res.subsite.created,
+                description: res.subsite.description,
+                avatar: res.subsite.avatar ? {
+                  type: res.subsite.avatar.type,
+                  data: {
+                    type: res.subsite.avatar.data.type,
+                    uuid: res.subsite.avatar.data.uuid
+                  }
+                } : '',
+                ...o.card ? o.card.info : {}
+              }
+            };
+          }
+
+          if(!o.card){
+            o.item.flags[o.r][o.key] ? o.item.flags[o.r][o.key] = false : o.item.flags[o.r][o.key] = true;
+            flagsCheck();
+          }
+          result({status:'success', process:'item update', type:o.type, id:o.id, item:obj});
+        });
+      }else{
+        this.getFeed(o.id).then(res => {
+          const obj = {
+            id: o.id,
+            flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+            info: {
+              author: {
+                id: res.author.id,
+                name: res.author.name,
+                avatar: res.author.avatar ? {
+                  type: res.author.avatar.type,
+                  data: {
+                    type: res.author.avatar.data.type,
+                    uuid: res.author.avatar.data.uuid
+                  }
+                }: ''
+              },
+              subsite: {
+                id: res.subsite.id,
+                name: res.subsite.name,
+                avatar: res.subsite.avatar ? {
+                  type: res.subsite.avatar.type,
+                  data: {
+                    type: res.subsite.avatar.data.type,
+                    uuid: res.subsite.avatar.data.uuid
+                  }
+                }: ''
+              },
+              title: res.title,
+              text: undefined,
+              date: res.date,
+              isBlur: res.isBlur,
+              keywords: res.keywords,
+              attachments: (() => {
+                if(res.blocks.length > 0){
+                  const list = [];
+                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
+                    if(arr[i].type.match(/media|text/)){
+                      list.push(this.getAttach(arr[i]));
+                    }else continue;
+                  }
+                  return list;
+                }
+              })(),
+              ...o.card ? o.card.info : {}
+            }
+          }
+
+          if(!o.card){
+            o.item.flags[o.key] ? o.item.flags[o.key] = false : o.item.flags[o.key] = true;
+            flagsCheck();
+          }
+          result({status:'success', process:'item update', type:o.type, id:o.id, item:obj});
+        });
+      }
+    });
+  }
+  addOrUpdate(o){
+    const check = (item) => {
+      console.log('dt', item);
+      return new Promise((result, error) => {
+        let user;
+        // console.log('addOrUpdate DATA', data);
+        if(!item) user = sData[o.type].findIndex(e => e.id === o.id);
+        // const user = (data||sData[o.type]).findIndex(e => e.id === o.id);
+        // console.log('USER', user);
+        if(item||user !== -1){
+          this.update({item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
+            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
+              run: 'addOrUpdate',
+              type: i.type,
+              target: i.id,
+              data: i.item
+            }).then(db => {
+              console.log('Yo', db);
+              if(db.status === 201){
+                console.log(`Success, ${i.type} is added!!!`);
+              }else
+              if(db.status === 204){
+                console.log(`Success, ${i.type} is updated!!!`);
+              }
+              // if(!mainCfg['database']['keepVars'][i.type]) new Odb().supabase({
+              //   run: 'get all',
+              //   type: i.type
+              // }).then(db => {
+              //   if(db){
+              //     result({status:'success', [i.type]:db});
+              //   }
+              // }).catch(er => {
+              //   console.log(er.code, er);
+              //   result({status:'success'});
+              // })
+              // else
+              result({status:'success', process:'update db'});
+            }).catch(er => {
+              console.log('Error at addOrUpdate...');
+              console.log(er.code, er);
+            });
+            else
+            result({status:'success', process:'update'});
+          });
+        }else
+          this.add({data:sData, item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
+            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
+              run: 'addOrUpdate',
+              type: i.type,
+              target: i.id,
+              data: i.item
+            }).then(db => {
+              console.log('Yo', db);
+              if(db.status === 201){
+                console.log(`Success, ${i.type} is added!!!`);
+              }else
+              if(db.status === 204){
+                console.log(`Success, ${i.type} is updated!!!`);
+              }
+              // if(!mainCfg['database']['keepVars'][i.type]) new Odb().supabase({
+              //   run: 'get all',
+              //   type: i.type
+              // }).then(db => {
+              //   if(db){
+              //     result({status:'success', [i.type]:db});
+              //   }
+              // }).catch(er => {
+              //   console.log(er.code, er);
+              //   result({status:'success'});
+              // })
+              // else
+              result({status:'success', process:'add db'});
+            }).catch(er => {
+              console.log('Error at addOrUpdate...');
+              console.log(er.code, er);
+            });
+            else
+            result({status:'success', process:'add'});
+          });
+      })
+    }
+    if(mainCfg['database']['cfg']['data']['online']){
+      if(!mainCfg['database']['keepVars'][o.type]){
+        return new Odb().supabase({
+          run: 'find',
+          type: o.type,
+          rType: 'object',
+          item: o.id
+        }).then(item => {
+          if(item) return check(o.type);
+          else
+          return check();
+        }).catch(err => console.log('Find error!!!', err));
+        // user = await new Odb().supabase({
+        //   run: 'find',
+        //   type: o.type,
+        //   target: o.id
+        // });
+        // if(user && !user.length > 0) user = -1;
+      }else{
+        return check();
+      }
+    }else
+    return check();
+    // console.log('DATA', data);
   }
   build(o){
     new CtxMenu().build({
