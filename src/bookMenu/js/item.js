@@ -19,19 +19,28 @@ class BookItem{
     main.classList.toggle('picked');
   }
   user({path, item, onclick, num}){
-    // console.log(`${item}, ${num}`);
     if(!item) return;
 
     new El().Div({
       path: path,
-      cName: `savedFeed${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
+      cName: `db-user${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
       attr: ['item-id', num],
       func: (m) => {
         new El().Div({
           path: m,
           cName: 'header',
           rtn: true,
-          onclick: () => this.picked(path, main, item, num),
+          onRclick: (e) => {
+            if(e.button !== 2) return;
+            e.preventDefault();
+            new HeaderMenu().build({
+              t: e.target.getBoundingClientRect(),
+              offset: e.target.offsetHeight,
+              uID: item.id,
+              uName: item.info.name,
+              type: 'db-user'
+            });
+          },
           func: (h) => {
             new El().Div({
               path: h,
@@ -50,6 +59,58 @@ class BookItem{
               path: h,
               cName: 'time',
               text: this.getTime(item.info.created)
+            });
+
+            new El().Button({
+              path: h,
+              text: '💾',
+              title: 'Сохранить/обновить автора',
+              onclick: (e) => {
+                new Promise((res, err) => {
+                  e.target.disabled = false;
+                    console.log('AuthorNOTInBase');
+                    new Adding()['user']({item:{id:item.id}, res:res, err:err});
+                }).then(data => {
+                  console.log(data);
+                });
+                return
+                if(mainCfg['database']['cfg']['data']['online']){
+                  e.target.disabled = true;
+                  new Odb().supabase({
+                    run: 'find',
+                    type: 'authors',
+                    rType: 'object',
+                    target: item.id
+                  }).then(db => {
+                    new Promise((res, err) => {
+                      e.target.disabled = false;
+                      if(!db){
+                        console.log('AuthorNOTInBase');
+                        new Adding()['author']({item:{id:item.id}, res:res, err:err});
+                      }else{
+                        console.log('AuthorInBase');
+                        new Adding()['author']({item:db, res:res, err:err});
+                      }
+                    }).then(data => {
+                      console.log(data);
+                      new UserMenu().addOrUpdate({id:item.id, type:'authors', card:data}).then(res => {
+                        if(res){
+                          checkFeeds({fullCheck:true});
+                        }
+                      });
+                    });
+                  }).catch(er => {
+                    console.log('Error at search...');
+                    console.log(er.code, er);
+                  });
+                }
+              }
+            });
+
+            new El().Button({
+              path: h,
+              text: '🖍️',
+              onclick: () => this.picked(path, main, item, num)
             });
           }
         });
@@ -67,14 +128,24 @@ class BookItem{
 
     new El().Div({
       path: path,
-      cName: `savedFeed${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
+      cName: `db-subsite${JSON.parse(path.getAttribute('picked'))?.some(i => i.num === num) && ' picked'||''} scrollMid`,
       attr: ['item-id', num],
       func: (m) => {
         new El().Div({
           path: m,
           cName: 'header',
           rtn: true,
-          onclick: () => this.picked(path, main, item, num),
+          onRclick: () => {
+            if(e.button !== 2) return;
+            e.preventDefault();
+            new UserMenu().build({
+              t: e.target.getBoundingClientRect(),
+              offset: e.target.offsetHeight,
+              uID: item.info.subsite.id,
+              uName: item.info.subsite.name,
+              type: 'db-subsite'
+            });
+          },
           func: (h) => {
             new El().Div({
               path: h,
@@ -93,6 +164,50 @@ class BookItem{
               path: h,
               cName: 'time',
               text: this.getTime(item.info.created)
+            });
+
+            new El().Button({
+              path: h,
+              text: '💾',
+              title: 'Сохранить/обновить подсайт',
+              onclick: (c) => {
+                if(mainCfg['database']['cfg']['data']['online']){
+                  e.target.disabled = true;
+                  new Odb().supabase({
+                    run: 'find',
+                    type: 'subsites',
+                    rType: 'object',
+                    target: item.id
+                  }).then(db => {
+                    new Promise((res, err) => {
+                      e.target.disabled = false;
+                      if(!db){
+                        console.log('SubsiteNOTInBase');
+                        new Adding()['author']({item:{id:item.id}, res:res, err:err});
+                      }else{
+                        console.log('SubsiteInBase');
+                        new Adding()['author']({item:db, res:res, err:err});
+                      }
+                    }).then(data => {
+                      console.log(data);
+                      new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
+                        if(res){
+                          checkFeeds({fullCheck:true});
+                        }
+                      });
+                    });
+                  }).catch(er => {
+                    console.log('Error at search...');
+                    console.log(er.code, er);
+                  });
+                }
+              }
+            });
+
+            new El().Button({
+              path: h,
+              text: '🖍️',
+              onclick: () => this.picked(path, main, item, num)
             });
           }
         });
@@ -169,13 +284,27 @@ class BookItem{
 
         new El().Button({
           path: h,
-          text: 'Save',
-          onclick: (c) => new Adding()['feed']({coord:c.target.getBoundingClientRect(), item:item})
+          text: '💾',
+          title: 'Сохранить/обновить фид',
+          onclick: (e) => {
+            if(mainCfg['database']['cfg']['data']['online']){
+              new Promise((res, err) => {
+                new Adding()['feed']({item:{id:item.id}, res:res, err:err});
+              }).then(data => {
+                console.log(data);
+                // new UserMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
+                //   if(res){
+                //     checkFeeds({fullCheck:true});
+                //   }
+                // });
+              });
+            }
+          }
         });
 
         new El().Button({
           path: h,
-          text: 'Test',
+          text: '🖍️',
           onclick: () => this.picked(path, main, item, num)
         });
       }
@@ -187,6 +316,12 @@ class BookItem{
       text: item.info.title
     });
 
+    if(item.info.comment) new El().Div({
+      path: main,
+      cName: 'comment',
+      text: item.info.comment
+    });
+
     new El().Div({
       path: main,
       cName: 'attachments',
@@ -194,18 +329,6 @@ class BookItem{
         if(e.type === 'media'){
           e.items.forEach(i => {
             attachment({path:a, type:'subsite', i:i});
-            // if(i.type === 'image'){
-            //   const mask=new El().Div({
-            //     path: a,
-            //     cName: `mask${e.hidden ? ' spoiler' : ''}`,
-            //     rtn: true
-            //   });
-            //   if(i.type === 'image' && i.data.type.match(/png|jpg/)) new El().Image({
-            //     path: mask,
-            //     cName: 'attach',
-            //     url: `https://leonardo.osnova.io/${i.data.uuid}`
-            //   });
-            // }
           })
         }else
         if(e.type === 'text'){
