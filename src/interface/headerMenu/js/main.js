@@ -6,8 +6,13 @@ class HeaderMenu{
         s = 'news';
       }
       break;
-      case 'subsite':{
+      case ('subsites'||'users'):{
         s = 'subsite';
+        v = 'id';
+      }
+      break;
+      case 'feeds':{
+        s = 'content';
         v = 'id';
       }
       break;
