@@ -7,7 +7,7 @@ const feedsCss = (c) => `
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
 .itemsList.feeds {
-  max-height: ${c.bookMenu.visual.feeds['max height']}px;
+  max-height: ${c.database.bookMenu.feeds.book.size['max height']}px;
 }
 
 .db-feed {
@@ -70,6 +70,13 @@ const feedsCss = (c) => `
   text-align: center;
 }
 
+.db-feed .comment {
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 5px;
+  text-align: center;
+}
+
 .db-feed .description {
   font-size: 14px;
   font-weight: 500;
@@ -98,7 +105,7 @@ const feedsCss = (c) => `
 }
 
 .db-feed .attachments .mask:is(.png, .jpg, .jpeg, .gif) {
-  max-width: ${c.database.feeds.attachments.visual.size.image}%;
+  max-width: ${c.database.bookMenu.feeds.attachments.visual.size.image['max width']}%;
 }
 
 .db-feed .tags {
@@ -110,11 +117,15 @@ const feedsCss = (c) => `
 }
 .db-feed .tags .tag {
   display: flex;
-  color: ${c.database.feeds.attachments.visual.color.tag};
+  color: ${c.database.bookMenu.feeds.attachments.visual.color.tag};
   cursor: pointer;
 }
 .db-feed .tags .tag::before {
   display: block;
   content: '#';
+}
+
+.contextMenu .list .btn:is(.readed, .planToRead, .onHold, .favorite, .ignored, .blocked) {
+  background-image: linear-gradient(45deg, rgb(83 148 161), transparent);
 }
 `;
