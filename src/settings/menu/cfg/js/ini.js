@@ -101,16 +101,6 @@ const sData = {
             }
         }
     },
-    feeds: {
-        attachments: {
-            video: {
-                size: {
-                    width: '300',
-                    height: '200'
-                }
-            }
-        }
-    },
     'filters': {
         'feeds': {
             'topics': {
@@ -192,6 +182,14 @@ const sData = {
             'my new': true,
             'bookmarks': true,
             'topic': true
+        },
+        attachments: {
+            video: {
+                size: {
+                    width: '300',
+                    height: '200'
+                }
+            }
         }
     },
     'usercard': {
