@@ -1,4 +1,5 @@
 initMenu.setData = (m, cfg) => {
+
   class Types{
     rewriteText({target, text, mode}){
       target.textContent = text ? text : (mode === '++' ? ++target.textContent : --target.textContent);
@@ -657,7 +658,7 @@ initMenu.setData = (m, cfg) => {
             db: db
           }).then(res => {
             console.log(res);
-            if(res.length === 0){
+            if(!res){
               console.log(`There's no saved feeds...`);
               new Types().feeds(m.children[0].children[1]);
             }else{
@@ -680,7 +681,7 @@ initMenu.setData = (m, cfg) => {
             db: db
           }).then(res => {
             console.log(res);
-            if(res.length === 0){
+            if(!res){
               console.log(`There's no saved subsites...`);
               new Types().subsites(m.children[0].children[1]);
             }else{
@@ -703,7 +704,7 @@ initMenu.setData = (m, cfg) => {
             db: db
           }).then(res => {
             console.log(res);
-            if(res.length === 0){
+            if(!res){
               console.log(`There's no saved users...`);
               new Types().users(m.children[0].children[1]);
             }else{
