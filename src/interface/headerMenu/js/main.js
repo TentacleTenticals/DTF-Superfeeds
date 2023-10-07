@@ -581,14 +581,14 @@ class HeaderMenu{
           type: 'button',
           text: 'О подсайте',
           onclick: () => {
-            this.dtfApi({type:'subsite', value:o.sID}).then(res => this.profileCard({path: document.body, e:o.t, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsite', value:o.sID}).then(res => this.profileCard({path: document.body, e:o.t, autohide:true, offset:o.offset, item:res}));
           }
         }]:[],
         {
           type: 'button',
           text: 'О пользователе',
           onclick: () => {
-            this.dtfApi({type:'subsite', value:o.uID}).then(res => this.profileCard({path: document.body, e:o.t, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsite', value:o.uID}).then(res => this.profileCard({path: document.body, e:o.t, autohide:true, offset:o.offset, item:res}));
           }
         },
 
@@ -606,6 +606,19 @@ class HeaderMenu{
               new AddEl()['subsite']({item:{id:o.sID}, res:res, err:err});
             }).then(data => {
               console.log(data);
+              if(data){
+                this.addOrUpdate({id:o.sID, name:o.sName, type:'subsites', card:data}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Subsite', sData.subsites);
+                    }
+                  }
+                });
+              }
             });
           }
         },
@@ -622,8 +635,15 @@ class HeaderMenu{
               text: '💘',
               onclick: () => {
                 this.addOrUpdate({id:o.sID, name:o.sName, type:'subsites', r:'topics', key:'favorite'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Subsite', sData.subsites);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Subsite', sData.subsites);
+                    }
+                  }
                 });
               }
             },
@@ -634,8 +654,15 @@ class HeaderMenu{
               text: '💢',
               onclick: () => {
                 this.addOrUpdate({id:o.sID, name:o.sName, type:'subsites', r:'topics', key:'ignored'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Subsite', sData.subsites);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Subsite', sData.subsites);
+                    }
+                  }
                 });
               }
             },
@@ -646,8 +673,15 @@ class HeaderMenu{
               text: '🈲',
               onclick: () => {
                 this.addOrUpdate({id:o.sID, name:o.sName, type:'subsites', r:'topics', key:'blocked'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Subsite', sData.subsites);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Subsite', sData.subsites);
+                    }
+                  }
                 });
               }
             }
@@ -667,6 +701,19 @@ class HeaderMenu{
               new AddEl()['user']({item:{id:o.uID}, res:res, err:err});
             }).then(data => {
               console.log(data);
+              if(data){
+                this.addOrUpdate({id:o.sID, name:o.sName, type:'users', card:data}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('user', sData.users);
+                    }
+                  }
+                });
+              }
             });
           }
         },
@@ -683,8 +730,15 @@ class HeaderMenu{
               text: '💘',
               onclick: () => {
                 this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'topics', key:'favorite'}).then(res => {
-                  checkFeeds({fullCheck:true});
-                  console.log('User', sData.users);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
                 });
               }
             },
@@ -695,8 +749,15 @@ class HeaderMenu{
               text: '💢',
               onclick: () => {
                 this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'topics', key:'ignored'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('User', sData.users);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
                 });
               }
             },
@@ -707,145 +768,215 @@ class HeaderMenu{
               text: '🈲',
               onclick: () => {
                 this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'topics', key:'blocked'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('User', sData.users);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            }
+          ]
+        },
+        {
+          type: 'sub',
+          cName: 'hor',
+          text: 'Блог',
+          title: 'Управление блогом',
+          items: [
+            {
+              type: 'button',
+              title: 'Избранное',
+              cName: (this.user && this.user.flags.blogs.favorite) ? 'button favorite' : 'button',
+              text: '💘',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'favorite'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            },
+            {
+              type: 'button',
+              title: 'Игноровано',
+              cName: (this.user && this.user.flags.blogs.ignored) ? 'button ignored' : 'button',
+              text: '💢',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'ignored'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            },
+            {
+              type: 'button',
+              title: 'Блокировано',
+              cName: (this.user && this.user.flags.blogs.blocked) ? 'button blocked' : 'button',
+              text: '🈲',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'blocked'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            }
+          ]
+        },
+        {
+          type: 'sub',
+          cName: 'hor',
+          text: 'Блог',
+          title: 'Управление блогом',
+          items: [
+            {
+              type: 'button',
+              title: 'Избранное',
+              cName: (this.user && this.user.flags.blogs.favorite) ? 'button favorite' : 'button',
+              text: '💘',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'favorite'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            },
+            {
+              type: 'button',
+              title: 'Игноровано',
+              cName: (this.user && this.user.flags.blogs.ignored) ? 'button ignored' : 'button',
+              text: '💢',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'ignored'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
+              }
+            },
+            {
+              type: 'button',
+              title: 'Блокировано',
+              cName: (this.user && this.user.flags.blogs.blocked) ? 'button blocked' : 'button',
+              text: '🈲',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'blocked'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
                 });
               }
             }
           ],
         },
         {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Блог',
-            title: 'Управление блогом',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: (this.user && this.user.flags.blogs.favorite) ? 'button favorite' : 'button',
-                text: '💘',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.blogs.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.blogs.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
+          type: 'sub',
+          cName: 'hor',
+          text: 'Комментарии',
+          title: 'Управление комментариями',
+          items: [
+            {
+              type: 'button',
+              title: 'Избранное',
+              cName: (this.user && this.user.flags.comments.favorite) ? 'button favorite' : 'button',
+              text: '💘',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'favorite'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
               }
-            ],
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Блог',
-            title: 'Управление блогом',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: (this.user && this.user.flags.blogs.favorite) ? 'button favorite' : 'button',
-                text: '💘',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.blogs.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.blogs.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'blogs', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
+            },
+            {
+              type: 'button',
+              title: 'Игноровано',
+              cName: (this.user && this.user.flags.comments.ignored) ? 'button ignored' : 'button',
+              text: '💢',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'ignored'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
               }
-            ],
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Комментарии',
-            title: 'Управление комментариями',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: (this.user && this.user.flags.comments.favorite) ? 'button favorite' : 'button',
-                text: '💘',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.comments.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.comments.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
+            },
+            {
+              type: 'button',
+              title: 'Блокировано',
+              cName: (this.user && this.user.flags.comments.blocked) ? 'button blocked' : 'button',
+              text: '🈲',
+              onclick: () => {
+                this.addOrUpdate({id:o.uID, name:o.uName, type:'users', r:'comments', key:'blocked'}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('User', sData.users);
+                    }
+                  }
+                });
               }
-            ],
-          }]:[],
+            }
+          ],
+        }]:[],
         // ФИДЫ
         ...o.type.match(/^(feed|db-feed)$/) ? [{
           type: 'separator',
@@ -860,6 +991,19 @@ class HeaderMenu{
               new AddEl()['feed']({item:{id:o.fID}, res:res, err:err});
             }).then(data => {
               console.log(data);
+              if(data){
+                this.addOrUpdate({id:o.sID, name:o.sName, type:'feeds', card:data}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('feed', sData.feeds);
+                    }
+                  }
+                });
+              }
             });
           }
         },
@@ -876,8 +1020,15 @@ class HeaderMenu{
               text: '✔️',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'readed'}).then(res => {
-                  checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -888,8 +1039,15 @@ class HeaderMenu{
               text: '📚',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'planToRead'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('User', sData);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -900,8 +1058,15 @@ class HeaderMenu{
               text: '📖',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'onHold'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -912,8 +1077,15 @@ class HeaderMenu{
               text: '❌',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'dropped'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -924,8 +1096,15 @@ class HeaderMenu{
               text: '💘',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'favorite'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -936,8 +1115,15 @@ class HeaderMenu{
               text: '💢',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'ignored'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             },
@@ -948,8 +1134,15 @@ class HeaderMenu{
               text: '🈲',
               onclick: () => {
                 this.addOrUpdate({id:o.fID, type:'feeds', key:'blocked'}).then(res => {
-                  if(res) checkFeeds({fullCheck:true});
-                  console.log('Feeds', sData.feeds);
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('Feed', sData.feeds);
+                    }
+                  }
                 });
               }
             }
@@ -958,17 +1151,17 @@ class HeaderMenu{
       ]
     })
   }
-  profileCard(c){
+  profileCard(o){
     console.log('USER', this.user);
     new El().Div({
       path: o.path,
       cName: 'profileCard',
       tab: -1,
       focus: true,
-      // style: `
-      //   top: ${(o.offset||0 + 10) + o.e.top + (window.scrollY||window.scrollHeight||0)}px;
-      //   left: ${o.e.left}px;`
-      // ,
+      style: `
+        top: ${(o.offset||0 + 10) + o.e.top + (window.scrollY||window.scrollHeight||0)}px;
+        left: ${o.e.left}px;`
+      ,
       onblur: (e) => {
         if(!o.autohide) return;
         setTimeout(() => {
