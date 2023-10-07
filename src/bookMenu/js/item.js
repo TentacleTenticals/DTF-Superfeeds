@@ -61,36 +61,42 @@ class BookItem{
               text: this.getTime(item.info.created)
             });
 
-            new El().Button({
+            new El().Div({
               path: h,
-              text: '💾',
-              title: 'Сохранить/обновить автора',
-              onclick: (e) => {
-                new Promise((res, err) => {
-                  new AddEl()['user']({item:{id:item.id}, res:res, err:err});
-                }).then(data => {
-                  console.log(data);
-                  if(data){
-                    new UserMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
-                      if(!res){
-                        return;
-                      }else{
-                        const page = getPageType(document.location.href).type;
-                        if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                          checkFeeds({fullCheck:true});
-                          console.log('user', sData.users);
-                        }
+              cName: 'actions',
+              func: (a) => {
+                new El().Button({
+                  path: a,
+                  text: '💾',
+                  title: 'Сохранить/обновить автора',
+                  onclick: (e) => {
+                    new Promise((res, err) => {
+                      new AddEl()['user']({item:{id:item.id}, res:res, err:err});
+                    }).then(data => {
+                      console.log(data);
+                      if(data){
+                        new UserMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
+                          if(!res){
+                            return;
+                          }else{
+                            const page = getPageType(document.location.href).type;
+                            if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                              checkFeeds({fullCheck:true});
+                              console.log('user', sData.users);
+                            }
+                          }
+                        });
                       }
                     });
                   }
                 });
-              }
-            });
 
-            new El().Button({
-              path: h,
-              text: '🖍️',
-              onclick: () => this.picked(path, main, item, num)
+                new El().Button({
+                  path: a,
+                  text: '🖍️',
+                  onclick: () => this.picked(path, main, item, num)
+                });
+              }
             });
           }
         });
@@ -146,36 +152,42 @@ class BookItem{
               text: this.getTime(item.info.created)
             });
 
-            new El().Button({
+            new El().Div({
               path: h,
-              text: '💾',
-              title: 'Сохранить/обновить подсайт',
-              onclick: (e) => {
-                new Promise((res, err) => {
-                  new AddEl()['subsite']({item:{id:item.id}, res:res, err:err});
-                }).then(data => {
-                  console.log(data);
-                  if(data){
-                    new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
-                      if(!res){
-                        return;
-                      }else{
-                        const page = getPageType(document.location.href).type;
-                        if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                          checkFeeds({fullCheck:true});
-                          console.log('subsite', sData.subsites);
-                        }
+              cName: 'actions',
+              func: (a) => {
+                new El().Button({
+                  path: a,
+                  text: '💾',
+                  title: 'Сохранить/обновить подсайт',
+                  onclick: (e) => {
+                    new Promise((res, err) => {
+                      new AddEl()['subsite']({item:{id:item.id}, res:res, err:err});
+                    }).then(data => {
+                      console.log(data);
+                      if(data){
+                        new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
+                          if(!res){
+                            return;
+                          }else{
+                            const page = getPageType(document.location.href).type;
+                            if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                              checkFeeds({fullCheck:true});
+                              console.log('subsite', sData.subsites);
+                            }
+                          }
+                        });
                       }
                     });
                   }
                 });
-              }
-            });
 
-            new El().Button({
-              path: h,
-              text: '🖍️',
-              onclick: () => this.picked(path, main, item, num)
+                new El().Button({
+                  path: a,
+                  text: '🖍️',
+                  onclick: () => this.picked(path, main, item, num)
+                });
+              }
             });
           }
         });
@@ -250,36 +262,42 @@ class BookItem{
           text: this.getTime(item.info.date)
         });
 
-        new El().Button({
+        new El().Div({
           path: h,
-          text: '💾',
-          title: 'Сохранить/обновить фид',
-          onclick: (e) => {
-            new Promise((res, err) => {
-              new AddEl()['feed']({item:{id:item.id}, res:res, err:err});
-            }).then(data => {
-              console.log(data);
-              if(data){
-                new UserMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
-                  if(!res){
-                    return;
-                  }else{
-                    const page = getPageType(document.location.href).type;
-                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
-                      console.log('feed', sData.feeds);
-                    }
+          cName: 'actions',
+          func: (a) => {
+            new El().Button({
+              path: a,
+              text: '💾',
+              title: 'Сохранить/обновить фид',
+              onclick: (e) => {
+                new Promise((res, err) => {
+                  new AddEl()['feed']({item:{id:item.id}, res:res, err:err});
+                }).then(data => {
+                  console.log(data);
+                  if(data){
+                    new UserMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
+                      if(!res){
+                        return;
+                      }else{
+                        const page = getPageType(document.location.href).type;
+                        if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                          checkFeeds({fullCheck:true});
+                          console.log('feed', sData.feeds);
+                        }
+                      }
+                    });
                   }
                 });
               }
             });
-          }
-        });
 
-        new El().Button({
-          path: h,
-          text: '🖍️',
-          onclick: () => this.picked(path, main, item, num)
+            new El().Button({
+              path: a,
+              text: '🖍️',
+              onclick: () => this.picked(path, main, item, num)
+            });
+          }
         });
       }
     });
