@@ -22,6 +22,7 @@ const feedsCss = (c) => `
 
 .db-feed .header {
   display: flex;
+  justify-content: space-between;
   gap: 0 10px;
   height: 45px;
   flex-shrink: 0;
@@ -44,6 +45,10 @@ const feedsCss = (c) => `
   white-space: nowrap;
   margin: 25px 0 0 0;
   opacity: 0.7;
+}
+.db-feed .header .actions {
+  display: flex;
+  gap: 0 5px;
 }
 
 .db-feed .header .mask {
