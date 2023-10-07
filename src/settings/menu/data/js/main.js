@@ -1,5 +1,4 @@
 initMenu.setData = (m, cfg) => {
-
   class Types{
     rewriteText({target, text, mode}){
       target.textContent = text ? text : (mode === '++' ? ++target.textContent : --target.textContent);
