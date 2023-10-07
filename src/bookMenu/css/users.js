@@ -12,6 +12,7 @@ const usersCss = (c) => `
 
 .db-user .header {
   display: flex;
+  justify-content: space-between;
   gap: 0 10px;
   height: 45px;
   flex-shrink: 0;
