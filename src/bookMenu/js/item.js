@@ -67,43 +67,23 @@ class BookItem{
               title: 'Сохранить/обновить автора',
               onclick: (e) => {
                 new Promise((res, err) => {
-                  e.target.disabled = false;
-                    console.log('AuthorNOTInBase');
-                    new Adding()['user']({item:{id:item.id}, res:res, err:err});
+                  new AddEl()['user']({item:{id:item.id}, res:res, err:err});
                 }).then(data => {
                   console.log(data);
-                });
-                return
-                if(mainCfg['database']['cfg']['data']['online']){
-                  e.target.disabled = true;
-                  new Odb().supabase({
-                    run: 'find',
-                    type: 'authors',
-                    rType: 'object',
-                    target: item.id
-                  }).then(db => {
-                    new Promise((res, err) => {
-                      e.target.disabled = false;
-                      if(!db){
-                        console.log('AuthorNOTInBase');
-                        new Adding()['author']({item:{id:item.id}, res:res, err:err});
+                  if(data){
+                    new UserMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
+                      if(!res){
+                        return;
                       }else{
-                        console.log('AuthorInBase');
-                        new Adding()['author']({item:db, res:res, err:err});
-                      }
-                    }).then(data => {
-                      console.log(data);
-                      new UserMenu().addOrUpdate({id:item.id, type:'authors', card:data}).then(res => {
-                        if(res){
+                        const page = getPageType(document.location.href).type;
+                        if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                           checkFeeds({fullCheck:true});
+                          console.log('user', sData.users);
                         }
-                      });
+                      }
                     });
-                  }).catch(er => {
-                    console.log('Error at search...');
-                    console.log(er.code, er);
-                  });
-                }
+                  }
+                });
               }
             });
 
@@ -170,37 +150,25 @@ class BookItem{
               path: h,
               text: '💾',
               title: 'Сохранить/обновить подсайт',
-              onclick: (c) => {
-                if(mainCfg['database']['cfg']['data']['online']){
-                  e.target.disabled = true;
-                  new Odb().supabase({
-                    run: 'find',
-                    type: 'subsites',
-                    rType: 'object',
-                    target: item.id
-                  }).then(db => {
-                    new Promise((res, err) => {
-                      e.target.disabled = false;
-                      if(!db){
-                        console.log('SubsiteNOTInBase');
-                        new Adding()['author']({item:{id:item.id}, res:res, err:err});
+              onclick: (e) => {
+                new Promise((res, err) => {
+                  new AddEl()['subsite']({item:{id:item.id}, res:res, err:err});
+                }).then(data => {
+                  console.log(data);
+                  if(data){
+                    new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
+                      if(!res){
+                        return;
                       }else{
-                        console.log('SubsiteInBase');
-                        new Adding()['author']({item:db, res:res, err:err});
-                      }
-                    }).then(data => {
-                      console.log(data);
-                      new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
-                        if(res){
+                        const page = getPageType(document.location.href).type;
+                        if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                           checkFeeds({fullCheck:true});
+                          console.log('subsite', sData.subsites);
                         }
-                      });
+                      }
                     });
-                  }).catch(er => {
-                    console.log('Error at search...');
-                    console.log(er.code, er);
-                  });
-                }
+                  }
+                });
               }
             });
 
@@ -287,18 +255,24 @@ class BookItem{
           text: '💾',
           title: 'Сохранить/обновить фид',
           onclick: (e) => {
-            if(mainCfg['database']['cfg']['data']['online']){
-              new Promise((res, err) => {
-                new Adding()['feed']({item:{id:item.id}, res:res, err:err});
-              }).then(data => {
-                console.log(data);
-                // new UserMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
-                //   if(res){
-                //     checkFeeds({fullCheck:true});
-                //   }
-                // });
-              });
-            }
+            new Promise((res, err) => {
+              new AddEl()['feed']({item:{id:item.id}, res:res, err:err});
+            }).then(data => {
+              console.log(data);
+              if(data){
+                new UserMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
+                  if(!res){
+                    return;
+                  }else{
+                    const page = getPageType(document.location.href).type;
+                    if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+                      checkFeeds({fullCheck:true});
+                      console.log('feed', sData.feeds);
+                    }
+                  }
+                });
+              }
+            });
           }
         });
 
