@@ -424,7 +424,7 @@ class HeaderMenu{
         // console.log('USER', user);
         if(item||user !== -1){
           this.update({item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
-            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
+            if(db.online) new Odb()[db.online]({
               run: 'addOrUpdate',
               type: i.type,
               target: i.id,
@@ -459,7 +459,7 @@ class HeaderMenu{
           });
         }else
           this.add({data:sData, item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
-            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
+            if(db.online) new Odb()[db.online]({
               run: 'addOrUpdate',
               type: i.type,
               target: i.id,
@@ -494,9 +494,9 @@ class HeaderMenu{
           });
       })
     }
-    if(mainCfg['database']['cfg']['data']['online']){
+    if(db.online){
       if(!mainCfg['database']['keepVars'][o.type]){
-        return new Odb().supabase({
+        return new Odb()[db.online]({
           run: 'find',
           type: o.type,
           rType: 'object',
@@ -524,6 +524,8 @@ class HeaderMenu{
       path: document.body,
       header: 'МЕНЮ УПРАВЛЕНИЯ',
       focus: true,
+      rect: o.rect,
+      offset: o.offset,
       // load: true,
       // autohide: true,
       onblur: (m) => {
@@ -537,24 +539,24 @@ class HeaderMenu{
         console.log('CC', o);
         // o.res('ok');
         if(!o.data) o.data = {};
-        if(mainCfg.database.cfg.data.online){
+        if(db.online){
           if(mainCfg.database.keepVars['subsites'||'users'||'feeds']) try {
             if(!db.name) return;
-            if(!o.data.subsites) o.data.subsite = await new Odb().supabase({
+            if(!o.data.subsites) o.data.subsite = await new Odb()[db.online]({
               run: 'find',
               type: 'subsites',
               rType: 'object',
               target: o.sID,
               db: db
             });
-            if(!o.data.users) o.data.user = await new Odb().supabase({
+            if(!o.data.users) o.data.user = await new Odb()[db.online]({
               run: 'find',
               type: 'users',
               rType: 'object',
               target: o.uID,
               db: db
             });
-            if(!o.data.feeds) o.data.feed = await new Odb().supabase({
+            if(!o.data.feeds) o.data.feed = await new Odb()[db.online]({
               run: 'find',
               type: 'feeds',
               rType: 'object',
