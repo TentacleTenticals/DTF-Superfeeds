@@ -34,7 +34,7 @@ class BookItem{
             if(e.button !== 2) return;
             e.preventDefault();
             new HeaderMenu().build({
-              t: e.target.getBoundingClientRect(),
+              rect: e.target.getBoundingClientRect(),
               offset: e.target.offsetHeight,
               uID: item.id,
               uName: item.info.name,
@@ -125,7 +125,7 @@ class BookItem{
             if(e.button !== 2) return;
             e.preventDefault();
             new UserMenu().build({
-              t: e.target.getBoundingClientRect(),
+              rect: e.target.getBoundingClientRect(),
               offset: e.target.offsetHeight,
               uID: item.info.subsite.id,
               uName: item.info.subsite.name,
@@ -219,7 +219,7 @@ class BookItem{
         if(e.button !== 2) return;
         e.preventDefault();
         new UserMenu().build({
-          t: e.target.getBoundingClientRect(),
+          rect: e.target.getBoundingClientRect(),
           offset: e.target.offsetHeight,
           uID: item.info.author.id,
           sID: item.info.subsite.id,
