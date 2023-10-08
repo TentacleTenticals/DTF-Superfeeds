@@ -1,15 +1,46 @@
 class AddEl{
-  user(c){
-    new Modal().build({
-      path: document.body,
-      title: 'Сохранение/обновление пользователя',
+  modal(c){
+    new El().Dialog({
+      path: c.path,
+      cName: 'modal',
       showM: true,
-      load: true,
-      loadText: 'Loading...',
       onclose: (m) => {
         m.target.remove();
-        c.err('Closed!!!');
+        if(c.err) c.err('Closed!!!');
       },
+      func: (m) => {
+        new El().Div({
+          path: m,
+          cName: 'header',
+          text: c.title,
+          onclick: () => {
+            m.close();
+          }
+        });
+        new El().Form({
+          path: m,
+          cName: 'main',
+          func: (fo) => {
+            new El().loading({
+              path: fo,
+              text: 'Loading...'
+            });
+            c.func(fo);
+          }
+        });
+        new El().Button({
+          path: m,
+          type: 'submit',
+          text: c.tSubmit||'Отправить',
+          onclick: () => c.submit(m.children[1])
+        });
+      }
+    });
+  }
+  user(c){
+    this.modal({
+      path: document.body,
+      title: 'Сохранение/обновление пользователя',
       submit: (p) => {
         const data = {
           flags: {
@@ -42,7 +73,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        new Odb().supabase({
+        if(db.online) new Odb()[db.online]({
           run: 'find',
           type: 'users',
           rType: 'object',
@@ -138,21 +169,17 @@ class AddEl{
             placeholder: 'Введите комментарий...',
             value: db && db.info && db.info.comment
           });
-        }).catch(err => console.log(err));
+        }).catch(err => {
+          c.err(err);
+          m.parentNode.close();
+        });
       }
     })    
   }
   subsite(c){
-    new Modal().build({
+    this.modal({
       path: document.body,
       title: 'Сохранение/обновление подсайта',
-      showM: true,
-      load: true,
-      loadText: 'Loading...',
-      onclose: (m) => {
-        m.target.remove();
-        c.err('Closed!!!');
-      },
       submit: (p) => {
         const data = {
           flags: {
@@ -185,7 +212,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        new Odb().supabase({
+        if(db.online) new Odb()[db.online]({
           run: 'find',
           type: 'subsites',
           rType: 'object',
@@ -280,21 +307,17 @@ class AddEl{
             placeholder: 'Введите комментарий...',
             value: db && db.info && db.info.comment
           });
-        }).catch(err => console.log(err));
+        }).catch(err => {
+          c.err(err);
+          m.parentNode.close();
+        });
       }
     })    
   }
   feed(c){
-    new Modal().build({
+   this.modal({
       path: document.body,
       title: 'Сохранение/обновление фида',
-      showM: true,
-      load: true,
-      loadText: 'Loading...',
-      onclose: (m) => {
-        m.target.remove();
-        c.err('Closed!!!');
-      },
       submit: (p) => {
         const data = {
           flags: {},
@@ -313,7 +336,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        new Odb().supabase({
+        if(db.online) new Odb()[db.online]({
           run: 'find',
           type: 'feeds',
           rType: 'object',
@@ -376,94 +399,11 @@ class AddEl{
             placeholder: 'Введите комментарий...',
             value: db && db.info && db.info.comment
           });
-        }).catch(err => console.log(err));
+        }).catch(err => {
+          c.err(err);
+          m.parentNode.close();
+        });
       }
     })    
-  }
-
-  feed1(c){
-    new Dialog().build({
-      path: document.body,
-      coord: c.coord,
-      autohide: false,
-      title: `${!c.item.info ? 'Сохранение':'Обновление'} фида`,
-      func: (m) => {
-        new El().Div({
-          path: m,
-          cName: 'flags',
-          func: (i) => {
-            new El().Div({
-              path: i,
-              cName: 'rz',
-              text: 'Состояние'
-            });
-    
-            [
-              ['Прочтено', 'readed'],
-              ['Прочту', 'planToRead'],
-              ['Читаю', 'onHold'],
-              ['Брошено', 'dropped'],
-              ['Ничего', 'null']
-            ].forEach(e => {
-              new El().Input({
-                path: i,
-                type: 'radio',
-                name: 'flags 1',
-                label: e[0],
-                value: e[1],
-                checked: c.item.flags && c.item.flags[e[1]]
-              });
-            });
-    
-            new El().Div({
-              path: i,
-              cName: 'rz',
-              text: 'Состояние'
-            });
-    
-            [
-              ['Избранное', 'favorite'],
-              ['Игнорируемое', 'ignored'],
-              ['Заблокированное', 'blocked'],
-              ['Ничего', 'null']
-            ].forEach(e => {
-              new El().Input({
-                path: i,
-                type: 'radio',
-                name: 'flags 2',
-                label: e[0],
-                value: e[1],
-                checked: c.item.flags && c.item.flags[e[1]]
-              });
-            });
-          }
-        });
-    
-        new El().Tarea({
-          path: m,
-          cName: 'zone',
-          placeholder: 'Введите комментарий...',
-          value: c.item.info && c.item.info.comment
-        });
-      },
-      submitText: 'Save/Update',
-      submit: (p) => {
-        const data = {
-          flags: {},
-          info: {
-            comment: p.children[1].value||false
-          }
-        };
-        for(let i = 0, arr = p.children[0].children, len = arr.length; i < len; i++){
-          if(arr[i].tagName !== 'LABEL') continue;
-          if(arr[i].children[0].value === 'null') continue;
-          data.flags[arr[i].children[0].value] = arr[i].children[0].checked;
-        }
-        setTimeout(() => {
-          p.parentNode.remove();
-          c.res(data);
-        }, 500);
-      }
-    })
   }
 }
