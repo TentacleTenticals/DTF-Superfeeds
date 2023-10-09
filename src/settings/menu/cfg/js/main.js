@@ -45,23 +45,24 @@ initMenu.setSettings = (m, cfg) => {
         text: 'Настройки'
       },
       {
-        t: 'select',
-        label: 'Удалённая база данных',
-        name: 'db',
-        options: [
-          ['Firebase', 'firebase'],
-          ['Supabase', 'supabase'],
-          ['MongoDB', 'mongoDB']
-        ],
-        group: 'cfg'
-      },
-      {
         t: 'input',
         type: 'checkbox',
         lName: 'full nl',
         label: 'Онлайн',
         name: 'online',
-        group: 'cfg'
+        group: 'settings'
+      },
+      {
+        t: 'select',
+        label: 'Удалённая база данных',
+        name: 'db',
+        options: [
+          ['Нет', 'none'],
+          ['Firebase', 'firebase'],
+          ['Supabase', 'supabase'],
+          ['MongoDB', 'mongoDB']
+        ],
+        group: 'settings'
       },
       {
         t: 'separator',
@@ -72,6 +73,7 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Удалённая база данных',
         name: 'db',
         options: [
+          ['Нет', 'none'],
           ['Firebase', 'firebase'],
           ['Supabase', 'supabase'],
           ['MongoDB', 'mongoDB']
@@ -99,14 +101,14 @@ initMenu.setSettings = (m, cfg) => {
       {
         t: 'input',
         type: 'number',
-        label: 'Максимальное кол-во вложений',
+        label: 'Максимум вложений',
         name: 'max sz',
         group: 'saving.feeds.attachments.items'
       },
       {
         t: 'input',
         type: 'number',
-        label: 'Максимальное кол-во вложений в альбомах',
+        label: 'Максимум вложений в альбомах',
         name: 'max sz',
         group: 'saving.feeds.attachments.albums'
       }
