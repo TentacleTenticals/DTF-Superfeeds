@@ -7,7 +7,7 @@ const sData = {
   defaultCfg = {
     'main': {
         feeds: {
-            'working mode': 'panels',
+            'working mode': 'tags',
             check: {
                 active: true,
                 onPageLoad: true,
@@ -32,13 +32,13 @@ const sData = {
                 onPageLoad: true,
                 attachments: {
                     video: {
-                        replace: true,
-                        autoplay: false,
-                        sound: false,
-                        volume: 40,
-                        size: {
-                        width: 300,
-                        height: 150
+                            replace: true,
+                            autoplay: false,
+                            sound: false,
+                            volume: 40,
+                            size: {
+                            width: 300,
+                            height: 150
                         }
                     }
                 }
@@ -46,15 +46,13 @@ const sData = {
         }
     },
     'database': {
-        'cfg': {
-            'settings': {
-                'online': true,
-                'db': 'mongoDB'
-            },
-            'data': {
-                'online': true,
-                'db': 'mongoDB'
-            },
+        'settings': {
+            'online': false,
+            'db': 'none'
+        },
+        'data': {
+            'online': false,
+            'db': 'none'
         },
         'keepVars': {
             'subsites': false,
@@ -154,6 +152,16 @@ const sData = {
                 'subsite actions': false
             }
         },
+        visual: {
+            attachments: {
+                video: {
+                    size: {
+                        width: '300',
+                        height: '200'
+                    }
+                }
+            }
+        },
         'what to show': {
             'popular': {
                 'topics': true,
@@ -182,14 +190,6 @@ const sData = {
             'my new': true,
             'bookmarks': true,
             'topic': true
-        },
-        attachments: {
-            video: {
-                size: {
-                    width: '300',
-                    height: '200'
-                }
-            }
         }
     },
     'usercard': {
@@ -209,6 +209,10 @@ const sData = {
     },
     'scriptInfo': {
         'name': 'DTF SuperFeeds',
-        'id': 'dtf-superFeeds'
+        'id': 'dtf-superFeeds',
+        storeName: 'DTF SuperFeeds cfg',
+        storeDesc: 'Настройки',
+        storeDatName: 'DTF SuperFeeds dat',
+        storeDatDesc: 'Данные'
     }
 };
