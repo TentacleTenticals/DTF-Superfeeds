@@ -12,7 +12,6 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Режим действия фидов',
         name: 'working mode',
         options: [
-          ['Нет', 'none'],
           ['Тэги', 'tags'],
           ['Панели', 'panels'],
           ['Обсервер', 'obs']
@@ -24,7 +23,6 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Режим действия комментариев',
         name: 'working mode',
         options: [
-          ['Нет', 'none'],
           ['Обсервер', 'obs']
         ],
         group: 'comments',
