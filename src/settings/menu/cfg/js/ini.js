@@ -7,7 +7,7 @@ const sData = {
   defaultCfg = {
     'main': {
         feeds: {
-            'working mode': 'tags',
+            'working mode': 'obs',
             check: {
                 active: true,
                 onPageLoad: true,
