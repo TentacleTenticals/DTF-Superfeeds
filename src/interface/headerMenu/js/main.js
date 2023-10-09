@@ -521,7 +521,7 @@ class HeaderMenu{
   }
   build(o){
     function upd(type, run){
-      if(!mainCfg.database.data.online) return run();
+      if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run();
       else
       new Odb()[mainCfg.database.data.db]({
         run: 'get all',
@@ -630,7 +630,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('subsites', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -657,7 +657,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('subsites', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -676,7 +676,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('subsites', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -695,7 +695,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('subsites', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -725,7 +725,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('user', sData.users);
                     }
                   }
@@ -752,7 +752,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -771,7 +771,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -790,7 +790,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -817,7 +817,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -836,7 +836,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -855,7 +855,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -882,7 +882,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -901,7 +901,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -920,7 +920,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -947,7 +947,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -966,7 +966,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -985,7 +985,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('users', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -1015,7 +1015,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('feed', sData.feeds);
                     }
                   }
@@ -1042,7 +1042,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1061,7 +1061,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1080,7 +1080,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1099,7 +1099,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1118,7 +1118,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1137,7 +1137,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1156,7 +1156,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsite', checkFeeds({fullCheck:true}));
+                      upd('feeds', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
