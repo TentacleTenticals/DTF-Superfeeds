@@ -135,7 +135,7 @@ class HeaderMenu{
             },
             info: {
               author: {
-                id: res.author.o.id,
+                id: res.author.id,
                 name: res.author.name,
                 avatar: res.author.avatar && {
                   type: res.author.avatar.type,
