@@ -73,7 +73,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        if(db.online) new Odb()[db.online]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
           run: 'find',
           type: 'users',
           rType: 'object',
@@ -212,7 +212,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        if(db.online) new Odb()[db.online]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
           run: 'find',
           type: 'subsites',
           rType: 'object',
@@ -336,7 +336,7 @@ class AddEl{
         }, 500);
       },
       func: (m) => {
-        if(db.online) new Odb()[db.online]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
           run: 'find',
           type: 'feeds',
           rType: 'object',
