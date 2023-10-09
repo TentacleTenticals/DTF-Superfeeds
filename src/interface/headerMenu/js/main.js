@@ -1,41 +1,40 @@
 class HeaderMenu{
   dtfApi(o){
-    let s;
     switch(o.type){
       case 'news':{
-        s = 'news';
+        o.s = 'news';
       }
       break;
       case ('subsites'||'users'):{
-        s = 'subsite';
-        v = 'id';
+        o.s = 'subsite';
+        o.v = 'id';
       }
       break;
       case 'feeds':{
-        s = 'content';
-        v = 'id';
+        o.s = 'content';
+        o.v = 'id';
       }
       break;
       case 'subscribers':{
-        s = 'subsite/subscribers';
-        v = 'subsiteId';
+        o.s = 'subsite/subscribers';
+        o.v = 'subsiteId';
       }
       break;
       case 'subscriptions':{
-        s = 'subsite/subscriptions';
-        v = 'subsiteId';
+        o.s = 'subsite/subscriptions';
+        o.v = 'subsiteId';
       }
       break;
       case 'comments':{
-        s = 'comments';
-        v = 'contentId';
+        o.s = 'comments';
+        o.v = 'contentId';
       }
       break;
       case 'bookmarks':{
-        s = 'bookmarks';
+        o.s = 'bookmarks';
       }
     }
-    return fetch(`https://api.dtf.ru/v2.31/${s && s+'?'||''}${o.v||''}${o.value && '='+o.value||''}`, {
+    return fetch(`https://api.dtf.ru/v2.31/${o.s && o.s+'?'||''}${o.v||''}${o.value && '='+o.value||''}`, {
       headers: {
         'accept': 'application/json',
         ...(o.token ? {'X-Device-Token':`'${o.token}'`} : {})
