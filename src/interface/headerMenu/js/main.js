@@ -45,6 +45,43 @@ class HeaderMenu{
     const t = new Date(d);
     return `${t.getFullYear()}/${t.getMonth()+1 < 10 ? `0${t.getMonth()+1}` : t.getMonth()+1}/${t.getDate() < 10 ? `0${t.getDate()}` : t.getDate()} ${t.getHours() < 10 ? `0${t.getHours()}` : t.getHours()}:${t.getMinutes() < 10 ? `0${t.getMinutes()}` : t.getMinutes()}:${t.getSeconds() < 10 ? `0${t.getSeconds()}` : t.getSeconds()}`
   }
+  getAttach(i){
+    // console.log('ATTACHMENT', i);
+    const attachment = {
+      type: i.type,
+      hidden: i.hidden,
+      text: i.data.text,
+      items: []
+    };
+    if(i.data.items && i.data.items.length > 0){
+      // attachment.data.items = [];
+      for(let e = 0, arr = i.data.items, len = (mainCfg.database.saving.feeds.attachments.albums['max sz'] >= arr.length ? arr.length : mainCfg.database.saving.feeds.attachments.albums['max sz']); e < len; e++){
+        if(this.attachItem(arr[e])) attachment.items.push(this.attachItem(arr[e]));
+      }
+      // i.data.items.forEach((e, i) => {
+      //   if(this.attachItem(e)) attachment.items.push(this.attachItem(e));
+      // });
+    }
+    return attachment;
+  }
+  attachItem(i){
+    if(i.image||i.video) return {
+      title: i.title,
+      type: i.image.type,
+      data: {
+        'type': i.image.data['type'],
+        'uuid': i.image.data['uuid'],
+        'external_service': i.image.data['external_service']
+      }
+    };
+  }
+  rs(path, text){
+    new El().Div({
+      path: path,
+      cName: 'ras',
+      text: text
+    });
+  }
   add(o){
     return new Promise((result, error) => {
       if(o.type.match(/users|subsites/)){
