@@ -424,7 +424,7 @@ class HeaderMenu{
         // console.log('USER', user);
         if(item||user !== -1){
           this.update({item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
-            if(db.online) new Odb()[db.online]({
+            if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
               run: 'addOrUpdate',
               type: i.type,
               target: i.id,
@@ -459,7 +459,7 @@ class HeaderMenu{
           });
         }else
           this.add({data:sData, item:item||sData[o.type][user], id:o.id, type:o.type, r:o.r, key:o.key, card:o.card}).then(i => {
-            if(db.online) new Odb()[db.online]({
+            if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
               run: 'addOrUpdate',
               type: i.type,
               target: i.id,
@@ -494,9 +494,9 @@ class HeaderMenu{
           });
       })
     }
-    if(db.online){
+    if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
       if(!mainCfg['database']['keepVars'][o.type]){
-        return new Odb()[db.online]({
+        return new Odb()[mainCfg.database.data.db]({
           run: 'find',
           type: o.type,
           rType: 'object',
@@ -520,6 +520,21 @@ class HeaderMenu{
     // console.log('DATA', data);
   }
   build(o){
+    function upd(type, run){
+      if(!mainCfg.database.data.online) return run();
+      else
+      new Odb()[mainCfg.database.data.db]({
+        run: 'get all',
+        type: type
+      }).then(db => {
+        if(!db){
+          run();
+        }else{
+          sData[type] = db;
+          run();
+        }
+      });
+    }
     new CtxMenu().build({
       path: document.body,
       header: 'МЕНЮ УПРАВЛЕНИЯ',
@@ -539,24 +554,24 @@ class HeaderMenu{
         console.log('CC', o);
         // o.res('ok');
         if(!o.data) o.data = {};
-        if(db.online){
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
           if(mainCfg.database.keepVars['subsites'||'users'||'feeds']) try {
             if(!db.name) return;
-            if(!o.data.subsites) o.data.subsite = await new Odb()[db.online]({
+            if(!o.data.subsites) o.data.subsite = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'subsites',
               rType: 'object',
               target: o.sID,
               db: db
             });
-            if(!o.data.users) o.data.user = await new Odb()[db.online]({
+            if(!o.data.users) o.data.user = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'users',
               rType: 'object',
               target: o.uID,
               db: db
             });
-            if(!o.data.feeds) o.data.feed = await new Odb()[db.online]({
+            if(!o.data.feeds) o.data.feed = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'feeds',
               rType: 'object',
@@ -615,7 +630,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -642,7 +657,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -661,7 +676,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -680,7 +695,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Subsite', sData.subsites);
                     }
                   }
@@ -710,7 +725,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('user', sData.users);
                     }
                   }
@@ -737,7 +752,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -756,7 +771,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -775,7 +790,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -802,7 +817,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -821,7 +836,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -840,7 +855,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -867,7 +882,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -886,7 +901,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -905,7 +920,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -932,7 +947,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -951,7 +966,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -970,7 +985,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('User', sData.users);
                     }
                   }
@@ -1000,7 +1015,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('feed', sData.feeds);
                     }
                   }
@@ -1027,7 +1042,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1046,7 +1061,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1065,7 +1080,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1084,7 +1099,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1103,7 +1118,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1122,7 +1137,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
@@ -1141,7 +1156,7 @@ class HeaderMenu{
                   }else{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      checkFeeds({fullCheck:true});
+                      upd('subsite', checkFeeds({fullCheck:true}));
                       console.log('Feed', sData.feeds);
                     }
                   }
