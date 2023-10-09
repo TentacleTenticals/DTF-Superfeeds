@@ -69,9 +69,9 @@ initMenu.setData = (m, cfg) => {
             onclick: async () => {
               this.clear(e, true);
               if(e.previousElementSibling.getAttribute('reload')){
-                if(db.name)
+                if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none')
                   try{
-                    items = await new Odb()[db.name]({
+                    items = await new Odb()[mainCfg.database.data.db]({
                       run: 'get all',
                       type: 'subsites',
                       db: db
@@ -246,9 +246,9 @@ initMenu.setData = (m, cfg) => {
             onclick: async () => {
               this.clear(e, true);
               if(e.previousElementSibling.getAttribute('reload')){
-                if(db.name)
+                if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none')
                   try{
-                    items = await new Odb()[db.name]({
+                    items = await new Odb()[mainCfg.database.data.db]({
                       run: 'get all',
                       type: 'users',
                       db: db
@@ -425,9 +425,9 @@ initMenu.setData = (m, cfg) => {
             onclick: async () => {
               this.clear(e, true);
               if(e.previousElementSibling.getAttribute('reload')){
-                if(db.name)
+                if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none')
                   try{
-                    items = await new Odb()[db.name]({
+                    items = await new Odb()[mainCfg.database.data.db]({
                       run: 'get all',
                       type: 'feeds',
                       db: db
@@ -649,19 +649,25 @@ initMenu.setData = (m, cfg) => {
     title: 'SAVED INFO',
     tabs: [
       {text:'Фиды', name:'feeds', onclick:() => {
-        console.log('Main', m)
         if(m.children[0].children[1].children.length > 0) m.children[0].children[1].replaceChildren();
-        if(db.name){
-          new Odb()[db.name]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
+          const loading = new El().loading({
+            path: m.children[0].children[1],
+            text: 'Loading...',
+            rtn: true
+          });
+          new Odb()[mainCfg.database.data.db]({
             run: 'get all',
             type: 'feeds',
             db: db
           }).then(res => {
-            console.log(res);
+            // console.log(res);
             if(!res){
+              loading.remove();
               console.log(`There's no saved feeds...`);
               new Types().feeds(m.children[0].children[1]);
             }else{
+              loading.remove();
               console.log(`Founded saved feeds, loading...`, res[0]);
               new Types().feeds(m.children[0].children[1], res, db);
             }
@@ -674,17 +680,24 @@ initMenu.setData = (m, cfg) => {
       }},
       {text:'Подсайты', name:'subsites', onclick:() => {
         if(m.children[0].children[1].children.length > 0) m.children[0].children[1].replaceChildren();
-        if(db.name){
-          new Odb()[db.name]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
+          const loading = new El().loading({
+            path: m.children[0].children[1],
+            text: 'Loading...',
+            rtn: true
+          });
+          new Odb()[mainCfg.database.data.db]({
             run: 'get all',
             type: 'subsites',
             db: db
           }).then(res => {
-            console.log(res);
+            // console.log(res);
             if(!res){
+              loading.remove();
               console.log(`There's no saved subsites...`);
               new Types().subsites(m.children[0].children[1]);
             }else{
+              loading.remove();
               console.log(`Founded saved subsites, loading...`, res[0]);
               new Types().subsites(m.children[0].children[1], res, db);
             }
@@ -695,19 +708,25 @@ initMenu.setData = (m, cfg) => {
         }
       }},
       {text:'Пользователи', name:'users', onclick:() => {
-        console.log('Main', m)
         if(m.children[0].children[1].children.length > 0) m.children[0].children[1].replaceChildren();
-        if(db.name){
-          new Odb()[db.name]({
+        if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
+          const loading = new El().loading({
+            path: m.children[0].children[1],
+            text: 'Loading...',
+            rtn: true
+          });
+          new Odb()[mainCfg.database.data.db]({
             run: 'get all',
             type: 'users',
             db: db
           }).then(res => {
-            console.log(res);
+            // console.log(res);
             if(!res){
+              loading.remove();
               console.log(`There's no saved users...`);
               new Types().users(m.children[0].children[1]);
             }else{
+              loading.remove();
               console.log(`Founded saved users, loading...`, res[0]);
               new Types().users(m.children[0].children[1], res, db);
             }
