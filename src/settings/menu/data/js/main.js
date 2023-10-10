@@ -166,7 +166,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Имя (Rxp)',
-            lName: 'full'
+            lName: 'full halfL'
           });
           new El().Input({
             path: panel,
@@ -178,12 +178,12 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Описание (Rxp)',
-            lName: 'full'
+            lName: 'full nl'
           });
           new El().Input({
             path: panel,
             label: 'Комментарий (Rxp)',
-            lName: 'full'
+            lName: 'full nl'
           });
           new El().Input({
             path: panel,
@@ -343,7 +343,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Имя (Rxp)',
-            lName: 'full'
+            lName: 'full halfL'
           });
           new El().Input({
             path: panel,
@@ -355,12 +355,12 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Описание (Rxp)',
-            lName: 'full'
+            lName: 'full nl'
           });
           new El().Input({
             path: panel,
             label: 'Комментарий (Rxp)',
-            lName: 'full'
+            lName: 'full nl'
           });
           new El().Input({
             path: panel,
@@ -547,7 +547,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Подсайт (Rxp)',
-            lName: 'full'
+            lName: 'full halfL'
           });
           new El().Input({
             path: panel,
@@ -559,7 +559,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Автор (Rxp)',
-            lName: 'full'
+            lName: 'full halfL'
           });
           new El().Input({
             path: panel,
@@ -586,6 +586,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
+            lName: 'full',
             type: 'time',
             label: [],
             onRclick: (e) => {
@@ -608,7 +609,7 @@ initMenu.setData = (m, cfg) => {
           new El().List({
             path: panel,
             mode: 'all',
-            lName: 'full nl',
+            lName: 'iList full nl',
             cName: 'tags flex',
             type: 'string',
             title: 'Нажмите на меня для добавления тега',
@@ -623,7 +624,7 @@ initMenu.setData = (m, cfg) => {
           new El().List({
             path: panel,
             mode: 'all',
-            lName: 'full nl',
+            lName: 'iList full nl',
             cName: 'tags flex',
             type: 'string',
             title: 'Нажмите на меня для добавления тега',
