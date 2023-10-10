@@ -31,6 +31,7 @@
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/bookMenu/css/main.js
 // @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/js/item.js
 // @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/css/feeds.js
+// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/css/users.js
 // Attachments
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/func/dtfAttachments.js
 //
@@ -47,21 +48,25 @@
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/settings/opener/menu/data/js/main.js
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/settings/opener/menu/cfg/js/main.js
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/settings/opener/menu/cfg/css/main.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/settings/opener/menu/info/js/main.js
 //
 // Init
 // @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/cfg/js/main.js
 // @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/data/js/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/info/js/main.js
 //
 // CtxMenu
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/ctxMenu/js/main.js
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/ctxMenu/css/main.js
 //
+// Modal
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/modal/js/main.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/modal/css/main.js
 // Dialog
-// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/dialog/js/main.js
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/dialog/css/main.js
 //
-// UserMenu
-// require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/userMenu/js/main.js
+// HeaderMenu
+// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/interface/headerMenu/js/main.js
 //
 // AddingToDB
 // @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/addingToDB/main.js
@@ -77,6 +82,10 @@
   }
   .scrollLite::-webkit-scrollbar {
     width: 2px;
+  }
+
+  .feed__item.l-island-round .content-link {
+    height: 20%;
   }
 
   .feed__item.l-island-round.collapsed {
@@ -135,6 +144,7 @@
   .feedButtons {
     display: flex;
     gap: 0 5px;
+    margin: 0 6px 0 0;
   }
   .feedButtons .subBtn {
     position: relative;
@@ -257,8 +267,8 @@
     display: inline-flex;
     position: relative;
     margin: auto;
-    max-width: ${cfg.feeds.attachments.video.size.width}px;
-    max-height: ${cfg.feeds.attachments.video.size.height}px;
+    max-width: ${cfg.main.feeds.check.attachments.video.size.width}px;
+    max-height: ${cfg.main.feeds.check.attachments.video.size.height}px;
     box-shadow: 0px 0px 3px 1px rgb(0 0 0);
     z-index: 10;
     cursor: pointer;
@@ -632,6 +642,9 @@
   .feed__item.l-island-round.readed.ignored::before {
     content: '✔️ ПРОСМОТРЕНО, 💢 ИГНОРИРОВАНО';
   }
+  .feed__item.l-island-round.readed.blocked::before {
+    content: '✔️ ПРОСМОТРЕНО, 🈲 БЛОКИРОВАНО';
+  }
 
   .feed__item.l-island-round.planToRead.favorite::before {
     content: '📚 ПРОЧТУ ПОЗЖЕ, 💘 ИЗБРАННОЕ';
@@ -639,12 +652,18 @@
   .feed__item.l-island-round.planToRead.ignored::before {
     content: '📚 ПРОЧТУ ПОЗЖЕ, 💢 ИГНОРИРОВАНО';
   }
+  .feed__item.l-island-round.planToRead.blocked::before {
+    content: '📚 ПРОЧТУ ПОЗЖЕ, 🈲 БЛОКИРОВАНО';
+  }
 
-  .feed__item.l-island-round.readed.onHold::before {
+  .feed__item.l-island-round.onHold.favorite::before {
     content: '📖 ЧИТАЮ, 💘 ИЗБРАННОЕ';
   }
-  .feed__item.l-island-round.readed.onHold::before {
+  .feed__item.l-island-round.onHold.ignored::before {
     content: '📖 ЧИТАЮ, 💢 ИГНОРИРОВАНО';
+  }
+  .feed__item.l-island-round.onHold.blocked::before {
+    content: '📖 ЧИТАЮ, 🈲 БЛОКИРОВАНО';
   }
 
   .feed__item.l-island-round.blocked.noTitle.noText::after {
@@ -1027,160 +1046,12 @@
     order: 3;
   }`;
   };
-  const mainData = {};
 
-  // mainCfg = {
-  //   'main': {
-  //     'databases': {
-  //       'online': {
-  //         'settings': false,
-  //         'data': true
-  //       },
-  //       'keepVars': {
-  //         'feeds': false,
-  //         'comments': false,
-  //         'subsites': true,
-  //         'users': true
-  //       }
-  //     }
-  //   },
-  //   'working mode': 'tags',
-  //   'filters': {
-  //     'comments': {
-  //       'text': {
-  //         'none': 'collapse',
-  //         'some': 'collapse',
-  //         'active': true,
-  //         'words active': true,
-  //         'words': []
-  //       }
-  //     },
-  //     'feeds': {
-  //       'blogs': {
-  //         'title': {
-  //           'none': 'collapse',
-  //           'some': 'collapse',
-  //           'active': true,
-  //           'words active': true,
-  //           'words': []
-  //         },
-  //         'text': {
-  //           'none': 'collapse',
-  //           'some': 'collapse',
-  //           'active': true,
-  //           'words active': true,
-  //           'words': []
-  //         }
-  //       },
-  //       'topics': {
-  //         'title': {
-  //           'none': 'collapse',
-  //           'some': 'collapse',
-  //           'active': true,
-  //           'words active': true,
-  //           'words': []
-  //         },
-  //         'text': {
-  //           'none': 'collapse',
-  //           'some': 'collapse',
-  //           'active': true,
-  //           'words active': true,
-  //           'words': []
-  //         }
-  //       }
-  //     }
-  //   },
-  //   'feeds': {
-  //     'interface': {
-  //       'feedButtons': {
-  //         'readed': true,
-  //         'author actions': true,
-  //         'subsite actions': false
-  //       }
-  //     },
-  //     'what to show': {
-  //       'popular': {
-  //         'topics': true,
-  //         'blogs': true
-  //       },
-  //       'new': {
-  //         'topics': true,
-  //         'blogs': true
-  //       },
-  //       'my new': {
-  //         'topics': true,
-  //         'blogs': true
-  //       },
-  //       'bookmarks': {
-  //         'topics': true,
-  //         'blogs': true
-  //       },
-  //       'topic': {
-  //         'topics': true,
-  //         'blogs': true
-  //       }
-  //     },
-  //     'attachments': {
-  //       'video': {
-  //         'replace': true,
-  //         'autoplay': false,
-  //         'sound': false,
-  //         'volume': 40,
-  //         'size': {
-  //           'width': 300,
-  //           'height': 150
-  //         }
-  //       }
-  //     }
-  //   },
-  //   'database': {
-  //     'adding': {
-  //       'feeds': {
-  //         'attachments': {
-  //           'items': {
-  //             'sz': 2
-  //           },
-  //           'albums': {
-  //             'sz': 2
-  //           }
-  //         }
-  //       },
-  //       'comments': {
-  //         'attachments': {
-  //           'items': {
-  //             'sz': 2
-  //           },
-  //           'albums': {
-  //             'sz': 2
-  //           }
-  //         }
-  //       }
-  //     }
-  //   },
-  //   'usercard': {
-  //     'avatar': {
-  //       'search': {
-  //         'list': [// Список поисковиков.
-  //           {url:'http://saucenao.com/search.php?db=999&url=', name:'Saucenao', use:true},
-  //           {url:'https://www.bing.com/images/search?view=detailv2&iss=sbi&FORM=SBIHMP&sbisrc=UrlPaste&q=imgurl:', name:'Bing', use:true},
-  //           {url:'https://www.google.com/searchbyimage?sbisrc=4chanx&safe=off&image_url=', name:'Google', use:true},
-  //           {url:'https://lens.google.com/uploadbyurl?url=', name:'Google Lens', use:true},
-  //           {url:'https://yandex.ru/images/search?rdrnd=296405&rpt=imageview&url=', name:'Yandex', use:true},
-  //           {url:'http://tineye.com/search/?url=', name:'TinEye', use:true},
-  //           {url:'http://iqdb.org/?url=', name:'IQDB', use:true}
-  //         ]
-  //       }
-  //     }
-  //   },
-  //   'menu': {
-  //     'feed': {
-  //       'sz': 5
-  //     },
-  //     'user': {
-  //       'sz': 5
-  //     }
-  //   },
-  // };
+  db = {
+  online: 'supabase', /* Напишите имя базы данных для использования */
+    supabase: { /* Данные базы данных для логина */
+    }
+  };
 
   // const sData = {
   //   users: [],
@@ -1434,8 +1305,8 @@
       }
     }
     console.log('Comments check...');
-    if(mainCfg['database']['cfg']['data']['online']){
-      if(!mainCfg['database']['keepVars']['users']) new Odb().supabase({
+    if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
+      if(!mainCfg['database']['keepVars']['users']) new Odb()[mainCfg.database.data.db]({
         run: 'get all',
         type: 'users'
       }).then(res => {
@@ -1483,17 +1354,17 @@
     console.log('Checking feeds...');
     mainFeed = new Feeds().build();
 
-    try{
-      if(!data) data = {};
-      if(!mainCfg['database']['keepVars']['feeds'] && !data.feeds) data.feeds = await new Odb().supabase({
+    if(!data) data = {};
+    if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') try{
+      if(!mainCfg['database']['keepVars']['feeds'] && !data.feeds) data.feeds = await new Odb()[mainCfg.database.data.db]({
         run: 'get all',
         type: 'feeds'
       });
-      if(!mainCfg['database']['keepVars']['users'] && !data.users) data.users = await new Odb().supabase({
+      if(!mainCfg['database']['keepVars']['users'] && !data.users) data.users = await new Odb()[mainCfg.database.data.db]({
         run: 'get all',
         type: 'users'
       });
-      if(!mainCfg['database']['keepVars']['subsites'] && !data.subsites) data.subsites = await new Odb().supabase({
+      if(!mainCfg['database']['keepVars']['subsites'] && !data.subsites) data.subsites = await new Odb()[mainCfg.database.data.db]({
         run: 'get all',
         type: 'subsites'
       });
@@ -1514,6 +1385,7 @@
 
     function checkAS(u, type, item, who, action){
       const teq = type.charAt(0).toUpperCase() + type.slice(1);
+      if(!u.flags[type]) return;
       // console.log('AU', u.flags[type].favorite);
       u.flags[type].favorite ? item.classList.add(`favorite${teq + who}`) : item.classList.remove(`favorite${teq + who}`);
       u.flags[type].ignored ? item.classList.add(`ignored${teq + who}`) : item.classList.remove(`ignored${teq + who}`);
@@ -1529,7 +1401,7 @@
       if(s.flags.blocked) action.remove;
     }
     function checkTitleText(t, type, att, action){
-      if(att.video && mainCfg.feeds.attachments.video.replace) videoReplace(att.video.path, att.video.video);
+      if(att.video && mainCfg.main.feeds.check.attachments.video.replace) videoReplace(att.video.path, att.video.video);
       if(mainCfg.filters.feeds[type].title.active){
         if(att.title){
           if(filter.title && mainCfg.filters.feeds[type].title['words active'] && att.title.match(filter.title)) action.collapse + t.classList.add('disabled', 'title');
@@ -1584,8 +1456,10 @@
         if(container) for(let c = 0, cn = container.children, len = cn.length; c < len; c++){
           // console.log(arr[i])
           if(!cn[c].className) continue;
-          if(cn[c].className.match('content-title')) att.title = cn[c].textContent.trim();
-          if(cn[c].className.match('content-title') && cn[c].children[0]) att.editorial = true;
+          if(cn[c].className.match('content-title')){
+            att.title = cn[c].textContent.trim();
+            if(cn[c].children[0]) att.editorial = true;
+          }
           if(cn[c].className.match('l-island-a') && cn[c].children[0] && cn[c].children[0].tagName === 'P') att.text = cn[c].children[0].textContent.trim();
           if(cn[c].className.match('figure-image') && cn[c].querySelector(`.andropov_video`)) att.video = {path:cn[c], video:cn[c].querySelector(`.andropov_video`)};
         }
@@ -1697,30 +1571,65 @@
                 text: '💾',
                 title: 'Сохранить/обновить фид',
                 onclick: (e) => {
+                  if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
+                    e.target.disabled = true;
+                    new Odb()[mainCfg.database.data.db]({
+                      run: 'find',
+                      type: 'feeds',
+                      rType: 'object',
+                      target: feed.id
+                    }).then(db => {
+                      new Promise((res, err) => {
+                        e.target.disabled = false;
+                        if(!db){
+                          console.log('FeedNOTInBase');
+                          new AddEl()['feed']({item:{id:feed.id}, res:res, err:err});
+                        }else{
+                          console.log('FeedInBase');
+                          new AddEl()['feed']({item:db, res:res, err:err});
+                        }
+                      }).then(data => {
+                        console.log(data);
+                        new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
+                          if(res){
+                            checkFeeds({fullCheck:true});
+                          }
+                        });
+                      });
+                    }).catch(er => {
+                      console.log('Error at search...');
+                      console.log(er.code, er);
+                    });
+                  }
+                  else
+
+
                   if(!feed.inBase){
                     console.log('No feed');
                     new Promise((res, err) => {
-                      new Adding()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id}, res:res, err:err});
+                      new AddEl()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id}, res:res, err:err});
                     }).then(data => {
                       console.log(data);
-                      new UserMenu().findOrAdd({id:feed.id, type:'feeds', card:data}).then(res => {
+                      new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
+                        console.log('RESSSSS', res);
+                        if(res){
+                          checkFeeds({fullCheck:true});
+                        }
+                      });
+                    });
+                  }else{
+                    console.log('Feed in base');
+                    new Promise((res, err) => {
+                      new AddEl()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id, flags:feed.inBase.flags, info:feed.inBase.info}, res:res, err:err});
+                    }).then(data => {
+                      console.log(data);
+                      new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
                         if(res){
                           checkFeeds({fullCheck:true, feeds:res.type});
                         }
                       });
                     });
-                  }else
-                    console.log('Feed in base');
-                  new Promise((res, err) => {
-                    new Adding()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id, flags:feed.inBase.flags, info:feed.inBase.info}, res:res, err:err});
-                  }).then(data => {
-                    console.log(data);
-                    new UserMenu().findOrAdd({id:feed.id, type:'feeds', card:data}).then(res => {
-                      if(res){
-                        checkFeeds({fullCheck:true, feeds:res.type});
-                      }
-                    });
-                  });
+                  }
                 }
               },
               ...mainCfg['feeds']['interface']['feedButtons']['readed'] ? [{
@@ -1729,7 +1638,7 @@
                 text: '✔️',
                 title: 'Пометить как "прочитано"',
                 onclick: () => {
-                  new UserMenu().findOrAdd({id:feed.id, type:'feeds', key:'readed'}).then(res => {
+                  new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', key:'readed'}).then(res => {
                     if(res){
                       console.log('RES IS YO!!!', res);
                       checkFeeds({fullCheck:true, feeds:res.type});
@@ -1757,7 +1666,7 @@
                     cName: 'favorite',
                     title: 'Избранный',
                     onclick: () => {
-                      new UserMenu().findOrAdd({id:user.id, name:sub.id, type:'users', r:type === 'topic' ? 'topics' : 'blogs', key:'favorite'}).then(res => {
+                      new HeaderMenu().addOrUpdate({id:user.id, name:sub.id, type:'users', r:type === 'topic' ? 'topics' : 'blogs', key:'favorite'}).then(res => {
                         if(res) checkFeeds({fullCheck:true});
                         console.log('Subsite', sData.subsites);
                       });
@@ -1835,1125 +1744,6 @@
       }
     });
   }
-  class UserMenu{
-  dtfApi({type, value, v, token}){
-    let s;
-    switch(type){
-      case 'news':{
-        s = 'news';
-      }
-      break;
-      case 'subsite':{
-        s = 'subsite';
-        v = 'id';
-      }
-      break;
-      case 'subscribers':{
-        s = 'subsite/subscribers';
-        v = 'subsiteId';
-      }
-      break;
-      case 'subscriptions':{
-        s = 'subsite/subscriptions';
-        v = 'subsiteId';
-      }
-      break;
-      case 'comments':{
-        s = 'comments';
-        v = 'contentId';
-      }
-      break;
-      case 'bookmarks':{
-        s = 'bookmarks';
-      }
-    }
-    return fetch(`https://api.dtf.ru/v2.31/${s && s+'?'||''}${v||''}${value && '='+value||''}`, {
-      headers: {
-        'accept': 'application/json',
-        ...(token ? {'X-Device-Token':`'${token}'`} : {})
-      }
-    }).then(r => r.json().then(rr => rr.result)).catch(err => err);
-  }
-  getUser(id){
-    return fetch(`https://api.dtf.ru/v2.31/subsite?id=${id}`, {
-    headers: {
-      'accept': 'application/json'
-    }
-    }).then(r => r.json().then(res => res.result));
-  }
-  getTime(d){
-    const t = new Date(d);
-    return `${t.getFullYear()}/${t.getMonth()+1 < 10 ? `0${t.getMonth()+1}` : t.getMonth()+1}/${t.getDate() < 10 ? `0${t.getDate()}` : t.getDate()} ${t.getHours() < 10 ? `0${t.getHours()}` : t.getHours()}:${t.getMinutes() < 10 ? `0${t.getMinutes()}` : t.getMinutes()}:${t.getSeconds() < 10 ? `0${t.getSeconds()}` : t.getSeconds()}`
-  }
-  add({id, tId, data, type, r, key, card}){
-    return new Promise((result, error) => {
-      if(type.match(/users|subsites/)){
-        let obj;
-        this.getUser(id).then(res => {
-          if(type === 'users') obj = {
-            id: id,
-            info: {
-              name: res.subsite.name,
-              created: res.subsite.created,
-              description: res.subsite.description,
-              avatar: res.subsite.avatar && {
-                type: res.subsite.avatar.type,
-                data: {
-                  type: res.subsite.avatar.data.type,
-                  uuid: res.subsite.avatar.data.uuid
-                }
-              }||''
-            },
-            flags:{
-              topics:{
-                favorite: false,
-                ignored: false,
-                blocked: false
-              },
-              blogs:{
-                favorite: false,
-                ignored: false,
-                blocked: false
-              },
-              comments:{
-                favorite: false,
-                ignored: false,
-                blocked: false
-              }
-            },
-            ...card ? card : {}
-          };
-          else
-          if(type === 'subsites') obj = {
-            id: id,
-            info: {
-              name: res.subsite.name,
-              created: res.subsite.created,
-              description: res.subsite.description,
-              avatar: res.subsite.avatar && {
-                type: res.subsite.avatar.type,
-                data: {
-                  type: res.subsite.avatar.data.type,
-                  uuid: res.subsite.avatar.data.uuid
-                }
-              }||''
-            },
-            flags:{
-              topics:{
-                favorite: false,
-                ignored: false,
-                blocked: false
-              },
-              comments:{
-                favorite: false,
-                ignored: false,
-                blocked: false
-              }
-            },
-            ...card ? card : {}
-          };
-          if(!card) obj.flags[r][key] ? obj.flags[r][key] = false : obj.flags[r][key] = true;
-          if(mainCfg['database']['keepVars'][type]) data[type].push(obj);
-          result({status:'success', type:type, run:'add', data:!mainCfg['database']['keepVars'][type] ? '' : data, id:id, item:obj});
-        });
-      }else
-      if(type.match(/feeds/)){
-        this.getFeed(id).then(res => {
-          const obj = {
-            id: id,
-            flags: {
-              readed: false,
-              planToRead: false,
-              onHold: false,
-              dropped: false,
-              favorite: false,
-              ignored: false,
-              blocked: false
-            },
-            info: {
-              author: {
-                id: res.author.id,
-                name: res.author.name,
-                avatar: res.author.avatar && {
-                  type: res.author.avatar.type,
-                  data: {
-                    type: res.author.avatar.data.type,
-                    uuid: res.author.avatar.data.uuid
-                  }
-                }||''
-              },
-              subsite: {
-                id: res.subsite.id,
-                name: res.subsite.name,
-                avatar: res.subsite.avatar && {
-                  type: res.subsite.avatar.type,
-                  data: {
-                    type: res.subsite.avatar.data.type,
-                    uuid: res.subsite.avatar.data.uuid
-                  }
-                }||''
-              },
-              title: res.title,
-              text: undefined,
-              date: res.date,
-              isBlur: res.isBlur,
-              keywords: res.keywords,
-              attachments: (() => {
-                if(res.blocks.length > 0){
-                  // console.log('BLOCKS', res.blocks);
-                  const list = [];
-                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
-                    if(arr[i].type.match(/media|text/)){
-                      list.push(this.getAttach(arr[i]));
-                    }else continue;
-                  }
-                  return list;
-                }
-              })(),
-              ...card ? card.info : {}
-            },
-            ...card ? {flags:card.flags} : {}
-          }
-          if(!card) obj.flags[key] ? obj.flags[key] = false : obj.flags[key] = true;
-          console.log('DATA', data);
-          console.log('DATA TYPE', data[type]);
-          if(mainCfg['database']['keepVars'][type]) data[type].push(obj);
-          result({status:'success', type:type, run:'add', id:id, data:!mainCfg['database']['keepVars'][type] && data, item:obj});
-          // checkFeeds({fullCheck:true});
-        });
-      }else
-      if(type.match(/comments/)){
-        console.log('IDs', id);
-        this.dtfApi({type:type, value:id}).then(res => {
-          console.log('RES', res);
-          const cmt = res.items.find(e => e.id === tId);
-          console.log('COMMENT', cmt);
-          const obj = {
-            id: cmt.id,
-            flags: {
-              readed: false,
-              planToRead: false,
-              onHold: false,
-              dropped: false,
-              favorite: false,
-              ignored: false,
-              blocked: false
-            },
-            info: {
-              author: {
-                id: cmt.author.id,
-                name: cmt.author.name,
-                avatar: cmt.author.avatar && {
-                  type: cmt.author.avatar.type,
-                  data: {
-                    type: cmt.author.avatar.data.type,
-                    uuid: cmt.author.avatar.data.uuid
-                  }
-                }||''
-              },
-              text: cmt.text,
-              date: cmt.date,
-              attachments: (() => {
-                if(cmt.media.length > 0){
-                  // console.log('BLOCKS', cmt.blocks);
-                  const list = [];
-                  for(let i = 0, arr = cmt.media, arrLen = arr.length, len = (mainCfg.database.adding.comments.attachments.items.sz >= arrLen ? arrLen : mainCfg.database.adding.comments.attachments.items.sz); i < len; i++){
-                    if(arr[i].type.match(/media|text/)){
-                      list.push(this.getAttach(arr[i]));
-                    }else continue;
-                  }
-                  return list;
-                }
-              })()
-            }
-          }
-          obj.flags[key] ? obj.flags[key] = false : obj.flags[key] = true;
-          console.log('DATA', data);
-          console.log('DATA TYPE', data[type]);
-          if(mainCfg['database']['keepVars'][type]) data[type].push(obj);
-          result({status:'success', type:type, run:'add', id:tId, data:!mainCfg['database']['keepVars'][type] && data, item:obj});
-          // checkFeeds({fullCheck:true});
-        });
-      }
-    });
-  }
-  update({id, item, type, r, key, card}){
-    function flagsCheck(){
-      if(type.match(/users|subsites/)){
-        if(!item.flags[r][key]) return;
-        // console.log('ITEM RULES', item.flags[r]);
-        switch(key){
-          case 'favorite':{
-            item.flags[r].ignored = false;
-            item.flags[r].blocked = false;
-          }
-          break;
-          case 'ignored':{
-            item.flags[r].favorite = false;
-            item.flags[r].blocked = false;
-          }
-          break;
-          case 'blocked':{
-            item.flags[r].favorite = false;
-            item.flags[r].ignored = false;
-          }
-          break;
-        }
-      }else
-      if(type.match(/feeds/)){
-        // console.log('ITEM RULES', item.flags);
-        if(!item.flags[key]) return;
-        switch(key){
-          case 'favorite':{
-            item.flags.ignored = false;
-            item.flags.blocked = false;
-          }
-          break;
-          case 'ignored':{
-            item.flags.favorite = false;
-            item.flags.blocked = false;
-          }
-          break;
-          case 'blocked':{
-            item.flags.favorite = false;
-            item.flags.ignored = false;
-          }
-          break;
-          case 'readed':{
-            item.flags.planToRead = false;
-            item.flags.onHold = false;
-            item.flags.dropped = false;
-          }
-          break;
-          case 'planToRead':{
-            item.flags.readed = false;
-            item.flags.onHold = false;
-            item.flags.dropped = false;
-          }
-          break;
-          case 'onHold':{
-            item.flags.readed = false;
-            item.flags.planToRead = false;
-            item.flags.dropped = false;
-          }
-          break;
-          case 'dropped':{
-            item.flags.readed = false;
-            item.flags.planToRead = false;
-            item.flags.onHold = false;
-          }
-          break;
-        }
-      }
-    }
-    return new Promise((result, error) => {
-      if(type.match(/users|subsites/)){
-        let obj;
-        this.getUser(id).then(res => {
-          if(type === 'users'){
-            obj = structuredClone(item);
-            obj.info.name = res.subsite.name;
-            obj.info.created = res.subsite.created;
-            obj.info.description = res.subsite.description;
-            obj.info.avatar = res.subsite.avatar ? {
-              type: res.subsite.avatar.type,
-              data: {
-                type: res.subsite.avatar.data.type,
-                uuid: res.subsite.avatar.data.uuid
-              }
-            }: '';
-          }else{
-            obj = structuredClone(item);
-            obj.info.name = res.subsite.name;
-            obj.info.created = res.subsite.created;
-            obj.info.description = res.subsite.description;
-            obj.info.avatar = res.subsite.avatar ? {
-              type: res.subsite.avatar.type,
-              data: {
-                type: res.subsite.avatar.data.type,
-                uuid: res.subsite.avatar.data.uuid
-              }
-            }: '';
-          }
-
-          item.flags[r][key] ? item.flags[r][key] = false : item.flags[r][key] = true;
-          flagsCheck();
-          result({status:'success', type:type, run:'update', id:id, item:item});
-        });
-      }else{
-        this.getFeed(id).then(res => {
-          const obj = {
-            id: id,
-            flags: card ? card.flags : structuredClone(item.flags),
-            info: {
-              author: {
-                id: res.author.id,
-                name: res.author.name,
-                avatar: res.author.avatar ? {
-                  type: res.author.avatar.type,
-                  data: {
-                    type: res.author.avatar.data.type,
-                    uuid: res.author.avatar.data.uuid
-                  }
-                }: ''
-              },
-              subsite: {
-                id: res.subsite.id,
-                name: res.subsite.name,
-                avatar: res.subsite.avatar ? {
-                  type: res.subsite.avatar.type,
-                  data: {
-                    type: res.subsite.avatar.data.type,
-                    uuid: res.subsite.avatar.data.uuid
-                  }
-                }: ''
-              },
-              title: res.title,
-              text: undefined,
-              date: res.date,
-              isBlur: res.isBlur,
-              keywords: res.keywords,
-              attachments: (() => {
-                if(res.blocks.length > 0){
-                  const list = [];
-                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
-                    if(arr[i].type.match(/media|text/)){
-                      list.push(this.getAttach(arr[i]));
-                    }else continue;
-                  }
-                  return list;
-                }
-              })(),
-              ...card ? card.info : {}
-            }
-          }
-
-          if(!card){
-            item.flags[key] ? item.flags[key] = false : item.flags[key] = true;
-            flagsCheck();
-          }
-          result({status:'success', type:type, run:'update', id:id, item:obj});
-        });
-      }
-    });
-  }
-  getValue(item, type, r, key){
-    return [type][item].flags[r][key];
-  }
-  findOrAdd({id, type, r, key, card}){
-    const check = (data) => {
-      console.log('dt', data);
-      return new Promise((result, error) => {
-        // console.log('findOrAdd DATA', data);
-        const user = (data||sData)[type].findIndex(e => e.id === id);
-        // const user = (data||sData[type]).findIndex(e => e.id === id);
-        // console.log('USER', user);
-        if(user !== -1){
-          this.update({data:(data||sData), item:(data||sData)[type][user], id:id, type:type, r:r, key:key, card:card}).then(i => {
-            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
-              run: 'findOrAdd',
-              type: i.type,
-              target: i.id,
-              data: i.item
-            }).then(db => {
-              console.log('Yo', db);
-              if(db.status === 201){
-                console.log(`Success, ${i.type} is added!!!`);
-              }else
-              if(db.status === 204){
-                console.log(`Success, ${i.type} is updated!!!`);
-              }
-              // if(!mainCfg['database']['keepVars'][i.type]) new Odb().supabase({
-              //   run: 'get all',
-              //   type: i.type
-              // }).then(db => {
-              //   if(db){
-              //     result({status:'success', [i.type]:db});
-              //   }
-              // }).catch(er => {
-              //   console.log(er.code, er);
-              //   result({status:'success'});
-              // })
-              // else
-              result({status:'success', data:i.data});
-            }).catch(er => {
-              console.log('Error at findOrAdd...');
-              console.log(er.code, er);
-            });
-            else
-            result({status:'success'});
-          });
-        }else
-          this.add({data:(data||sData), item:(data||sData)[type][user], id:id, type:type, r:r, key:key, card:card}).then(i => {
-            if(mainCfg['database']['cfg']['data']['online']) new Odb().supabase({
-              run: 'findOrAdd',
-              type: i.type,
-              target: i.id,
-              data: i.item
-            }).then(db => {
-              console.log('Yo', db);
-              if(db.status === 201){
-                console.log(`Success, ${i.type} is added!!!`);
-              }else
-              if(db.status === 204){
-                console.log(`Success, ${i.type} is updated!!!`);
-              }
-              // if(!mainCfg['database']['keepVars'][i.type]) new Odb().supabase({
-              //   run: 'get all',
-              //   type: i.type
-              // }).then(db => {
-              //   if(db){
-              //     result({status:'success', [i.type]:db});
-              //   }
-              // }).catch(er => {
-              //   console.log(er.code, er);
-              //   result({status:'success'});
-              // })
-              // else
-              result({status:'success', data:i.data});
-            }).catch(er => {
-              console.log('Error at findOrAdd...');
-              console.log(er.code, er);
-            });
-            else
-            result({status:'success'});
-          });
-      })
-    }
-    if(mainCfg['database']['cfg']['data']['online']){
-      if(!mainCfg['database']['keepVars'][type]){
-        return new Odb().supabase({
-          run: 'get all',
-          type: type
-        }).then(data => {
-          if(data) return check({[type]:data});
-          else
-          check({[type]:[]});
-        }).catch(err => console.log('getAll error!!!', err));
-        // user = await new Odb().supabase({
-        //   run: 'find',
-        //   type: type,
-        //   target: id
-        // });
-        // if(user && !user.length > 0) user = -1;
-      }else{
-        return check();
-      }
-    }else
-    return check();
-    // console.log('DATA', data);
-  }
-  getFeed(id){
-    return fetch(`https://api.dtf.ru/v2.31/content?id=${id}`, {
-      headers: {
-        'accept': 'application/json'
-      }
-    }).then(r => r.json().then(rr => rr.result));
-  }
-  getAttach(i){
-    // console.log('ATTACHMENT', i);
-    const attachment = {
-      type: i.type,
-      hidden: i.hidden,
-      text: i.data.text,
-      items: []
-    };
-    if(i.data.items && i.data.items.length > 0){
-      // attachment.data.items = [];
-      for(let e = 0, arr = i.data.items, len = (mainCfg.database.saving.feeds.attachments.albums['max sz'] >= arr.length ? arr.length : mainCfg.database.saving.feeds.attachments.albums['max sz']); e < len; e++){
-        if(this.attachItem(arr[e])) attachment.items.push(this.attachItem(arr[e]));
-      }
-      // i.data.items.forEach((e, i) => {
-      //   if(this.attachItem(e)) attachment.items.push(this.attachItem(e));
-      // });
-    }
-    return attachment;
-  }
-  attachItem(i){
-    if(i.image||i.video) return {
-      title: i.title,
-      type: i.image.type,
-      data: {
-        'type': i.image.data['type'],
-        'uuid': i.image.data['uuid'],
-        'external_service': i.image.data['external_service']
-      }
-    };
-  }
-  rs(path, text){
-    new El().Div({
-      path: path,
-      cName: 'ras',
-      text: text
-    });
-  }
-  async build({t, data, offset, uID, cID, sID, fID, uName, sName, type}){
-    // console.log('sData', sData)
-    if(!data) data = {};
-    if(mainCfg.database.cfg.data.online){
-      try{
-        // if(!mainCfg.database.cfg.data.online) return;
-        if(!db.name) return;
-        if(!mainCfg['database']['keepVars']['users'] && !data.users) data.user = await new Odb().supabase({
-          run: 'find',
-          type: 'users',
-          target: uID,
-          db: db
-        });
-        // console.log('USERS', (data.user||sData.users));
-      }catch(err){
-        console.log('ERR', err);
-      }
-    }
-    // console.log('Menu', data.user||(data.users||sData.users))
-    console.log('uID', uID)
-    this.user=data.user||(data.users||sData.users).find(el => el.id === uID.toString());
-    console.log('USER', this.user);
-    console.log('Flags', (this.user && this.user.flags.topics.favorite) ? 'button favorite' : 'button')
-    // this.subsite=(data||sData).subsites.find(el => el.id === sID);
-    // this.feeds=(data||sData).feeds.find(el => el.id === fID);
-    // this.comments=sData.comments.find(el => el.id === fID);
-    new CtxMenu().build({
-      path: document.body,
-      title: 'МЕНЮ УПРАВЛЕНИЯ',
-      e: t,
-      offset: offset,
-      focus: true,
-      // autohide: true,
-      items: [
-        {
-          type: 'separator',
-          text: 'Инфо'
-        },
-        ...type.match(/topic|db-feed/) ? [
-          {
-            type: 'button',
-            text: 'О подсайте',
-            onclick: () => {
-              this.getUser(sID).then(res => this.profileCard({path: document.body, e:t, offset:offset, item:res}));
-              // this.avatar({t:t, offset:offset, user:''})
-            }
-          }
-        ] : [],
-        {
-          type: 'button',
-          text: 'О пользователе',
-          onclick: () => {
-            this.getUser(uID).then(res => this.profileCard({path: document.body, e:t, offset:offset, item:res}));
-            // this.avatar({t:t, offset:offset, user:''})
-          }
-        },
-        ...type.match(/topic|db-feed/) ? [
-          {
-            type: 'separator',
-            text: 'Фид'
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Фиды',
-            title: 'Управление фидами',
-            items: [
-              {
-                type: 'button',
-                title: 'Прочтено',
-                cName: this.feeds && this.feeds.flags.readed ? 'btn readed':'btn',
-                text: '✔️',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'readed'}).then(res => {
-                    checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Прочту',
-                cName: this.feeds && this.feeds.flags.planToRead ? 'btn planToRead':'btn',
-                text: '📚',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'planToRead'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Читаю',
-                cName: this.feeds && this.feeds.flags.onHold ? 'btn onHold':'btn',
-                text: '📖',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'onHold'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Брошено',
-                cName: this.feeds && this.feeds.flags.dropped ? 'btn dropped':'btn',
-                text: '❌',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'dropped'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: this.feeds && this.feeds.flags.favorite ? 'btn favorite':'btn',
-                text: '💘',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: this.feeds && this.feeds.flags.ignored ? 'btn ignored':'btn',
-                text: '💢',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: this.feeds && this.feeds.flags.blocked ? 'btn blocked':'btn',
-                text: '🈲',
-                onclick: () => {
-                  this.findOrAdd({id:fID, type:'feeds', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Feeds', sData.feeds);
-                  });
-                }
-              }
-            ],
-          }
-        ] : [],
-        ...type.match(/topic|db-feed/) ? [
-          {
-            type: 'separator',
-            text: 'Фиды подсайта'
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Статьи',
-            title: 'Управление статьями',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: this.subsite && this.subsite.flags.topics.favorite ? 'btn favorite':'btn',
-                text: '💘',
-                onclick: () => {
-                  this.findOrAdd({id:sID, name:sName, type:'subsites', r:'topics', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Subsite', sData.subsites);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.subsite && this.subsite.flags.topics.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.findOrAdd({id:sID, name:sName, type:'subsites', r:'topics', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Subsite', sData.subsites);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.subsite && this.subsite.flags.topics.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.findOrAdd({id:sID, name:sName, type:'subsites', r:'topics', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('Subsite', sData.subsites);
-                  });
-                }
-              }
-            ],
-          }
-        ] : [],
-        ...type.match(/topic|db-feed|comment/) ? [
-          {
-            type: 'separator',
-            text: 'Контент автора'
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Статьи',
-            title: 'Управление статьями',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: this.user && this.user.flags.topics.favorite ? 'btn favorite':'btn',
-                text: '💘',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'topics', key:'favorite'}).then(res => {
-                    checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.topics.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'topics', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.topics.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'topics', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              }
-            ],
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Блог',
-            title: 'Управление блогом',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: (this.user && this.user.flags.blogs.favorite) ? 'button favorite' : 'button',
-                text: '💘',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'blogs', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.blogs.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'blogs', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.blogs.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'blogs', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              }
-            ],
-          },
-          {
-            type: 'sub',
-            cName: 'hor',
-            text: 'Комментарии',
-            title: 'Управление комментариями',
-            items: [
-              {
-                type: 'button',
-                title: 'Избранное',
-                cName: (this.user && this.user.flags.comments.favorite) ? 'button favorite' : 'button',
-                text: '💘',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'comments', key:'favorite'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Игноровано',
-                cName: (this.user && this.user.flags.comments.ignored) ? 'button ignored' : 'button',
-                text: '💢',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'comments', key:'ignored'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              },
-              {
-                type: 'button',
-                title: 'Блокировано',
-                cName: (this.user && this.user.flags.comments.blocked) ? 'button blocked' : 'button',
-                text: '🈲',
-                onclick: () => {
-                  this.findOrAdd({id:uID, name:uName, type:'users', r:'comments', key:'blocked'}).then(res => {
-                    if(res) checkFeeds({fullCheck:true});
-                    console.log('User', sData.users);
-                  });
-                }
-              }
-            ],
-          },
-        ] : [],
-      ]
-    })
-  }
-  profileCard({e, offset, path, item, autohide}){
-    console.log('USER', this.user);
-    new El().Div({
-      path: path,
-      cName: 'profileCard',
-      tab: -1,
-      focus: true,
-      style: `
-        top: ${(offset||0 + 10) + e.top + (window.scrollY||window.scrollHeight||0)}px;
-        left: ${e.left}px;`
-      ,
-      onblur: (e) => {
-        if(!autohide) return;
-        setTimeout(() => {
-          e.target.remove();
-        }, 1000);
-      },
-      func: (m) => {
-        attachment({
-          path: m,
-          type: 'cover',
-          i: item.subsite.cover
-        });
-        new El().Div({
-          path: m,
-          cName: 'header'
-        });
-        new El().Div({
-          path: m,
-          cName: 'list',
-          func: (l) => {
-            attachment({
-              path: l,
-              type: 'avatar',
-              i: item.subsite.avatar
-            });
-
-            new El().List({
-              path: l,
-              cName: 'itemsList',
-              items: [
-                {
-                  text: `🏷️ ${item.subsite.name}`,
-                  title: 'Имя'
-                },
-                {
-                  text: `📅 ${this.getTime(item.subsite.created * 1000)}`,
-                  title: 'Создан'
-                },
-                {
-                  text: `📊 ${item.subsite.rating}`,
-                  title: 'Рейтинг',
-                  cName: item.subsite.rating > 0 ? 'positive' : 'negative'
-                },
-                {
-                  text: `📔 ${item.subsite.description}`,
-                  title: 'Описание',
-                  cName: 'texter scrollLite'
-                },
-                {
-                  text: '🔗\uFE0E',
-                  btn: [
-                    {
-                      text: 'Профиль',
-                      onclick: () => {
-                        window.open(item.subsite.url, '_blank');
-                      }
-                    },
-                    ...item.subsite.avatar ? [{
-                      text: 'Аватар',
-                      onclick: () => {
-                        window.open(`https://leonardo.osnova.io/${item.subsite.avatar.data.uuid}`, '_blank');
-                      }
-                    }] : [],
-                    ...item.subsite.cover ? [{
-                      text: 'Cover',
-                      onclick: () => {
-                        window.open(`https://leonardo.osnova.io/${item.subsite.cover.data.uuid}`, '_blank');
-                      }
-                    }] : []
-                  ]
-                }
-              ]
-            });
-
-            new El().List({
-              path: m,
-              cName: 'itemsList hor',
-              items: [
-                {
-                  title: item.subsite.isOnline ? 'Онлайн' : 'Оффлайн',
-                  cName: !item.subsite.isOnline && 'off',
-                  text: '📶\uFE0E'
-                },
-                {
-                  title: item.subsite.isPlus && 'Плюс',
-                  cName: !item.subsite.isPlus && 'off',
-                  text: '➕\uFE0E'
-                },
-                {
-                  title: item.subsite.isPro && 'Про',
-                  cName: !item.subsite.isPro && 'off',
-                  text: '💼\uFE0E'
-                },
-                {
-                  title: item.subsite.isVerified && 'Подтверждён',
-                  cName: !item.subsite.isVerified && 'off',
-                  text: '✔️\uFE0E'
-                }
-              ]
-            });
-
-            new El().List({
-              path: m,
-              cName: 'itemsList',
-              items: [
-                {
-                  title: 'Комментариев',
-                  text: `📜\uFE0E ${item.subsite.counters.comments}`
-                },
-                {
-                  title: 'Статей',
-                  text: `📰\uFE0E ${item.subsite.counters.entries}`
-                },
-                {
-                  title: 'Подписчиков',
-                  text: `🔭\uFE0E ${item.subsite.counters.subscribers}`
-                },
-                {
-                  title: 'Подписок',
-                  text: `📬\uFE0E ${item.subsite.counters.subscriptions}`
-                }
-              ]
-            })
-          }
-        });
-      }
-    });
-  }
-  avatar({t, offset, user}){
-    new CtxMenu().build({
-      path: document.body,
-      title: 'МЕНЮ АВАТАРА',
-      e: t,
-      offset: offset,
-      focus: true,
-      autohide: true,
-      items: [
-        {
-          type: 'separator',
-          text: 'Ссылки'
-        },
-        ...user.subsite.avatar ? [
-          {
-            type: 'button',
-            text: 'Аватарка',
-            onclick: () => {
-              window.open(`https://leonardo.osnova.io/${user.subsite.avatar.data.uuid}`, '_blank');
-            }
-          }
-        ] : [],
-        ...user.subsite.cover ? [
-          {
-            type: 'button',
-            text: 'Обложка',
-            onclick: () => {
-              window.open(`https://leonardo.osnova.io/${user.subsite.cover.data.uuid}`, '_blank');
-            }
-          }
-        ] : [],
-        ...user.subsite.avatar||user.subsite.cover ? [
-          {
-            type: 'separator',
-            text: 'Поиск сурсов'
-          },
-          ...user.subsite.avatar ? [{
-            type: 'sub',
-            text: 'Аватарка',
-            title: 'Поиски аватарки',
-            items: (() => {
-              const arr = [];
-              mainCfg.usercard.avatar.search.list.forEach(e => {
-                arr.push({
-                  type: 'button',
-                  text: e.name,
-                  onclick: () => {
-                    window.open(`${e.url}https://leonardo.osnova.io/${user.subsite.avatar.data.uuid}`, '_blank');
-                    // document.activeElement.blur();
-                  }
-                })
-              })
-              return arr;
-            })()
-          }] : [],
-          ...user.subsite.cover ? [{
-            type: 'sub',
-            text: 'Обложка',
-            title: 'Поиски обложки',
-            items: (() => {
-              const arr = [];
-              mainCfg.usercard.avatar.search.list.forEach(e => {
-                arr.push({
-                  type: 'button',
-                  text: e.name,
-                  onclick: () => {
-                    window.open(`${e.url}https://leonardo.osnova.io/${user.subsite.cover.data.uuid}`, '_blank');
-                    // document.activeElement.blur();
-                  }
-                })
-              })
-              return arr;
-            })()
-          }] : [],
-        ] : [],
-        {
-          type: 'separator',
-          text: 'Автор'
-        }
-      ]
-    })
-  }
-}
 
 
   // new El().Css('DTF-User Block', css(mainCfg));
@@ -2973,7 +1763,7 @@
       e.preventDefault();
       e.stopImmediatePropagation();
       const control = e.target.closest('.comment').querySelector(`.comment__action[air-module='module.etc_controls']`);
-      new UserMenu().userMenu({
+      new HeaderMenu().build({
         t: e.target.getBoundingClientRect(),
         offset: e.target.offsetHeight,
         fID: control.getAttribute('data-content-id'),
@@ -2985,7 +1775,7 @@
       e.preventDefault();
       e.stopImmediatePropagation();
       const control = e.target.closest('.content-header').querySelector(`.content-header__item--controls`).children[0];
-      new UserMenu().userMenu({
+      new HeaderMenu().build({
         t: e.target.getBoundingClientRect(),
         offset: e.target.offsetHeight,
         uID: control.getAttribute('data-user-id'),
@@ -2993,153 +1783,163 @@
         fID: control.getAttribute('data-content-id'),
         uName: e.target.textContent.trim(),
         sName: control.getAttribute('data-subsite-name'),
-        type: 'topic'
+        type: 'feed'
       });
     }
   }
-
-  new WidgetPanel({
-      bText: '🏷️',
-      hText: 'Лист тегов',
-      cName: 'tagList',
-      id: 'tagList',
-      items: (w) => {
-        new El().Div({
-          path: w,
-          cName: 'types',
-          func: (t) => {
-            new El().Div({
-              path: t,
-              cName: 'header',
-              text: 'Типы'
-            });
-            new El().Div({
-              path: t,
-              cName: 'list scrollLite'
-            });
-          }
-        });
-
-        new El().Div({
-          path: w,
-          cName: 'subsites',
-          func: (s) => {
-            new El().Div({
-              path: s,
-              cName: 'header',
-              text: 'Подсайты'
-            });
-            new El().Div({
-              path: s,
-              cName: 'list scrollLite'
-            });
-          }
-        });
-
-        new El().Div({
-          path: w,
-          cName: 'authors',
-          func: (a) => {
-            new El().Div({
-              path: a,
-              cName: 'header',
-              text: 'Авторы'
-            });
-            new El().Div({
-              path: a,
-              cName: 'authorTypes',
-              text: 'Статьи',
-              func: (at) => {
-                new El().Div({
-                  path: at,
-                  cName: 'list scrollLite'
-                });
-              }
-            });
-            new El().Div({
-              path: a,
-              cName: 'authorTypes',
-              text: 'Блоги',
-              func: (at) => {
-                new El().Div({
-                  path: at,
-                  cName: 'list scrollLite'
-                });
-              }
-            });
-          }
-        });
-      }
-    });
 
   function run(){
     const pageType = getPageType(document.location.href);
     if(pageType.type && pageType.type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
           checkFeeds({});
-          !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+          if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
     if(pageType.type && pageType.type.match(/topic/)){
       checkComments();
       // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
 
-    const widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
-    const tabs = {
-      types: widget.children[1].children[0].children[1],
-      subsites: widget.children[1].children[1].children[1],
-      topics: widget.children[1].children[2].children[1].children[0],
-      blogs: widget.children[1].children[2].children[2].children[0]
+    if(mainCfg.main.feeds['working mode'] === 'tags'){
+      const widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
+      const tabs = {
+        types: widget.children[1].children[0].children[1],
+        subsites: widget.children[1].children[1].children[1],
+        topics: widget.children[1].children[2].children[1].children[0],
+        blogs: widget.children[1].children[2].children[2].children[0]
+      }
+      tabs.types.replaceChildren();
+      tabs.subsites.replaceChildren();
+      tabs.topics.replaceChildren();
+      tabs.blogs.replaceChildren();
     }
-    tabs.types.replaceChildren();
-    tabs.subsites.replaceChildren();
-    tabs.topics.replaceChildren();
-    tabs.blogs.replaceChildren();
   }
 
   function runner(s){
     if(s.page !== 'def' && s.status !== 'ready') return;
+    if(!db.init){
+      console.log(`[Runner] Запуск...`);
+      new Promise((res, err) => {
+        new Db().run({mode:'start', res:res, err:err});
+      }).then(async res => {
+        console.log(res);
+        if(!res){
+          console.log('Err');
+        }else{
+          db.init = true;
+          console.log(`[Runner] Скрипт успешно запущен!`, res);
 
-    const config = {
-      // settings: defaultCfg,
-      start: async (c) => {
-        console.log('Staaaaaaaaaaaaart', mainCfg);
-        // new El().Css('DTF-cfg', cfgMenuCss());
-        new El().Css('DTF-User Block', css(mainCfg));
-        new El().Css('feeds', feedsCss(mainCfg));
+          new El().Css('DTF-User Block', css(mainCfg));
+          new El().Css('feeds', feedsCss(mainCfg));
+          new El().Css('users', usersCss(mainCfg));
+          new El().Css('dialog', dialogCss());
+          new El().Css('modal', modalCss());
 
-        // console.log('Updated CFG', mainCfg);
+          if(mainCfg.main.feeds['working mode'] === 'tags') new WidgetPanel({
+            bText: '🏷️',
+            hText: 'Лист тегов',
+            cName: 'tagList',
+            id: 'tagList',
+            items: (w) => {
+              new El().Div({
+                path: w,
+                cName: 'types',
+                func: (t) => {
+                  new El().Div({
+                    path: t,
+                    cName: 'header',
+                    text: 'Типы'
+                  });
+                  new El().Div({
+                    path: t,
+                    cName: 'list scrollLite'
+                  });
+                }
+              });
 
-        try{
-          if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb().supabase({
-            run: 'get all',
-            type: 'feeds'
+              new El().Div({
+                path: w,
+                cName: 'subsites',
+                func: (s) => {
+                  new El().Div({
+                    path: s,
+                    cName: 'header',
+                    text: 'Подсайты'
+                  });
+                  new El().Div({
+                    path: s,
+                    cName: 'list scrollLite'
+                  });
+                }
+              });
+
+              new El().Div({
+                path: w,
+                cName: 'authors',
+                func: (a) => {
+                  new El().Div({
+                    path: a,
+                    cName: 'header',
+                    text: 'Авторы'
+                  });
+                  new El().Div({
+                    path: a,
+                    cName: 'authorTypes',
+                    text: 'Статьи',
+                    func: (at) => {
+                      new El().Div({
+                        path: at,
+                        cName: 'list scrollLite'
+                      });
+                    }
+                  });
+                  new El().Div({
+                    path: a,
+                    cName: 'authorTypes',
+                    text: 'Блоги',
+                    func: (at) => {
+                      new El().Div({
+                        path: at,
+                        cName: 'list scrollLite'
+                      });
+                    }
+                  });
+                }
+              });
+            }
           });
-          if(mainCfg['database']['keepVars']['users']) sData.users = await new Odb().supabase({
-            run: 'get all',
-            type: 'users'
-          });
-          if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb().supabase({
-            run: 'get all',
-            type: 'subsites'
-          });
-          // if(mainCfg['database']['keepVars']['comments']) sData.comments = await new Odb().supabase({
-          //   run: 'get all',
-          //   type: 'comments'
-          // });
-        }catch(err){
-          console.log('ERR', err);
-        }
 
-        if(getPageType(document.location.href).type && getPageType(document.location.href).type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-          checkFeeds({});
-          !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+
+          if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') try{
+            // if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb().supabase({
+            //   run: 'get all',
+            //   type: 'feeds'
+            // });
+            if(mainCfg['database']['keepVars']['users']) sData.users = await new Odb()[mainCfg.database.data.db]({
+              run: 'get all',
+              type: 'users',
+              db: db
+            });
+            console.log('USERS', sData.users)
+            // if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb().supabase({
+            //   run: 'get all',
+            //   type: 'subsites'
+            // });
+          }catch(err){
+            console.log('ERR', err);
+          }
+
+          run();
         }
-        if(getPageType(document.location.href).type && getPageType(document.location.href).type.match(/topic/)){
-          checkComments();
-          // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-        }
-      }
-    };
+      });
+    }
+    else{
+      console.log(`[Run] Restarting...`);
+      run();
+    }
+}
+
+  function runner1(s){
+    if(s.page !== 'def' && s.status !== 'ready') return;
 
     if(!mainCfg){
       console.log(`[Run] Starting...`);
@@ -3147,11 +1947,12 @@
         if(res.result !== 'success') return;
         if(res.process === 'init'){
           console.log(`[Run] Скрипт успешно запущен!`);
-          console.log('RRR', getPageType(document.location.href))
 
           new El().Css('DTF-User Block', css(mainCfg));
           new El().Css('feeds', feedsCss(mainCfg));
+          new El().Css('users', usersCss(mainCfg));
           new El().Css('dialog', dialogCss());
+          new El().Css('modal', modalCss());
 
           // console.log('Updated CFG', mainCfg);
 
@@ -3184,43 +1985,6 @@
       console.log(`[Run] Restarting...`);
       run();
     }
-
-
-//     if(!mainCfg.init){
-//       SettingsOpenerItem('Book Worm', 'book-worm', initMenu, mainCfg, sData);
-//       console.log('INIT', initMenu);
-//       try{
-//         if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb().supabase({
-//           run: 'get all',
-//           type: 'feeds'
-//         });
-//         if(mainCfg['database']['keepVars']['users']) sData.users = await new Odb().supabase({
-//           run: 'get all',
-//           type: 'users'
-//         });
-//         if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb().supabase({
-//           run: 'get all',
-//           type: 'subsites'
-//         });
-//         // if(mainCfg['database']['keepVars']['comments']) sData.comments = await new Odb().supabase({
-//         //   run: 'get all',
-//         //   type: 'comments'
-//         // });
-//       }catch(err){
-//         console.log('ERR', err);
-//       }
-
-//       mainCfg.init = true;
-//     }
-    // new Feeds().widgetItem(widget);
-    // if(getPageType(document.location.href).type && getPageType(document.location.href).type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-    //   checkFeeds({});
-    //   !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-    // }
-    // if(getPageType(document.location.href).type && getPageType(document.location.href).type.match(/topic/)){
-    //   checkComments();
-    //   // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-    // }
   }
 
   new El().onPageLoad(runner);
