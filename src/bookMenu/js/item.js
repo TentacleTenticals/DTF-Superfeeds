@@ -75,7 +75,7 @@ class BookItem{
                     }).then(data => {
                       console.log(data);
                       if(data){
-                        new UserMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
+                        new HeaderMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
                           if(!res){
                             return;
                           }else{
@@ -124,7 +124,7 @@ class BookItem{
           onRclick: () => {
             if(e.button !== 2) return;
             e.preventDefault();
-            new UserMenu().build({
+            new HeaderMenu().build({
               rect: e.target.getBoundingClientRect(),
               offset: e.target.offsetHeight,
               uID: item.info.subsite.id,
@@ -166,7 +166,7 @@ class BookItem{
                     }).then(data => {
                       console.log(data);
                       if(data){
-                        new UserMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
+                        new HeaderMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
                           if(!res){
                             return;
                           }else{
@@ -218,7 +218,7 @@ class BookItem{
       onRclick: (e) => {
         if(e.button !== 2) return;
         e.preventDefault();
-        new UserMenu().build({
+        new HeaderMenu().build({
           rect: e.target.getBoundingClientRect(),
           offset: e.target.offsetHeight,
           uID: item.info.author.id,
@@ -276,7 +276,7 @@ class BookItem{
                 }).then(data => {
                   console.log(data);
                   if(data){
-                    new UserMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
+                    new HeaderMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
                       if(!res){
                         return;
                       }else{
