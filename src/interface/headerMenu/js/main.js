@@ -75,13 +75,6 @@ class HeaderMenu{
       }
     };
   }
-  rs(path, text){
-    new El().Div({
-      path: path,
-      cName: 'ras',
-      text: text
-    });
-  }
   add(o){
     return new Promise((result, error) => {
       if(o.type.match(/users|subsites/)){
@@ -572,22 +565,21 @@ class HeaderMenu{
       });
     }
     new CtxMenu().build({
-      path: document.body,
       header: 'МЕНЮ УПРАВЛЕНИЯ',
       focus: true,
       rect: o.rect,
       offset: o.offset,
       // load: true,
-      // autohide: true,
-      onblur: (m) => {
-        setTimeout(() => {
-          m.remove();
-          if(o.res) o.err('Menu closed!');
-        }, 500);
+      autohide: true,
+      onblur: () => {
+        if(o.res) o.err('Menu closed!');
+        // setTimeout(() => {
+        //   // m.remove();
+        //   if(o.res) o.err('Menu closed!');
+        // }, 500);
       },
       loadText: 'Load...',
       func: async (m) => {
-        console.log('CC', o);
         // o.res('ok');
         if(!o.data) o.data = {};
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
@@ -618,12 +610,11 @@ class HeaderMenu{
           }catch(err){
             console.log('ERR', err);
           }
-        }
+        }else if(m.res) m.res('ok');
 
-        this.subsite=o.data.subsite||(o.data.subsites||sData.subsites).find(el => el.id === o.sID.toString());
-        this.user=o.data.user||(o.data.users||sData.users).find(el => el.id === o.uID.toString());
-        this.feed=o.data.feed||(o.data.feeds||sData.feeds).find(el => el.id === o.fID.toString());
-        console.log('USER', this.user);
+        if(o.sID) this.subsite=o.data.subsite||(o.data.subsites||sData.subsites).find(el => el.id === o.sID.toString());
+        if(o.uID) this.user=o.data.user||(o.data.users||sData.users).find(el => el.id === o.uID.toString());
+        if(o.fID) this.feed=o.data.feed||(o.data.feeds||sData.feeds).find(el => el.id === o.fID.toString());
       },
       items: [
         {
@@ -634,14 +625,14 @@ class HeaderMenu{
           type: 'button',
           text: 'О подсайте',
           onclick: () => {
-            this.dtfApi({type:'subsite', value:o.sID}).then(res => this.profileCard({path: document.body, e:o.t, autohide:true, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsites', value:o.sID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
           }
         }]:[],
         {
           type: 'button',
           text: 'О пользователе',
           onclick: () => {
-            this.dtfApi({type:'subsite', value:o.uID}).then(res => this.profileCard({path: document.body, e:o.t, autohide:true, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsites', value:o.uID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
           }
         },
 
@@ -1204,22 +1195,100 @@ class HeaderMenu{
       ]
     })
   }
+  avatar(o){
+    new CtxMenu().build({
+      cName: 'avat',
+      header: 'МЕНЮ АВАТАРА',
+      rect: o.rect,
+      offset: o.offset,
+      focus: true,
+      autohide: true,
+      items: [
+        {
+          type: 'separator',
+          text: 'Ссылки'
+        },
+        ...o.user.subsite.avatar ? [
+          {
+            type: 'button',
+            text: 'Аватарка',
+            onclick: () => {
+              window.open(`https://leonardo.osnova.io/${o.user.subsite.avatar.data.uuid}`, '_blank');
+            }
+          }
+        ] : [],
+        ...o.user.subsite.cover ? [
+          {
+            type: 'button',
+            text: 'Обложка',
+            onclick: () => {
+              window.open(`https://leonardo.osnova.io/${o.user.subsite.cover.data.uuid}`, '_blank');
+            }
+          }
+        ] : [],
+        ...o.user.subsite.avatar||o.user.subsite.cover ? [
+          {
+            type: 'separator',
+            text: 'Поиск сурсов'
+          },
+          ...o.user.subsite.avatar ? [{
+            type: 'sub',
+            text: 'Аватарка',
+            title: 'Поиски аватарки',
+            items: (() => {
+              const arr = [];
+              mainCfg.usercard.avatar.search.list.forEach(e => {
+                arr.push({
+                  type: 'button',
+                  text: e.name,
+                  onclick: () => {
+                    window.open(`${e.url}https://leonardo.osnova.io/${o.user.subsite.avatar.data.uuid}`, '_blank');
+                    // document.activeElement.blur();
+                  }
+                })
+              })
+              return arr;
+            })()
+          }] : [],
+          ...o.user.subsite.cover ? [{
+            type: 'sub',
+            text: 'Обложка',
+            title: 'Поиски обложки',
+            items: (() => {
+              const arr = [];
+              mainCfg.usercard.avatar.search.list.forEach(e => {
+                arr.push({
+                  type: 'button',
+                  text: e.name,
+                  onclick: () => {
+                    window.open(`${e.url}https://leonardo.osnova.io/${o.user.subsite.cover.data.uuid}`, '_blank');
+                    // document.activeElement.blur();
+                  }
+                })
+              })
+              return arr;
+            })()
+          }] : [],
+        ] : [],
+        {
+          type: 'separator',
+          text: 'Автор'
+        }
+      ]
+    });
+  }
   profileCard(o){
-    console.log('USER', this.user);
     new El().Div({
       path: o.path,
       cName: 'profileCard',
       tab: -1,
       focus: true,
       style: `
-        top: ${(o.offset||0 + 10) + o.e.top + (window.scrollY||window.scrollHeight||0)}px;
-        left: ${o.e.left}px;`
+        top: ${(o.offset||0 + 10) + o.rect.top + (window.scrollY||window.scrollHeight||0)}px;
+        left: ${o.rect.left}px;`
       ,
       onblur: (e) => {
-        if(!o.autohide) return;
-        setTimeout(() => {
-          e.target.remove();
-        }, 1000);
+        if(o.autohide) e.target.remove();
       },
       func: (m) => {
         attachment({
@@ -1238,7 +1307,22 @@ class HeaderMenu{
             attachment({
               path: l,
               type: 'avatar',
-              i: o.item.subsite.avatar
+              i: o.item.subsite.avatar,
+              // tab: -1,
+              onclick: (e) => {
+                if(e.button !== 0) return;
+                e.currentTarget.classList.toggle('zoom');
+              },
+              onRclick: (e) => {
+                if(e.button !== 2) return;
+                e.preventDefault();
+                // document.activeElement.blur();
+                this.avatar({
+                  rect: o.rect,
+                  ofsset: o.offset,
+                  user: o.item
+                });
+              }
             });
 
             new El().List({
