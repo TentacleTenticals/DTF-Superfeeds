@@ -5,9 +5,9 @@ initMenu.setData = (m, cfg) => {
       target.textContent = text ? text : (mode === '++' ? ++target.textContent : --target.textContent);
     }
     sortByValue(a, b, value, search){
-      if(!search) return a.info[value] > b.info[value] ? 1 : -1;
+      if(!search) return a.info[value] < b.info[value] ? 1 : -1;
       else
-      if(search) return a.info[value] < b.info[value] ? 1 : -1;
+      if(search) return a.info[value] > b.info[value] ? 1 : -1;
     }
     clear(e, full){
       if(e.children[0].children[1].children.length > 0) e.children[0].children[1].replaceChildren();
@@ -153,8 +153,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return sData.subsites.sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
-                  else return sData.subsites.filter(i => {
+                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return (items||sData.subsites).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
+                  else return (items||sData.subsites).filter(i => {
                     return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   }).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                 })(),
@@ -330,8 +330,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return sData.users.sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
-                  else return sData.users.filter(i => {
+                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return (items||sData.users).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
+                  else return (items||sData.users).filter(i => {
                     return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   }).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                 })(),
@@ -525,8 +525,8 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.comment && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return sData.feeds.sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
-                  else return sData.feeds.filter(i => {
+                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.comment && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return (items||sData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
+                  else return (items||sData.feeds).filter(i => {
                     return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
                       return i.info.keywords.some(t => t.name === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
