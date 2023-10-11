@@ -314,6 +314,10 @@
     align-items: center;
     box-shadow: 0px 0px 4px 0px rgb(0 0 0);
     z-index: 1;
+    background-image: url(https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg);
+    background-size: 35%;
+    background-repeat: no-repeat;
+    background-position: 60% 50%;
     /* cursor: pointer; */
   }
   .mediaStarter .btn img {
@@ -1054,8 +1058,7 @@
   db = {
   online: 'supabase', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
-      name: 'supabase'
-    }
+      }
   };
 
   // const sData = {
@@ -1073,86 +1076,122 @@
   //   'subsites': []
   // };
 
-  function attachment1({path, type, i}){
-    console.log(i)
-    const main=new El().Div({
-      path: path,
-      cName: `mask ${type} ${i.data && i.data.type||''}`,
-      rtn: true
-    });
-    if(!i.data) return;
-    if(i.type === 'image'){
-      if(i.data.type.match(/video|gif/)){
-        new El().Video({
-          path: main,
-          cName: 'attach',
-          url: `https://leonardo.osnova.io/${i.data.uuid}`
-        })
-      }else
-      new El().Image({
-        path: main,
-        cName: 'attach',
-        url: `https://leonardo.osnova.io/${i.data.uuid}`
-      })
-    }
-  };
+  function videoReplace(path, video, comment){
+    function player(o){
+      new El().Div({
+        path: o.path,
+        cName: 'cont',
+        func: (m) => {
+          new El().Div({
+            path: m,
+            cName: 'video-cont',
+            onclick: (e) => {
+              if(e.button !== 0) return;
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              if(m.children[0].lastChild.paused) m.children[0].lastChild.play();
+              else m.children[0].lastChild.pause();
+            },
+            func: (p) => {
+              new El().Div({
+                path: p,
+                cName: 'mediaStarter',
+                func: (s) => {
+                  new El().Div({
+                    path: s,
+                    cName: 'btn'
+                  });
+                }
+              });
 
-  function videoReplace(path, video){
+              new El().Video({
+                path: p,
+                url: o.url,
+                poster: o.poster,
+                loop: true,
+                muted: true,
+                onplay: (e) => {
+                  e.target.parentNode.classList.toggle('playing');
+                },
+                onpause: (e) => {
+                  e.target.parentNode.classList.toggle('playing');
+                },
+                onended: (e) => {
+                  e.target.parentNode.classList.toggle('playing');
+                }
+              });
+            }
+          });
+        }
+      });
+
+    // new El().Image({
+    //   path: prev,
+    //   url: 'https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg'
+    // });
+    }
     if(video.getAttribute('data-andropov-type') === 'video' && video.getAttribute('data-video-service') === 'default'){
       // console.log('VIDEO', path.parentNode);
       // if(!path.parentNode || path.parentNode === 'null') return;
       let pp;
       path.parentNode ? pp = path.parentNode : pp = path;
       console.log('VIDEO', pp);
-      let main=new El().Div({
-        path: pp,
-        cName: 'cont',
-        rtn: []
+      player({
+        path:!comment ? pp : path,
+        url:video.getAttribute('data-video-mp4'),
+        poster:video.getAttribute('data-video-thumbnail')
       });
-      let c=new El().Div({
-        path: main,
-        cName: 'video-cont',
-        rtn: [],
-        onclick: (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          if(c.lastChild.paused) c.lastChild.play();
-          else c.lastChild.pause();
-        }
-      });
-      let starter=new El().Div({
-        path: c,
-        cName: 'mediaStarter',
-        rtn: []
-      });
-      let prev=new El().Div({
-        path: starter,
-        cName: 'btn',
-        rtn: []
-      });
-      new El().Image({
-        path: prev,
-        url: 'https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg'
-      });
-      new El().Video({
-        path: c,
-        url: video.getAttribute('data-video-mp4'),
-        poster: video.getAttribute('data-video-thumbnail'),
-        loop: true,
-        muted: true,
-        onplay: (e) => {
-          e.target.parentNode.classList.toggle('playing');
-        },
-        onpause: (e) => {
-          e.target.parentNode.classList.toggle('playing');
-        },
-        onended: (e) => {
-          e.target.parentNode.classList.toggle('playing');
-        }
-      });
+      // let main=new El().Div({
+      //   path: pp,
+      //   cName: 'cont',
+      //   rtn: []
+      // });
+      // let c=new El().Div({
+      //   path: main,
+      //   cName: 'video-cont',
+      //   rtn: [],
+      //   onclick: (e) => {
+      //     if(e.button !== 0) return;
+      //     e.preventDefault();
+      //     e.stopPropagation();
+      //     e.stopImmediatePropagation();
+      //     if(c.lastChild.paused) c.lastChild.play();
+      //     else c.lastChild.pause();
+      //   }
+      // });
+      // let starter=new El().Div({
+      //   path: c,
+      //   cName: 'mediaStarter',
+      //   rtn: []
+      // });
+      // let prev=new El().Div({
+      //   path: starter,
+      //   cName: 'btn',
+      //   rtn: []
+      // });
+      // new El().Image({
+      //   path: prev,
+      //   url: 'https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg'
+      // });
+      // new El().Video({
+      //   path: c,
+      //   url: video.getAttribute('data-video-mp4'),
+      //   poster: video.getAttribute('data-video-thumbnail'),
+      //   loop: true,
+      //   muted: true,
+      //   onplay: (e) => {
+      //     e.target.parentNode.classList.toggle('playing');
+      //   },
+      //   onpause: (e) => {
+      //     e.target.parentNode.classList.toggle('playing');
+      //   },
+      //   onended: (e) => {
+      //     e.target.parentNode.classList.toggle('playing');
+      //   }
+      // });
       // path.replaceChildren(main);
-      path.remove();
+      !comment ? path.remove() : video.remove();
     }
   }
 
@@ -1299,6 +1338,8 @@
         s.blocked ? t.classList.add('blocked') : t.classList.remove('blocked');
       }
       if(!target) for(let i = 0, arr = document.querySelectorAll('.comment'), length = arr.length; i < length; i++){
+        const media = arr[i].children[1].querySelector(`.comment__attaches`);
+        if(media && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +arr[i].getAttribute('data-user_id'));
         if(!t) continue;
         console.log('FOUNDED!!!!', t);
@@ -1324,7 +1365,7 @@
       check(target, sData.users);
     }
   }
-  async function checkFeeds({target, header, fullCheck, data}){
+  async function checkFeeds({target, isFeed, fullCheck, data}){
     function typeOf(t){
       return Object.prototype.toString.call(t).slice(8, -1).toLowerCase();
     }
@@ -1390,7 +1431,7 @@
         action = {},
         tag = {},
         header = o.tg.querySelector(`.content-header__info`),
-        container = o.header ? o.tg.querySelector(`.content.content--full`) : o.tg.querySelector(`.content-container`),
+        container = isFeed ? o.tg.querySelector(`.content.content--full`) : o.tg.querySelector(`.content-container`),
         user = {
           id: control.getAttribute('data-user-id'),
           name: control.getAttribute('data-author-name'),
@@ -1419,7 +1460,7 @@
       if(feed.inBase) console.log('Feed in base', feed.inBase);
 
       if(container) for(let c = 0, cn = container.children, len = cn.length; c < len; c++){
-        // console.log(o.tg)
+        // console.log('Container', cn[c]);
         if(!cn[c].className) continue;
         if(cn[c].className.match('content-title')){
           att.title = cn[c].textContent.trim();
@@ -1432,7 +1473,7 @@
       o.tg.setAttribute('sID', sub.id);
       o.tg.setAttribute('uID', user.id);
 
-      if(mainCfg['working mode'] === 'tags'){
+      if(mainCfg.main.feeds['working mode'] === 'tags'){
         widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
         tabs = {
           types: widget.children[1].children[0].children[1],
@@ -1450,7 +1491,7 @@
         o.tg.classList.add('topic');
         !att.editorial ? o.tg.setAttribute('type', 'topic') : o.tg.setAttribute('type', 'topic-edt');
 
-        if(mainCfg['working mode'] === 'tags'){
+        if(mainCfg.main.feeds['working mode'] === 'tags'){
           tag.typelist = new Feeds().tagButton({
             path:tabs.types,
             id:o.tg.getAttribute('type'),
@@ -1561,7 +1602,7 @@
                           if(!page.type) return;
                           if(!mainCfg.feeds['where to react'][page.type]) return;
                           if(!page.type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)) return;
-                          page.type.match(/topic/) ? checkFeeds({fullCheck:true, header:true}) : checkFeeds({fullCheck:true});
+                          page.type.match(/topic/) ? checkFeeds({fullCheck:true, isFeed:true}) : checkFeeds({fullCheck:true});
                         }
                       });
                     });
@@ -1731,7 +1772,7 @@
     // if(!target && !target.children.length > 0) return;
     // console.log('Target', target);
     // console.log('TYYYYYYYYYYPE', Object.prototype.toString.call(target).slice(8, -1).toLowerCase());
-    if(header) chk({tg:document.querySelector(`.l-entry.l-island-bg`)});
+    if(isFeed) chk({tg:document.querySelector(`.l-entry.l-island-bg`)});
     if(!fullCheck) for(let ci = 0, chunk = typeOf(target) === 'nodelist' ? target : [target], len = chunk.length; ci < len; ci++){
       console.log('CHUNK', chunk[ci]);
       chunkReader(chunk[ci]);
@@ -1771,15 +1812,15 @@
 
   document.body.oncontextmenu = (e) => {
     if(!e.target.className) return;
-    if(!e.button === 2) return;
+    if(e.button !== 2) return;
     if(e.target.className === 'comment__author'){
       e.preventDefault();
       e.stopImmediatePropagation();
       const control = e.target.closest('.comment').querySelector(`.comment__action[air-module='module.etc_controls']`);
       new HeaderMenu().build({
-        t: e.target.getBoundingClientRect(),
+        rect: e.target.getBoundingClientRect(),
         offset: e.target.offsetHeight,
-        fID: control.getAttribute('data-content-id'),
+        uID: control.getAttribute('data-user-id'),
         cID: control.getAttribute('data-comment-id'),
         uName: e.target.textContent.trim(),
         type: 'comment'});
@@ -1789,7 +1830,7 @@
       e.stopImmediatePropagation();
       const control = e.target.closest('.content-header').querySelector(`.content-header__item--controls`).children[0];
       new HeaderMenu().build({
-        t: e.target.getBoundingClientRect(),
+        rect: e.target.getBoundingClientRect(),
         offset: e.target.offsetHeight,
         uID: control.getAttribute('data-user-id'),
         sID: control.getAttribute('data-subsite-id'),
@@ -1804,8 +1845,9 @@
   function run(){
     const pageType = getPageType(document.location.href);
     if(pageType.type && pageType.type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-          pageType.type.match(/topic/) ? checkFeeds({header:true}) : checkFeeds({});
-          if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+      pageType.type.match(/topic/) ? checkFeeds({isFeed:true}) : checkFeeds({});
+      if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+      // if(mainCfg.main.comments['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
     if(pageType.type && pageType.type.match(/topic/)){
       checkComments();
