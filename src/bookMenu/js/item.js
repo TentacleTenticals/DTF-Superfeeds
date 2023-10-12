@@ -101,6 +101,12 @@ class BookItem{
           }
         });
 
+        if(item.info.myComment) new El().Div({
+          path: m,
+          cName: 'comment',
+          text: item.info.myComment
+        });
+
         new El().Div({
           path: m,
           cName: 'description',
@@ -190,6 +196,12 @@ class BookItem{
               }
             });
           }
+        });
+
+        if(item.info.myComment) new El().Div({
+          path: m,
+          cName: 'comment',
+          text: item.info.myComment
         });
 
         new El().Div({
@@ -308,10 +320,10 @@ class BookItem{
       text: item.info.title
     });
 
-    if(item.info.comment) new El().Div({
+    if(item.info.myComment) new El().Div({
       path: main,
       cName: 'comment',
-      text: item.info.comment
+      text: item.info.myComment
     });
 
     new El().Div({
@@ -347,7 +359,7 @@ class BookItem{
           onclick: (e) => {
             if(e.button !== 0) return;
             let check;
-            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[11].children[0];
+            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[13].children[0];
             for(let i = 0, arr = tags.children, len = arr.length; i < len; i++){
               if(arr[i].getAttribute('value') === e.target.textContent) check = true;
             };
@@ -363,7 +375,7 @@ class BookItem{
             if(e.button !== 2) return;
             e.preventDefault();
             let check;
-            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[12].children[0];
+            const tags = path.parentNode.parentNode.previousElementSibling.children[2].children[14].children[0];
             for(let i = 0, arr = tags.children, len = arr.length; i < len; i++){
               if(arr[i].getAttribute('value') === e.target.textContent) check = true;
             };
