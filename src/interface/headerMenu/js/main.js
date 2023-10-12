@@ -741,7 +741,7 @@ class HeaderMenu{
           ],
         }]:[],
         // ПОЛЬЗОВАТЕЛЬ
-        ...o.type.match(/^(feed|db-feed|db-user)$/) ? [{
+        ...o.type.match(/^(feed|user|db-feed|db-user)$/) ? [{
           type: 'separator',
           text: 'ПОЛЬЗОВАТЕЛИ 📚'
         },
