@@ -4,7 +4,7 @@ const sData = {
     users: [],
     feeds: []
 },
-  const defaultCfg = {
+  defaultCfg = {
     'main': {
         feeds: {
             'working mode': 'obs',
