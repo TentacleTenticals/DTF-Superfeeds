@@ -6,6 +6,7 @@ const profilecardCss = () => `
   position: absolute;
   padding: 8px;
   min-width: 0;
+  max-width: 450px;
   background-color: rgb(0,0,0);
   color: rgb(255,255,255);
   box-shadow: 0 0 2px 1px rgb(255,255,255), 0 0 2px 1px rgb(0 0 0);
