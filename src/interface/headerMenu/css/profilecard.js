@@ -5,7 +5,7 @@ const profilecardCss = () => `
   gap: 7px 0;
   position: absolute;
   padding: 8px;
-  width: 400px;
+  min-width: 0;
   background-color: rgb(0,0,0);
   color: rgb(255,255,255);
   z-index: 1000;
@@ -33,7 +33,7 @@ const profilecardCss = () => `
   top: 0;
   width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 8px;
   margin: auto;
   opacity: 0.2;
 }
