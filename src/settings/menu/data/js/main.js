@@ -88,8 +88,7 @@ initMenu.setData = (m, cfg) => {
               }
               if(!search.sort) return;
       
-              console.log(search);;
-              // 46807
+              console.log(search);
       
               new BookMenu().itemList({
                 path: e.children[0],
@@ -142,10 +141,11 @@ initMenu.setData = (m, cfg) => {
                 name: panel.children[4].children[0].value && new RegExp(panel.children[4].children[0].value, 'i'),
                 nType: panel.children[5].children[0].checked,
                 description: panel.children[6].children[0].value && new RegExp(panel.children[6].children[0].value, 'i'),
-                comment: panel.children[7].children[0].value && new RegExp(panel.children[7].children[0].value, 'i'),
-                date: panel.children[8].children[0].value,
-                time: panel.children[9].children[0].value,
-                dateFrom: Date.parse(`${panel.children[10].children[0].value} 00:00`)
+                mySubName: panel.children[7].children[0].value && new RegExp(panel.children[7].children[0].value, 'i'),
+                myComment: panel.children[8].children[0].value && new RegExp(panel.children[8].children[0].value, 'i'),
+                date: panel.children[9].children[0].value,
+                time: panel.children[10].children[0].value,
+                dateFrom: Date.parse(`${panel.children[11].children[0].value} 00:00`)
               };
       
               console.log(search);
@@ -153,9 +153,9 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return (items||sData.subsites).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
+                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.mySubName && !search.myComment && !search.date && !search.time && !search.dateFrom) return (items||sData.subsites).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                   else return (items||sData.subsites).filter(i => {
-                    return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
+                    return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.mySubName ? i.info.mySubName.match(search.mySubName) : true) && (search.myComment ? i.info.myComment.match(search.myComment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   }).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                 })(),
                 type: 'subsite'
@@ -178,6 +178,11 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Описание (Rxp)',
+            lName: 'full nl'
+          });
+          new El().Input({
+            path: panel,
+            label: 'Под-имя (Rxp)',
             lName: 'full nl'
           });
           new El().Input({
@@ -238,7 +243,6 @@ initMenu.setData = (m, cfg) => {
           {text:'🈲', name:'blocked'},
         ],
         body: (e, panel) => {
-          console.log('PANEL', panel);
           new El().Button({
             path: panel,
             cName: 'load',
@@ -265,8 +269,7 @@ initMenu.setData = (m, cfg) => {
               }
               if(!search.sort) return;
       
-              console.log(search);;
-              // 46807
+              console.log(search);
       
               new BookMenu().itemList({
                 path: e.children[0],
@@ -319,10 +322,11 @@ initMenu.setData = (m, cfg) => {
                 name: panel.children[4].children[0].value && new RegExp(panel.children[4].children[0].value, 'i'),
                 nType: panel.children[5].children[0].checked,
                 description: panel.children[6].children[0].value && new RegExp(panel.children[6].children[0].value, 'i'),
-                comment: panel.children[7].children[0].value && new RegExp(panel.children[7].children[0].value, 'i'),
-                date: panel.children[8].children[0].value,
-                time: panel.children[9].children[0].value,
-                dateFrom: Date.parse(`${panel.children[10].children[0].value} 00:00`)
+                mySubName: panel.children[7].children[0].value && new RegExp(panel.children[7].children[0].value, 'i'),
+                myComment: panel.children[8].children[0].value && new RegExp(panel.children[8].children[0].value, 'i'),
+                date: panel.children[9].children[0].value,
+                time: panel.children[10].children[0].value,
+                dateFrom: Date.parse(`${panel.children[11].children[0].value} 00:00`)
               };
       
               console.log(search);
@@ -330,9 +334,9 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.comment && !search.date && !search.time && !search.dateFrom) return (items||sData.users).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
+                  if(search.sort === 'all' && search.type === 'all' && !search.name && !search.description && !search.mySubName && !search.myComment && !search.date && !search.time && !search.dateFrom) return (items||sData.users).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                   else return (items||sData.users).filter(i => {
-                    return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
+                    return this.sortie(i.flags, search.sort, search.type) && (search.name ? i.info.name.match(search.name) : true) && (search.name ? this.id(search.name, search.nType, i.info) : true) && (search.description ? i.info.description.match(search.description) : true) && (search.mySubName ? i.info.mySubName.match(search.mySubName) : true) && (search.myComment ? i.info.myComment.match(search.myComment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true)
                   }).sort((a, b) => this.sortByValue(a, b, 'created', search.sortByDate));
                 })(),
                 type: 'user'
@@ -355,6 +359,11 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Описание (Rxp)',
+            lName: 'full nl'
+          });
+          new El().Input({
+            path: panel,
+            label: 'Под-имя (Rxp)',
             lName: 'full nl'
           });
           new El().Input({
@@ -500,7 +509,7 @@ initMenu.setData = (m, cfg) => {
                 sType: panel.children[6].children[0].checked,
                 author: panel.children[7].children[0].value && new RegExp(panel.children[7].children[0].value, 'i'),
                 aType: panel.children[8].children[0].checked,
-                comment: panel.children[9].children[0].value && new RegExp(panel.children[9].children[0].value, 'i'),
+                myComment: panel.children[9].children[0].value && new RegExp(panel.children[9].children[0].value, 'i'),
                 date: panel.children[10].children[0].value,
                 time: panel.children[11].children[0].value,
                 dateFrom: Date.parse(`${panel.children[12].children[0].value} 00:00`),
@@ -525,9 +534,9 @@ initMenu.setData = (m, cfg) => {
               new BookMenu().itemList({
                 path: e.children[0],
                 target: (() => {
-                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.comment && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return (items||sData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
+                  if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.myComment && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return (items||sData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                   else return (items||sData.feeds).filter(i => {
-                    return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.comment ? i.info.comment.match(search.comment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
+                    return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.myComment ? i.info.myComment.match(search.myComment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
                       return i.info.keywords.some(t => t.name === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
                       return !i.info.keywords.some(t => t.name === s)
