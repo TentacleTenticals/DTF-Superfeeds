@@ -1443,6 +1443,14 @@ class HeaderMenu{
                 path: l,
                 cName: 'flex ver',
                 func: (l) => {
+                  new El().Div({
+                    path: l,
+                    text: `Sub: ${this.user.info.mySubName}`
+                  });
+                  new El().Div({
+                    path: l,
+                    text: `Cm: ${this.user.info.myComment}`
+                  });
                   new El().List({
                     path: l,
                     label: 'Статьи',
