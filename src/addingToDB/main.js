@@ -49,7 +49,8 @@ class AddEl{
             comments: {}
           },
           info: {
-            comment: p.children[3].value||false
+            mySubName: p.children[3].value||false,
+            myComment: p.children[4].value||false
           }
         };
         for(let i = 0, arr = p.children[0].children, len = arr.length; i < len; i++){
@@ -166,8 +167,14 @@ class AddEl{
           new El().Tarea({
             path: m,
             cName: 'zone',
+            placeholder: 'Введите под-имя...',
+            value: db && db.info && db.info.mySubName
+          });
+          new El().Tarea({
+            path: m,
+            cName: 'zone',
             placeholder: 'Введите комментарий...',
-            value: db && db.info && db.info.comment
+            value: db && db.info && db.info.myComment
           });
         }).catch(err => {
           c.err(err);
@@ -188,7 +195,8 @@ class AddEl{
             comments: {}
           },
           info: {
-            comment: p.children[3].value||false
+            mySubName: p.children[3].value||false,
+            myComment: p.children[4].value||false
           }
         };
         for(let i = 0, arr = p.children[0].children, len = arr.length; i < len; i++){
@@ -300,12 +308,18 @@ class AddEl{
               });
             }
           });
-      
+
+          new El().Tarea({
+            path: m,
+            cName: 'zone',
+            placeholder: 'Введите под-имя...',
+            value: db && db.info && db.info.mySubName
+          });
           new El().Tarea({
             path: m,
             cName: 'zone',
             placeholder: 'Введите комментарий...',
-            value: db && db.info && db.info.comment
+            value: db && db.info && db.info.myComment
           });
         }).catch(err => {
           c.err(err);
@@ -322,7 +336,7 @@ class AddEl{
         const data = {
           flags: {},
           info: {
-            comment: p.children[1].value||false
+            myComment: p.children[1].value||false
           }
         };
         for(let i = 0, arr = p.children[0].children, len = arr.length; i < len; i++){
@@ -397,7 +411,7 @@ class AddEl{
             path: m,
             cName: 'zone',
             placeholder: 'Введите комментарий...',
-            value: db && db.info && db.info.comment
+            value: db && db.info && db.info.myComment
           });
         }).catch(err => {
           c.err(err);
