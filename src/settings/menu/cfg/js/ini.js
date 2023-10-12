@@ -11,13 +11,6 @@ const sData = {
             check: {
                 active: true,
                 onPageLoad: true,
-                interface: {
-                    feedButtons: {
-                        readed: true,
-                        'author actions': true,
-                        'subsite actions': false
-                    }
-                },
                 attachments: {
                     video: {
                         replace: true,
