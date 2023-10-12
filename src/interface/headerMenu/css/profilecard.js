@@ -8,6 +8,7 @@ const profilecardCss = () => `
   min-width: 0;
   background-color: rgb(0,0,0);
   color: rgb(255,255,255);
+  box-shadow: 0 0 2px 1px rgb(255,255,255), 0 0 2px 1px rgb(0 0 0);
   z-index: 1000;
 }
 .profileCard>* {
@@ -33,7 +34,7 @@ const profilecardCss = () => `
   top: 0;
   width: 100%;
   height: 100%;
-  padding: 8px;
+  padding: 0;
   margin: auto;
   opacity: 0.2;
 }
