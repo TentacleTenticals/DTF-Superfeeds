@@ -1297,7 +1297,7 @@ class HeaderMenu{
         left: ${o.rect.left}px;`
       ,
       onblur: (e) => {
-        // if(o.autohide) e.target.remove();
+        if(o.autohide) e.target.remove();
       },
       func: (m) => {
         attachment({
@@ -1356,6 +1356,18 @@ class HeaderMenu{
                   title: 'Описание',
                   cName: 'texter scrollLite'
                 },
+                this.user ? [
+                  {
+                    text: `Sub: ${this.user.info.mySubName}`,
+                    title: 'Под-имя',
+                    cName: 'texter scrollLite'
+                  },
+                  {
+                    text: `Cm: ${this.user.info.myComment}`,
+                    title: 'Комментарий',
+                    cName: 'texter scrollLite'
+                  }
+                ]:[],
                 {
                   text: '🔗\uFE0E',
                   btn: [
@@ -1443,14 +1455,6 @@ class HeaderMenu{
                 path: l,
                 cName: 'flex ver',
                 func: (l) => {
-                  new El().Div({
-                    path: l,
-                    text: `Sub: ${this.user.info.mySubName}`
-                  });
-                  new El().Div({
-                    path: l,
-                    text: `Cm: ${this.user.info.myComment}`
-                  });
                   new El().List({
                     path: l,
                     label: 'Статьи',
