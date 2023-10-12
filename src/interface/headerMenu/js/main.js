@@ -1356,7 +1356,7 @@ class HeaderMenu{
                   title: 'Описание',
                   cName: 'texter scrollLite'
                 },
-                this.user ? [
+                ...this.user ? [
                   {
                     text: `Sub: ${this.user.info.mySubName}`,
                     title: 'Под-имя',
