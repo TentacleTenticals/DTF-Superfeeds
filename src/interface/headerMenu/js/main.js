@@ -1297,7 +1297,7 @@ class HeaderMenu{
         left: ${o.rect.left}px;`
       ,
       onblur: (e) => {
-        if(o.autohide) e.target.remove();
+        // if(o.autohide) e.target.remove();
       },
       func: (m) => {
         attachment({
@@ -1408,83 +1408,15 @@ class HeaderMenu{
                 }
               ]
             });
+          }
+        });
 
-            if(this.user){
-              new El().List({
-                path: m,
-                label: 'Статьи',
-                lName: 'hor',
-                cName: 'itemsList hor fs10px',
-                items: [
-                  {
-                    title: this.user.flags.topics.favorite && 'Избранный',
-                    cName: !this.user.flags.topics.favorite && 'off',
-                    text: '💘'
-                  },
-                  {
-                    title: this.user.flags.topics.ignored && 'Игнорируется',
-                    cName: !this.user.flags.topics.ignored && 'off',
-                    text: '💢'
-                  },
-                  {
-                    title: this.user.flags.topics.blocked && 'Блокируется',
-                    cName: !this.user.flags.topics.blocked && 'off',
-                    text: '🈲'
-                  }
-                ]
-              });
-
-              new El().List({
-                path: m,
-                label: 'Блоги',
-                lName: 'hor',
-                cName: 'itemsList hor fs10px',
-                items: [
-                  {
-                    title: this.user.flags.blogs.favorite && 'Избранный',
-                    cName: !this.user.flags.blogs.favorite && 'off',
-                    text: '💘'
-                  },
-                  {
-                    title: this.user.flags.blogs.ignored && 'Игнорируется',
-                    cName: !this.user.flags.blogs.ignored && 'off',
-                    text: '💢'
-                  },
-                  {
-                    title: this.user.flags.blogs.blocked && 'Блокируется',
-                    cName: !this.user.flags.blogs.blocked && 'off',
-                    text: '🈲'
-                  }
-                ]
-              });
-
-              new El().List({
-                path: m,
-                label: 'Комментарии',
-                lName: 'hor',
-                cName: 'itemsList hor fs10px',
-                items: [
-                  {
-                    title: this.user.flags.comments.favorite && 'Избранный',
-                    cName: !this.user.flags.comments.favorite && 'off',
-                    text: '💘'
-                  },
-                  {
-                    title: this.user.flags.comments.ignored && 'Игнорируется',
-                    cName: !this.user.flags.comments.ignored && 'off',
-                    text: '💢'
-                  },
-                  {
-                    title: this.user.flags.comments.blocked && 'Блокируется',
-                    cName: !this.user.flags.comments.blocked && 'off',
-                    text: '🈲'
-                  }
-                ]
-              });
-            }
-
+        new El().Div({
+          path: m,
+          cName: 'list',
+          func: (l) => {
             new El().List({
-              path: m,
+              path: l,
               cName: 'itemsList',
               items: [
                 {
@@ -1504,7 +1436,87 @@ class HeaderMenu{
                   text: `📬\uFE0E ${o.item.subsite.counters.subscriptions}`
                 }
               ]
-            })
+            });
+
+            if(this.user){
+              new El().Div({
+                path: l,
+                cName: 'flex ver',
+                func: (l) => {
+                  new El().List({
+                    path: l,
+                    label: 'Статьи',
+                    lName: 'hor',
+                    cName: 'itemsList hor fs10px',
+                    items: [
+                      {
+                        title: this.user.flags.topics.favorite && 'Избранный',
+                        cName: !this.user.flags.topics.favorite && 'off',
+                        text: '💘'
+                      },
+                      {
+                        title: this.user.flags.topics.ignored && 'Игнорируется',
+                        cName: !this.user.flags.topics.ignored && 'off',
+                        text: '💢'
+                      },
+                      {
+                        title: this.user.flags.topics.blocked && 'Блокируется',
+                        cName: !this.user.flags.topics.blocked && 'off',
+                        text: '🈲'
+                      }
+                    ]
+                  });
+
+                  new El().List({
+                    path: l,
+                    label: 'Блоги',
+                    lName: 'hor',
+                    cName: 'itemsList hor fs10px',
+                    items: [
+                      {
+                        title: this.user.flags.blogs.favorite && 'Избранный',
+                        cName: !this.user.flags.blogs.favorite && 'off',
+                        text: '💘'
+                      },
+                      {
+                        title: this.user.flags.blogs.ignored && 'Игнорируется',
+                        cName: !this.user.flags.blogs.ignored && 'off',
+                        text: '💢'
+                      },
+                      {
+                        title: this.user.flags.blogs.blocked && 'Блокируется',
+                        cName: !this.user.flags.blogs.blocked && 'off',
+                        text: '🈲'
+                      }
+                    ]
+                  });
+
+                  new El().List({
+                    path: l,
+                    label: 'Комментарии',
+                    lName: 'hor',
+                    cName: 'itemsList hor fs10px',
+                    items: [
+                      {
+                        title: this.user.flags.comments.favorite && 'Избранный',
+                        cName: !this.user.flags.comments.favorite && 'off',
+                        text: '💘'
+                      },
+                      {
+                        title: this.user.flags.comments.ignored && 'Игнорируется',
+                        cName: !this.user.flags.comments.ignored && 'off',
+                        text: '💢'
+                      },
+                      {
+                        title: this.user.flags.comments.blocked && 'Блокируется',
+                        cName: !this.user.flags.comments.blocked && 'off',
+                        text: '🈲'
+                      }
+                    ]
+                  });
+                }
+              });
+            }
           }
         });
       }
