@@ -164,6 +164,13 @@ const sData = {
         }
     },
     'feeds': {
+        'interface': {
+            'feedButtons': {
+                'readed': true,
+                'author actions': true,
+                'subsite actions': false
+            }
+        },
         'what to show': {
             'popular': {
                 'topics': true,
