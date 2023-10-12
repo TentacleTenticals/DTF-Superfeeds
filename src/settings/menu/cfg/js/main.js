@@ -40,30 +40,6 @@ initMenu.setSettings = (m, cfg) => {
     items: [
       {
         t: 'separator',
-        text: 'Настройки'
-      },
-      {
-        t: 'input',
-        type: 'checkbox',
-        lName: 'full nl',
-        label: 'Онлайн',
-        name: 'online',
-        group: 'settings'
-      },
-      {
-        t: 'select',
-        label: 'Удалённая база данных',
-        name: 'db',
-        options: [
-          ['Нет', 'none'],
-          ['Firebase', 'firebase'],
-          ['Supabase', 'supabase'],
-          ['MongoDB', 'mongoDB']
-        ],
-        group: 'settings'
-      },
-      {
-        t: 'separator',
         text: 'Данные'
       },
       {
@@ -100,14 +76,14 @@ initMenu.setSettings = (m, cfg) => {
         t: 'input',
         type: 'number',
         label: 'Максимум вложений',
-        name: 'max sz',
+        name: 'max size',
         group: 'saving.feeds.attachments.items'
       },
       {
         t: 'input',
         type: 'number',
         label: 'Максимум вложений в альбомах',
-        name: 'max sz',
+        name: 'max size',
         group: 'saving.feeds.attachments.albums'
       }
     ]
@@ -361,10 +337,47 @@ initMenu.setSettings = (m, cfg) => {
     path: m,
     groupName: 'filters',
     cName: 'grid',
-    legend: 'Фильтры фидов',
-    info: 'Фильтрация фидов по тексту, или же его отсутствию',
+    legend: 'Фильтры фидов (статьи)',
+    info: 'Фильтрация',
     autocfg: [cfg, 'feeds.topics.title'],
     items: [
+      {
+        t: 'separator',
+        text: 'Автор'
+      },
+      {
+        t: 'select',
+        label: 'Игнорируется',
+        lName: 'full nl',
+        name: 'ignored',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'feeds.topics.author'
+      },
+      {
+        t: 'select',
+        label: 'Блокируется',
+        lName: 'full nl',
+        name: 'blocked',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'feeds.topics.author'
+      },
+
+      {
+        t: 'separator',
+        text: 'Заголовок'
+      },
       {
         t: 'input',
         type: 'checkbox',
@@ -392,7 +405,7 @@ initMenu.setSettings = (m, cfg) => {
         t: 'select',
         label: 'Есть заголовок с...',
         lName: 'full nl',
-        name: 'none',
+        name: 'some',
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
@@ -454,7 +467,7 @@ initMenu.setSettings = (m, cfg) => {
         t: 'select',
         label: 'Есть текст с...',
         lName: 'full nl',
-        name: 'none',
+        name: 'some',
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
@@ -486,9 +499,46 @@ initMenu.setSettings = (m, cfg) => {
     groupName: 'filters',
     cName: 'grid',
     legend: 'Фильтры фидов (блоги)',
-    info: 'Заголовок',
+    info: 'Фильтрация',
     autocfg: [cfg, 'feeds.blogs.title'],
     items: [
+      {
+        t: 'separator',
+        text: 'Автор'
+      },
+      {
+        t: 'select',
+        label: 'Игнорируется',
+        lName: 'full nl',
+        name: 'ignored',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'feeds.blogs.author'
+      },
+      {
+        t: 'select',
+        label: 'Блокируется',
+        lName: 'full nl',
+        name: 'blocked',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'feeds.blogs.author'
+      },
+
+      {
+        t: 'separator',
+        text: 'Заголовок'
+      },
       {
         t: 'input',
         type: 'checkbox',
@@ -516,7 +566,7 @@ initMenu.setSettings = (m, cfg) => {
         t: 'select',
         label: 'Есть заголовок с...',
         lName: 'full nl',
-        name: 'none',
+        name: 'some',
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
@@ -610,8 +660,107 @@ initMenu.setSettings = (m, cfg) => {
     groupName: 'filters',
     cName: 'grid',
     legend: 'Фильтры комментариев',
+    info: 'Фильтрация',
+    autocfg: [cfg, 'comments.text'],
+    items: [
+      {
+        t: 'separator',
+        text: 'Автор'
+      },
+      {
+        t: 'select',
+        label: 'Игнорируется',
+        lName: 'full nl',
+        name: 'ignored',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'comments.author'
+      },
+      {
+        t: 'select',
+        label: 'Блокируется',
+        lName: 'full nl',
+        name: 'blocked',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Замаскировать', 'blur'],
+          ['Скрыть', 'hide'],
+          ['Удалить', 'delete']
+        ],
+        group: 'comments.author'
+      },
+
+      {
+        t: 'separator',
+        text: 'Заголовок'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Активен',
+        name: 'active'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Фильтр по словам',
+        name: 'words active'
+      },
+      {
+        t: 'select',
+        label: 'Нет заголовка',
+        lName: 'full nl',
+        name: 'none',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Удалить', 'delete']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Есть заголовок с...',
+        lName: 'full nl',
+        name: 'none',
+        options: [
+          ['Ничего', 'none'],
+          ['Свернуть', 'collapse'],
+          ['Удалить', 'delete']
+        ]
+      },
+      {
+        t: 'list',
+        mode: 'all',
+        name: 'words',
+        lName: 'iList full nl',
+        cName: 'tags flex',
+        type: 'string',
+        title: 'Нажмите на меня для добавления слова',
+        label: 'Слова:',
+        focus: true,
+        canDel: true,
+        onRclick: (e) => {
+          e.preventDefault();
+          if(e.target.nodeName !== 'UL') return;
+          e.currentTarget.replaceChildren();
+        }
+      }
+    ]
+  });
+
+  new El().Field({
+    path: m,
+    groupName: 'filters',
+    cName: 'grid',
+    legend: '',
     info: 'Текст',
-    autocfg: [cfg, 'comments'],
+    autocfg: [cfg, 'comments.text'],
     items: [
       {
         t: 'input',
@@ -640,7 +789,7 @@ initMenu.setSettings = (m, cfg) => {
         t: 'select',
         label: 'Есть текст с...',
         lName: 'full nl',
-        name: 'none',
+        name: 'some',
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
