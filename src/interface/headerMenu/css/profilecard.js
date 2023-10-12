@@ -54,6 +54,12 @@ const profilecardCss = () => `
   gap: 3px 3px;
 }
 
+.profileCard .buttons button {
+  background-color: rgb(0,0,0);
+  color: rgb(255,255,255);
+  box-shadow: 0 0 2px 0px rgb(255,255,255);
+}
+
 .profileCard .off {
   opacity: 0.5;
 }
