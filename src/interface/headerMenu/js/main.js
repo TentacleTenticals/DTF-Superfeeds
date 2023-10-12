@@ -5,12 +5,10 @@ class HeaderMenu{
         o.s = 'news';
       }
       break;
-      case 'subsite':{
-        o.s = 'subsite';
-        o.v = 'id';
-      }
-      break;
-      case 'user':{
+      case 'subsite':
+      case 'subsites':
+      case 'user':
+      case 'users': {
         o.s = 'subsite';
         o.v = 'id';
       }
@@ -636,14 +634,14 @@ class HeaderMenu{
           type: 'button',
           text: 'О подсайте',
           onclick: () => {
-            this.dtfApi({type:'subsites', value:o.sID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsite', value:o.sID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
           }
         }]:[],
         {
           type: 'button',
           text: 'О пользователе',
           onclick: () => {
-            this.dtfApi({type:'subsites', value:o.uID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
+            this.dtfApi({type:'subsite', value:o.uID}).then(res => this.profileCard({path: document.body, rect:o.rect, autohide:true, offset:o.offset, item:res}));
           }
         },
 
