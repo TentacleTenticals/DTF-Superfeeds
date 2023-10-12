@@ -5,7 +5,12 @@ class HeaderMenu{
         o.s = 'news';
       }
       break;
-      case ('subsites'||'users'):{
+      case 'subsite':{
+        o.s = 'subsite';
+        o.v = 'id';
+      }
+      break;
+      case 'user':{
         o.s = 'subsite';
         o.v = 'id';
       }
@@ -133,6 +138,11 @@ class HeaderMenu{
             },
             flags:{
               topics:{
+                favorite: false,
+                ignored: false,
+                blocked: false
+              },
+              blogs:{
                 favorite: false,
                 ignored: false,
                 blocked: false
@@ -340,7 +350,8 @@ class HeaderMenu{
     return new Promise((result, error) => {
       if(o.type.match(/users|subsites/)){
         let obj;
-        this.getUser(o.id).then(res => {
+        this.dtfApi({type:o.type, value:o.id}).then(res => {
+          console.log('USER', res)
           if(o.type === 'users'){
             obj = {
               id: o.id,
