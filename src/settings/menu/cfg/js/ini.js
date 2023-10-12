@@ -4,7 +4,7 @@ const sData = {
     users: [],
     feeds: []
 },
-  defaultCfg = {
+  const defaultCfg = {
     'main': {
         feeds: {
             'working mode': 'obs',
@@ -21,6 +21,13 @@ const sData = {
                             width: 300,
                             height: 150
                         }
+                    }
+                },
+                interface: {
+                    feedButtons: {
+                        'readed': true,
+                        'author actions': true,
+                        'subsite actions': false
                     }
                 }
             }
@@ -102,6 +109,10 @@ const sData = {
     'filters': {
         'feeds': {
             'topics': {
+                author: {
+                    ignored: 'blur',
+                    blocked: 'blur'
+                },
                 'title': {
                     'none': 'none',
                     'some': 'none',
@@ -118,6 +129,10 @@ const sData = {
                 }
             },
             'blogs': {
+                author: {
+                    ignored: 'blur',
+                    blocked: 'blur'
+                },
                 'title': {
                     'none': 'none',
                     'some': 'none',
@@ -135,6 +150,10 @@ const sData = {
             }
         },
         'comments': {
+            author: {
+                ignored: 'blur',
+                blocked: 'blur'
+            },
             'text': {
                 'none': 'none',
                 'some': 'none',
@@ -145,23 +164,6 @@ const sData = {
         }
     },
     'feeds': {
-        'interface': {
-            'feedButtons': {
-                'readed': true,
-                'author actions': true,
-                'subsite actions': false
-            }
-        },
-        visual: {
-            attachments: {
-                video: {
-                    size: {
-                        width: '300',
-                        height: '200'
-                    }
-                }
-            }
-        },
         'what to show': {
             'popular': {
                 'topics': true,
