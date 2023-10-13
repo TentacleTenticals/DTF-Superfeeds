@@ -114,9 +114,9 @@ class HeaderMenu{
                 favorite: false,
                 ignored: false,
                 blocked: false
-              }
-            },
-            ...o.card ? o.card.flags : {}
+              },
+              ...o.card ? o.card.flags : {}
+            }
           };
           else
           if(o.type === 'subsites') obj = {
@@ -149,9 +149,9 @@ class HeaderMenu{
                 favorite: false,
                 ignored: false,
                 blocked: false
-              }
-            },
-            ...o.card ? o.card.flags : {}
+              },
+              ...o.card ? o.card.flags : {}
+            }
           };
           if(!o.card) obj.flags[o.r][o.key] ? obj.flags[o.r][o.key] = false : obj.flags[o.r][o.key] = true;
           if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
@@ -169,7 +169,8 @@ class HeaderMenu{
               dropped: false,
               favorite: false,
               ignored: false,
-              blocked: false
+              blocked: false,
+              ...o.card ? o.card.flags : {}
             },
             info: {
               author: {
@@ -212,8 +213,7 @@ class HeaderMenu{
                 }
               })(),
               ...o.card ? o.card.info : {}
-            },
-            ...o.card ? {flags:o.card.flags} : {}
+            }
           }
           if(!o.card) obj.flags[o.key] ? obj.flags[o.key] = false : obj.flags[o.key] = true;
           if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
