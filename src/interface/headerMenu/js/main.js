@@ -755,7 +755,7 @@ class HeaderMenu{
             }).then(data => {
               console.log(data);
               if(data){
-                this.addOrUpdate({id:o.sID, name:o.sName, type:'users', card:data}).then(res => {
+                this.addOrUpdate({id:o.uID, name:o.sName, type:'users', card:data}).then(res => {
                   if(!res){
                     return;
                   }else{
@@ -980,7 +980,7 @@ class HeaderMenu{
             }).then(data => {
               console.log(data);
               if(data){
-                this.addOrUpdate({id:o.sID, name:o.sName, type:'feeds', card:data}).then(res => {
+                this.addOrUpdate({id:o.fID, name:o.sName, type:'feeds', card:data}).then(res => {
                   if(!res){
                     return;
                   }else{
