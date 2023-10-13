@@ -158,13 +158,19 @@ initMenu.setSettings = (m, cfg) => {
       {
         t: 'input',
         type: 'checkbox',
-        label: 'Страница фида',
+        label: 'Страницы подсайтов',
+        name: 'subsite'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Страницы фидов',
         name: 'topic'
       },
       {
         t: 'input',
         type: 'checkbox',
-        label: 'Страница автора',
+        label: 'Страницы авторов',
         name: 'user page'
       }
     ]
@@ -220,7 +226,17 @@ initMenu.setSettings = (m, cfg) => {
       },
       {
         t: 'select',
-        label: 'Страница фида',
+        label: 'Страницы подсайтов',
+        name: 'subsite',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Страницы фидов',
         name: 'topic',
         options: [
           ['Все', 'all'],
@@ -230,7 +246,7 @@ initMenu.setSettings = (m, cfg) => {
       },
       {
         t: 'select',
-        label: 'Страница автора',
+        label: 'Страницы авторов',
         name: 'user page',
         options: [
           ['Все', 'all'],
