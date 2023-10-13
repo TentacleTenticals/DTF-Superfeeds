@@ -582,6 +582,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -593,6 +599,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -644,6 +656,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -655,6 +673,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -698,7 +722,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
-          ['Замаскировать', 'blur'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Скрыть', 'hide'],
           ['Удалить', 'delete']
         ],
@@ -712,7 +741,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
-          ['Замаскировать', 'blur'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Скрыть', 'hide'],
           ['Удалить', 'delete']
         ],
@@ -742,7 +776,12 @@ initMenu.setSettings = (m, cfg) => {
         name: 'none',
         options: [
           ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -753,7 +792,12 @@ initMenu.setSettings = (m, cfg) => {
         name: 'some',
         options: [
           ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -805,6 +849,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -816,6 +866,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -892,70 +948,8 @@ initMenu.setSettings = (m, cfg) => {
 
       {
         t: 'separator',
-        text: 'Заголовок'
+        text: 'Текст'
       },
-      {
-        t: 'input',
-        type: 'checkbox',
-        label: 'Активен',
-        name: 'active'
-      },
-      {
-        t: 'input',
-        type: 'checkbox',
-        label: 'Фильтр по словам',
-        name: 'words active'
-      },
-      {
-        t: 'select',
-        label: 'Нет заголовка',
-        lName: 'full nl',
-        name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Удалить', 'delete']
-        ]
-      },
-      {
-        t: 'select',
-        label: 'Есть заголовок с...',
-        lName: 'full nl',
-        name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Удалить', 'delete']
-        ]
-      },
-      {
-        t: 'list',
-        mode: 'all',
-        name: 'words',
-        lName: 'iList full nl',
-        cName: 'tags flex',
-        type: 'string',
-        title: 'Нажмите на меня для добавления слова',
-        label: 'Слова:',
-        focus: true,
-        canDel: true,
-        onRclick: (e) => {
-          e.preventDefault();
-          if(e.target.nodeName !== 'UL') return;
-          e.currentTarget.replaceChildren();
-        }
-      }
-    ]
-  });
-
-  new El().Field({
-    path: m,
-    groupName: 'filters',
-    cName: 'grid',
-    legend: '',
-    info: 'Текст',
-    autocfg: [cfg, 'comments.text'],
-    items: [
       {
         t: 'input',
         type: 'checkbox',
@@ -976,6 +970,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
@@ -987,6 +987,12 @@ initMenu.setSettings = (m, cfg) => {
         options: [
           ['Ничего', 'none'],
           ['Свернуть', 'collapse'],
+          ['Замаскировать всё', 'blur'],
+          ['Замаскировать текст', 'blurText'],
+          ['Замаскировать вложения', 'blurAtt'],
+          ['Перекрыть всё', 'sp'],
+          ['Перекрыть текст', 'spText'],
+          ['Перекрыть вложения', 'spAtt'],
           ['Удалить', 'delete']
         ]
       },
