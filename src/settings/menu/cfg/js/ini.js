@@ -151,8 +151,8 @@ const sData = {
         },
         'comments': {
             author: {
-                ignored: 'blurAll',
-                blocked: 'blurAll'
+                ignored: 'blur',
+                blocked: 'sp'
             },
             'text': {
                 'none': 'none',
