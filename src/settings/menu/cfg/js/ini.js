@@ -26,7 +26,7 @@ const sData = {
                 interface: {
                     feedButtons: {
                         'readed': true,
-                        'author actions': true,
+                        'author actions': false,
                         'subsite actions': false
                     }
                 }
@@ -71,10 +71,10 @@ const sData = {
             'feeds': {
                 'attachments': {
                     'items': {
-                        'max sz': 2
+                        'max size': 2
                     },
                     'albums': {
-                        'max sz': 2
+                        'max size': 2
                     }
                 }
             }
@@ -165,26 +165,12 @@ const sData = {
     },
     'feeds': {
         'what to show': {
-            'popular': {
-                'topics': true,
-                'blogs': true
-            },
-            'new': {
-                'topics': true,
-                'blogs': true
-            },
-            'my new': {
-                'topics': true,
-                'blogs': true
-            },
-            'bookmarks': {
-                'topics': true,
-                'blogs': true
-            },
-            'topic': {
-                'topics': true,
-                'blogs': true
-            }
+            'popular': 'all',
+            'new': 'all',
+            'my new': 'all',
+            'bookmarks': 'all',
+            'topic': 'all',
+            'user page': 'all'
         },
         'where to react': {
             'popular': true,
