@@ -125,6 +125,124 @@ initMenu.setSettings = (m, cfg) => {
 
   new El().Field({
     path: m,
+    groupName: 'feeds',
+    cName: 'grid',
+    legend: 'Поиски фидов',
+    info: 'Где искать фиды',
+    autocfg: [cfg, 'where to react'],
+    items: [
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Популярное',
+        name: 'popular'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Новое',
+        name: 'new'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Моя стена',
+        name: 'my new'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Закладки',
+        name: 'bookmarks'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Страница фида',
+        name: 'topic'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Страница автора',
+        name: 'user page'
+      }
+    ]
+  });
+
+  new El().Field({
+    path: m,
+    groupName: 'feeds',
+    cName: 'grid',
+    legend: 'Что показывать',
+    info: 'Какие именно виды фидов показывать',
+    autocfg: [cfg, 'what to show'],
+    items: [
+      {
+        t: 'select',
+        label: 'Популярное',
+        name: 'popular',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Новое',
+        name: 'new',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Моя стена',
+        name: 'my new',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Закладки',
+        name: 'bookmarks',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Страница фида',
+        name: 'topic',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Страница автора',
+        name: 'user page',
+        options: [
+          ['Все', 'all'],
+          ['Статьи', 'topics'],
+          ['Блоги', 'blogs']
+        ]
+      }
+    ]
+  });
+
+  new El().Field({
+    path: m,
     groupName: 'main',
     cName: 'grid',
     legend: 'Проверка фидов/комментариев',
@@ -166,6 +284,46 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Проверять при загрузке страницы',
         name: 'onPageLoad',
         group: 'comments.check',
+      }
+    ]
+  });
+
+  new El().Field({
+    path: m,
+    groupName: 'main',
+    cName: 'grid',
+    legend: 'Просмотр фидов',
+    info: 'Вид фидов',
+    autocfg: [cfg],
+    items: [
+      {
+        t: 'separator',
+        text: 'Интерфейс'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Прочтено',
+        name: 'readed',
+        group: 'feeds.check.interface.feedButtons',
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Действия с подсайтом',
+        name: 'subsite actions',
+        group: 'feeds.check.interface.feedButtons',
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Действия с автором',
+        name: 'author actions',
+        group: 'feeds.check.interface.feedButtons',
+      },
+      {
+        t: 'separator',
+        text: 'Комментарии'
       }
     ]
   });
@@ -270,11 +428,11 @@ initMenu.setSettings = (m, cfg) => {
 
   new El().Field({
     path: m,
-    groupName: 'bookMenu',
+    groupName: 'database',
     cName: 'grid',
-    legend: 'BookMenu',
+    legend: 'bookMenu',
     info: 'Кол-во итемов на одной странице',
-    autocfg: [cfg, 'size'],
+    autocfg: [cfg, 'bookMenu.size'],
     items: [
       {
         t: 'input',
@@ -312,7 +470,7 @@ initMenu.setSettings = (m, cfg) => {
       {
         t: 'input',
         type: 'number',
-        label: 'Максимальная высота книги фидов',
+        label: 'Высота книги фидов',
         name: 'max height',
         group: 'bookMenu.feeds.book.size'
       },
