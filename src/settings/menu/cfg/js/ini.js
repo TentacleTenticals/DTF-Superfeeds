@@ -191,7 +191,8 @@ const sData = {
             'new': true,
             'my new': true,
             'bookmarks': true,
-            'topic': true
+            'topic': true,
+            'user page': true
         }
     },
     'usercard': {
