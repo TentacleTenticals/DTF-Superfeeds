@@ -169,6 +169,7 @@ const sData = {
             'new': 'all',
             'my new': 'all',
             'bookmarks': 'all',
+            'subsite': 'all',
             'topic': 'all',
             'user page': 'all'
         },
@@ -177,6 +178,7 @@ const sData = {
             'new': true,
             'my new': true,
             'bookmarks': true,
+            'subsite': true,
             'topic': true,
             'user page': true
         }
