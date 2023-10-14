@@ -12,14 +12,26 @@ const sData = {
                 active: true,
                 onPageLoad: true,
                 attachments: {
+                    embeds: {
+                        youtube: {
+                            replace: true,
+                            autoplay: false,
+                            sound: false,
+                            volume: 40,
+                            size: {
+                                width: 500,
+                                height: 300
+                            }
+                        }
+                    },
                     video: {
                         replace: true,
                         autoplay: false,
                         sound: false,
                         volume: 40,
                         size: {
-                            width: 300,
-                            height: 150
+                            width: 500,
+                            height: 300
                         }
                     }
                 },
