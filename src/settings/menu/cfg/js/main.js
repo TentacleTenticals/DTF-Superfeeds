@@ -353,6 +353,10 @@ initMenu.setSettings = (m, cfg) => {
     autocfg: [cfg, 'feeds.check.attachments.video'],
     items: [
       {
+        t: 'separator',
+        text: 'Видео'
+      },
+      {
         t: 'input',
         type: 'checkbox',
         label: 'Замена видео',
@@ -389,7 +393,33 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Размер - ширина',
         name: 'height',
         group: 'feeds.check.attachments.video.size'
-      }
+      },
+
+      {
+        t: 'separator',
+        text: 'Youtube'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Замена youtube',
+        name: 'replace',
+        group: 'feeds.check.attachments.embeds.youtube'
+      },
+      {
+        t: 'input',
+        type: 'number',
+        label: 'Длина',
+        name: 'width',
+        group: 'feeds.check.attachments.embeds.youtube.size'
+      },
+      {
+        t: 'input',
+        type: 'number',
+        label: 'Ширина',
+        name: 'height',
+        group: 'feeds.check.attachments.embeds.youtube.size'
+      },
     ]
   });
 
@@ -524,17 +554,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Игнорируется',
         lName: 'full nl',
         name: 'ignored',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'feeds.topics.author'
       },
@@ -543,17 +588,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Блокируется',
         lName: 'full nl',
         name: 'blocked',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'feeds.topics.author'
       },
@@ -579,16 +639,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Нет заголовка',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -596,16 +672,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Есть заголовок с...',
         lName: 'full nl',
         name: 'some',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -653,16 +745,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Нет текста',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -670,16 +778,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Есть текст с...',
         lName: 'full nl',
         name: 'some',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -719,17 +843,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Игнорируется',
         lName: 'full nl',
         name: 'ignored',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'feeds.blogs.author'
       },
@@ -738,17 +877,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Блокируется',
         lName: 'full nl',
         name: 'blocked',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'feeds.blogs.author'
       },
@@ -774,15 +928,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Нет заголовка',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -790,15 +961,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Есть заголовок с...',
         lName: 'full nl',
         name: 'some',
-        options: [
-          ['Ничего', 'none'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -846,16 +1034,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Нет текста',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -863,16 +1067,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Есть текст с...',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -912,17 +1132,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Игнорируется',
         lName: 'full nl',
         name: 'ignored',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'comments.author'
       },
@@ -931,17 +1166,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Блокируется',
         lName: 'full nl',
         name: 'blocked',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Скрыть', 'hide'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ],
         group: 'comments.author'
       },
@@ -967,16 +1217,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Нет текста',
         lName: 'full nl',
         name: 'none',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
@@ -984,16 +1250,32 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Есть текст с...',
         lName: 'full nl',
         name: 'some',
-        options: [
-          ['Ничего', 'none'],
-          ['Свернуть', 'collapse'],
-          ['Замаскировать всё', 'blur'],
-          ['Замаскировать текст', 'blurText'],
-          ['Замаскировать вложения', 'blurAtt'],
-          ['Перекрыть всё', 'sp'],
-          ['Перекрыть текст', 'spText'],
-          ['Перекрыть вложения', 'spAtt'],
-          ['Удалить', 'delete']
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide'],
+              ['Удалить', 'delete']
+            ]
+          },
+          {
+            label: 'Размытие',
+            items: [
+              ['Всё', 'blur'],
+              ['Текст', 'blurText'],
+              ['Вложения', 'blurAtt']
+            ]
+          },
+          {
+            label: 'Перекрыть плашкой',
+            items: [
+              ['Всё', 'sp'],
+              ['Текст', 'spText'],
+              ['Вложения', 'spAtt']
+            ]
+          }
         ]
       },
       {
