@@ -129,14 +129,14 @@ const sData = {
                     'none': 'none',
                     'some': 'none',
                     'active': true,
-                    'words active': true,
-                    'words': ['lol']
+                    'words active': false,
+                    'words': []
                 },
                 'text': {
                     'none': 'none',
                     'some': 'none',
                     'active': true,
-                    'words active': true,
+                    'words active': false,
                     'words': []
                 }
             },
@@ -149,14 +149,14 @@ const sData = {
                     'none': 'none',
                     'some': 'none',
                     'active': true,
-                    'words active': true,
+                    'words active': false,
                     'words': []
                 },
                 'text': {
                     'none': 'none',
                     'some': 'none',
                     'active': true,
-                    'words active': true,
+                    'words active': false,
                     'words': []
                 }
             }
@@ -170,7 +170,7 @@ const sData = {
                 'none': 'none',
                 'some': 'none',
                 'active': true,
-                'words active': true,
+                'words active': false,
                 'words': []
             }
         }
