@@ -133,4 +133,73 @@ const feedsCss = (c) => `
 .contextMenu .list .btn:is(.readed, .planToRead, .onHold, .favorite, .ignored, .blocked) {
   background-image: linear-gradient(45deg, rgb(83 148 161), transparent);
 }
+
+
+
+
+.db-feed .cont {
+  display: flex;
+  margin: 20px 0 0 0;
+}
+.db-feed .video-cont {
+  display: inline-flex;
+  position: relative;
+  margin: auto;
+  max-width: ${c.database.bookMenu.feeds.attachments.visual.size.video['max width']}%;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0);
+  z-index: 10;
+  cursor: pointer;
+}
+.db-feed .video-cont video {
+  max-width: inherit;
+  max-height: inherit;
+  margin: auto;
+}
+
+.db-feed .video-cont.playing .mediaStarter {
+  display: none;
+}
+
+.db-feed .mediaStarter {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 40%);
+  position: absolute;
+  /* justify-content: center; */
+  align-items: center;
+  z-index: 10;
+  cursor: pointer;
+}
+.db-feed .mediaStarter .btn {
+  display: flex;
+  background-color: rgb(255 255 255);
+  margin: 0 auto;
+  height: 50%;
+  max-height: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 4px 0px rgb(0 0 0);
+  z-index: 1;
+  background-image: url(https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg);
+  background-size: 35%;
+  background-repeat: no-repeat;
+  background-position: 60% 50%;
+}
+.db-feed .mediaStarter .btn img {
+  width: 35%;
+  margin: 0px 0px 0px 10%;
+}
+.db-feed :is(.dtf-attach, .video-cont):hover .mediaStarter .btn {
+  opacity: 0.6;
+}
+
+.db-feed .dtf-attach.iframe.yt.video .mediaStarter .btn {
+  background-color: rgb(255, 0, 0);
+}
 `;
