@@ -529,6 +529,13 @@ initMenu.setSettings = (m, cfg) => {
       },
       {
         t: 'input',
+        type: 'number',
+        label: 'Размер видео',
+        name: 'max width',
+        group: 'bookMenu.feeds.attachments.visual.size.video'
+      },
+      {
+        t: 'input',
         type: 'color',
         label: 'Цвет тегов',
         name: 'tag',
