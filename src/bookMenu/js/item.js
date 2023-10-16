@@ -332,7 +332,7 @@ class BookItem{
       func: (a) => item.info.attachments.forEach(e => {
         if(e.type === 'media'){
           e.items.forEach(i => {
-            attachment({path:a, type:'subsite', i:i});
+            attachment({path:a, type:'media', i:i});
           })
         }else
         if(e.type === 'text'){
