@@ -575,17 +575,17 @@ class HeaderMenu{
   }
   build(o){
     function upd(type, run){
-      if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run();
+      if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
       else
       new Odb()[mainCfg.database.data.db]({
         run: 'get all',
         type: type
       }).then(db => {
         if(!db){
-          run();
+          run;
         }else{
           sData[type] = db;
-          run();
+          run;
         }
       });
     }
