@@ -146,7 +146,7 @@ const feedsCss = (c) => `
   position: relative;
   margin: auto;
   max-width: ${c.database.bookMenu.feeds.attachments.visual.size.video['max width']}%;
-  box-shadow: 0px 0px 3px 1px rgb(0 0 0);
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0), 0px 0px 3px 1px rgb(255 255 255);
   z-index: 10;
   cursor: pointer;
 }
