@@ -48,14 +48,14 @@ class HeaderMenu{
     if(o.status === 'success'){
       alerter({
         title: `[AddOrUpdate]`,
-        text: `${o.type} успешно ${o.process}`,
+        text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} успешно выполнено`,
         timer: 5000
       });
     }else{
       alerter({
         alert: true,
         title: `[AddOrUpdate]`,
-        text: `${o.type} не ${o.process}`,
+        text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} не выполнено`,
         timer: 5000
       });
     }
@@ -171,7 +171,7 @@ class HeaderMenu{
           };
           if(!o.card) obj.flags[o.r][o.key] ? obj.flags[o.r][o.key] = false : obj.flags[o.r][o.key] = true;
           if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
-          result({status:'success', process:'adding item', type:o.type, id:o.id, item:obj});
+          result({status:'success', process:'item adding', type:o.type, id:o.id, item:obj});
         });
       }else
       if(o.type.match(/feeds/)){
@@ -233,7 +233,7 @@ class HeaderMenu{
           }
           if(!o.card) obj.flags[o.key] ? obj.flags[o.key] = false : obj.flags[o.key] = true;
           if(mainCfg['database']['keepVars'][o.type]) o.data[o.type].push(obj);
-          result({status:'success', process:'adding item', type:o.type, id:o.id, item:obj});
+          result({status:'success', process:'item adding', type:o.type, id:o.id, item:obj});
           // checkFeeds({fullCheck:true});
         });
       }else
@@ -408,7 +408,7 @@ class HeaderMenu{
             o.item.flags[o.r][o.key] ? o.item.flags[o.r][o.key] = false : o.item.flags[o.r][o.key] = true;
             flagsCheck();
           }
-          result({status:'success', process:'item update', type:o.type, id:o.id, item:obj});
+          result({status:'success', process:'item updating', type:o.type, id:o.id, item:obj});
         });
       }else{
         this.getFeed(o.id).then(res => {
@@ -462,7 +462,7 @@ class HeaderMenu{
             o.item.flags[o.key] ? o.item.flags[o.key] = false : o.item.flags[o.key] = true;
             flagsCheck();
           }
-          result({status:'success', process:'item update', type:o.type, id:o.id, item:obj});
+          result({status:'success', process:'item updating', type:o.type, id:o.id, item:obj});
         });
       }
     });
@@ -688,7 +688,6 @@ class HeaderMenu{
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('subsites', checkFeeds({fullCheck:true}));
-                      console.log('Subsite', sData.subsites);
                     }
                   }
                 });
@@ -712,10 +711,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('subsites', checkFeeds({fullCheck:true}));
-                      console.log('Subsite', sData.subsites);
                     }
                   }
                 });
@@ -731,10 +730,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('subsites', checkFeeds({fullCheck:true}));
-                      console.log('Subsite', sData.subsites);
                     }
                   }
                 });
@@ -750,10 +749,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('subsites', checkFeeds({fullCheck:true}));
-                      console.log('Subsite', sData.subsites);
                     }
                   }
                 });
@@ -780,10 +779,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('user', sData.users);
                     }
                   }
                 });
@@ -807,10 +806,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -826,10 +825,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -845,10 +844,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -872,10 +871,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -891,10 +890,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -910,10 +909,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -937,10 +936,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -956,10 +955,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -975,10 +974,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('users', checkFeeds({fullCheck:true}));
-                      console.log('User', sData.users);
                     }
                   }
                 });
@@ -1005,10 +1004,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('feed', sData.feeds);
                     }
                   }
                 });
@@ -1032,10 +1031,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1051,10 +1050,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1070,10 +1069,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1089,10 +1088,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1108,10 +1107,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1127,10 +1126,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
@@ -1146,10 +1145,10 @@ class HeaderMenu{
                   if(!res){
                     return;
                   }else{
+                    this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                       upd('feeds', checkFeeds({fullCheck:true}));
-                      console.log('Feed', sData.feeds);
                     }
                   }
                 });
