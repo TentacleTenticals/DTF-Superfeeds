@@ -110,8 +110,8 @@ const sData = {
                                 'max width': '50'
                             },
                             video: {
-                                'max width': '50',
-                                'max height': '30'
+                                'max width': '80',
+                                'max height': '50'
                             }
                         },
                         color: {
