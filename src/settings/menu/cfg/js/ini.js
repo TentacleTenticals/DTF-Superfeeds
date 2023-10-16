@@ -108,6 +108,10 @@ const sData = {
                         size: {
                             image: {
                                 'max width': '50'
+                            },
+                            video: {
+                                'max width': '50',
+                                'max height': '30'
                             }
                         },
                         color: {
