@@ -1,17 +1,17 @@
 // ==UserScript==
-// @name        DTF-User Block
+// @name        DTF-Superfeeds
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
 // @version     1.0
 // @author      Tentacle Tenticals
-// @description Скрипт для показа и получения аватарок и фонов пользователей
-// @homepage    https://github.com/TentacleTenticals/DTF-Get-your-avatar1
-// @updateURL   https://github.com/TentacleTenticals/DTF-Get-your-avatar1/raw/master/main.user.js
-// @downloadURL https://github.com/TentacleTenticals/DTF-Get-your-avatar1/raw/master/main.user.js
+// @description Скрипт для изменения системы фидов
+// @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
+// @updateURL   https://github.com/TentacleTenticals/DTF-Superfeeds/raw/master/main.user.js
+// @downloadURL https://github.com/TentacleTenticals/DTF-Superfeeds/raw/master/main.user.js
 //
 // Ini
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/cfg/js/ini.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/settings/menu/cfg/js/ini.js
 //
 // Base
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/classes/main.js
@@ -29,13 +29,13 @@
 // BookMenu
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/bookMenu/js/main.js
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/bookMenu/css/main.js
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/js/item.js
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/css/feeds.js
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/bookMenu/css/users.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/bookMenu/js/item.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/bookMenu/css/feeds.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/bookMenu/css/users.js
 // Attachments
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/func/dtfAttachments.js
 //
-// @require     https://github.com/TentacleTenticals/DTF-Libs1/raw/main/classes/profilecard/css/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/interface/headerMenu/css/profilecard.js
 //
 // DB
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/db/online/main.js
@@ -51,9 +51,9 @@
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/settings/opener/menu/info/js/main.js
 //
 // Init
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/cfg/js/main.js
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/data/js/main.js
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/settings/menu/info/js/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/settings/menu/cfg/js/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/settings/menu/data/js/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/settings/menu/info/js/main.js
 //
 // CtxMenu
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/ctxMenu/js/main.js
@@ -66,10 +66,14 @@
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/dialog/css/main.js
 //
 // HeaderMenu
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/interface/headerMenu/js/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/interface/headerMenu/js/main.js
 //
 // AddingToDB
-// @require     https://github.com/TentacleTenticals/DTF-Feeds-4.0/raw/main/src/addingToDB/main.js
+// @require     https://github.com/TentacleTenticals/DTF-Superfeeds/raw/main/src/addingToDB/main.js
+//
+// Alerter
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/alerter/js/main.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/alerter/css/main.js
 // @license MIT
 // ==/UserScript==
 /* jshint esversion:8 */
@@ -84,8 +88,63 @@
     width: 2px;
   }
 
+  .dtf-attach.iframe.yt.video {
+    display: flex;
+    position: relative;
+    width: ${cfg.main.feeds.check.attachments.embeds.youtube.size.width}px;
+    height: max-content;
+    max-height: 300px;
+    aspect-ratio: 1/0.5;
+    margin: auto;
+    background-color: rgb(0,0,0);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .dtf-attach.embed {
+    display: inline-flex;
+    position: relative;
+    background-position: center !important;
+    background-size: cover;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 1/0.5;
+    overflow: hidden;
+    box-shadow: 0 0 3px 1px rgb(0 0 0);
+    z-index: 0;
+  }
+  .dtf-attach.embed.yt {
+    background-color: rgb(0 0 0);
+    background-image: url(https://i.imgur.com/m8F3Dgo.png);
+    background-size: 97%;
+    width: 400px;
+  }
+  .dtf-attach.embed iframe {
+    max-width: inherit;
+    max-height: inherit;
+    margin: auto;
+    border: unset;
+    border-radius: 1px;
+    box-shadow: 0 0 3px 1px rgb(255 255 255);
+  }
+
+  .comment .comment__detail {
+    display: flex;
+    gap: 0 5px;
+  }
+  .comment .mySubName {
+    padding: 0 4px 0 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 8px;
+  }
+
   .feed__item.l-island-round .content-link {
-    height: 20%;
+  }
+  .feed__item.l-island-round .content-header {
   }
 
   .feed__item.l-island-round.collapsed {
@@ -309,7 +368,6 @@
     position: absolute;
     left: 0;
     right: 0;
-    /* top: calc(50% - 50% / 2); */
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 4px 0px rgb(0 0 0);
@@ -318,14 +376,17 @@
     background-size: 35%;
     background-repeat: no-repeat;
     background-position: 60% 50%;
-    /* cursor: pointer; */
   }
   .mediaStarter .btn img {
     width: 35%;
     margin: 0px 0px 0px 10%;
   }
-  .video-cont:hover .mediaStarter .btn {
-    background-color: rgb(255 0 0);
+  :is(.dtf-attach, .video-cont):hover .mediaStarter .btn {
+    opacity: 0.6;
+  }
+
+  .dtf-attach.iframe.yt.video .mediaStarter .btn {
+    background-color: rgb(255, 0, 0);
   }
 
   .updown {
@@ -471,6 +532,19 @@
     gap: 5px 5px;
     box-shadow: 0px 0px 2px 1px rgb(0 0 0);
     z-index: 10;
+  }
+
+  .feed__item.l-island-round.collapsed .content-container {
+    height: 50px;
+    overflow: hidden;
+    box-shadow: inset 0 -10px 8px 0px rgb(195 191 191);
+  }
+
+  .feed__item.l-island-round.topic.disabled.noTitle.blur .content {
+    filter: blur(8px);
+  }
+  .feed__item.l-island-round.topic.disabled.noTitle.blur .content:hover {
+    filter: none;
   }
 
   :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg):is(.favoriteTopicsSubsite, .favoriteTopicsAuthor, .favoriteBlogsAuthor,
@@ -698,7 +772,7 @@
     position: relative;
     border-radius: 50%;
   }
-  .comment:is(.favorite, .ignored, .blocked) .comment__avatar::after {
+  .comment:is(.favorite, .ignored, .blocked) .comment__avatar::before {
     display: flex;
     position: absolute;
     top: -20%;
@@ -717,47 +791,60 @@
   .comment.ignored .comment__avatar {
     box-shadow: 0 0 0px 3px rgb(177 69 25), 0 0 4px 2px rgb(0,0,0);
   }
-  .comment.ignored .comment__avatar::after {
+  .comment.ignored .comment__avatar::before {
     content: '💢';
+  }
+  .comment.blocked .comment__avatar {
+    box-shadow: 0 0 0px 3px rgb(99 78 15), 0 0 4px 2px rgb(0,0,0);
+  }
+  .comment.blocked .comment__avatar::before {
+    content: '🈲';
   }
   .comment.favorite .comment__avatar {
     box-shadow: 0 0 0px 3px rgb(213 132 183), 0 0 4px 2px rgb(0,0,0);
   }
-  .comment.favorite .comment__avatar::after {
+  .comment.favorite .comment__avatar::before {
     content: '💘';
   }
 
-  .comment.ignored .comment__text {
-    filter: blur(9px);
+  .comment.ignored:is(.blur, .blurText) .comment__text {
+    filter: blur(8px);
   }
-  .comment.ignored .comment__attaches {
-    filter: blur(9px);
-    opacity: 0.2;
+  .comment.ignored:is(.blur, .blurAtt) .comment__attaches {
+    filter: blur(8px);
   }
   .comment.ignored :is(.comment__text, .comment__attaches):hover {
     filter: none;
     opacity: 1;
   }
 
-  .comment.blocked {
+  .comment.blocked:is(.sp, .spText) .comment__text {
     position: relative;
-    backdrop-filter: brightness(0.1);
-    filter: brightness(0.1);
+    border-radius: 2px;
+    font-size: 0;
+    background-color: rgb(217 217 217);
+    color: transparent;
+    box-shadow: 0 0 2px 1px rgb(117 117 117);
   }
-  .comment.blocked::after {
+  .comment.blocked:is(.sp, .spText) .comment__text::before {
     display: block;
     position: absolute;
-    content: 'Blocked';
+    content: 'Автор игнорируется';
     width: 100%;
-    height: 100%;
-    background-color: rgb(0,0,0);
-    color: rgb(255,255,255);
+    color: rgb(0 0 0);
+    font-size: 12px;
     text-align: center;
     z-index: 1;
   }
-  .comment.blocked:hover::after {
-    backdrop-filter: none;
-    filter: none;
+  .comment.blocked:is(.sp, .spText):hover .comment__text::before {
+    display: none;
+  }
+
+  .comment.blocked:is(.sp, .spText):hover :is(.comment__text, .comment__attaches) {
+    background-color: unset;
+    color: unset;
+    font-size: unset;
+    box-shadow: unset;
   }
 
   .usercard {
@@ -1058,7 +1145,14 @@
   db = {
   online: 'supabase', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
-      }
+      name: 'supabase',
+      dbID: '',
+      get url(){
+        return new Odb().getUrl(this.name, this.dbID);
+      },
+      apiKey: '',
+      token: ''
+    }
   };
 
   // const sData = {
@@ -1070,6 +1164,10 @@
 
   let obs = {},
     widget;
+
+
+
+
   // window.addEventListener('load', run);
   // let data = {
   //   'users': [],
@@ -1080,6 +1178,7 @@
     function player(o){
       new El().Div({
         path: o.path,
+        ...o.addBefore ? {addBefore: o.addBefore} : {},
         cName: 'cont',
         func: (m) => {
           new El().Div({
@@ -1131,66 +1230,65 @@
     //   url: 'https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg'
     // });
     }
+    // console.log('VIDEO', video);
+    // console.log('PATH', path);
     if(video.getAttribute('data-andropov-type') === 'video' && video.getAttribute('data-video-service') === 'default'){
-      // console.log('VIDEO', path.parentNode);
-      // if(!path.parentNode || path.parentNode === 'null') return;
-      let pp;
-      path.parentNode ? pp = path.parentNode : pp = path;
-      console.log('VIDEO', pp);
+
       player({
-        path:!comment ? pp : path,
+        path: !comment ? path.parentNode : path,
+        ...!comment ? {addBefore: path} : {},
         url:video.getAttribute('data-video-mp4'),
         poster:video.getAttribute('data-video-thumbnail')
       });
-      // let main=new El().Div({
-      //   path: pp,
-      //   cName: 'cont',
-      //   rtn: []
-      // });
-      // let c=new El().Div({
-      //   path: main,
-      //   cName: 'video-cont',
-      //   rtn: [],
-      //   onclick: (e) => {
-      //     if(e.button !== 0) return;
-      //     e.preventDefault();
-      //     e.stopPropagation();
-      //     e.stopImmediatePropagation();
-      //     if(c.lastChild.paused) c.lastChild.play();
-      //     else c.lastChild.pause();
-      //   }
-      // });
-      // let starter=new El().Div({
-      //   path: c,
-      //   cName: 'mediaStarter',
-      //   rtn: []
-      // });
-      // let prev=new El().Div({
-      //   path: starter,
-      //   cName: 'btn',
-      //   rtn: []
-      // });
-      // new El().Image({
-      //   path: prev,
-      //   url: 'https://github.com/TentacleTenticals/dtf-markdown/raw/main/libs/Play.svg'
-      // });
-      // new El().Video({
-      //   path: c,
-      //   url: video.getAttribute('data-video-mp4'),
-      //   poster: video.getAttribute('data-video-thumbnail'),
-      //   loop: true,
-      //   muted: true,
-      //   onplay: (e) => {
-      //     e.target.parentNode.classList.toggle('playing');
-      //   },
-      //   onpause: (e) => {
-      //     e.target.parentNode.classList.toggle('playing');
-      //   },
-      //   onended: (e) => {
-      //     e.target.parentNode.classList.toggle('playing');
-      //   }
-      // });
-      // path.replaceChildren(main);
+      !comment ? path.remove() : video.remove();
+    }else
+    if(video.getAttribute('data-andropov-type') === 'video' && video.getAttribute('data-video-service') === 'youtube'){
+      if(!mainCfg.main.feeds.check.attachments.embeds.youtube.replace) return;
+      function iframe(o){
+        // console.log(o.embed)
+        const main=new El().Div({
+          path: o.path,
+          addBefore: o.addBefore,
+          cName: `dtf-attach ${o.type} ${o.embed.site} ${o.embed.type}`,
+          rtn: [],
+          style: `background-image:url(https://i.ytimg.com/vi/${o.embed.id}/hqdefault.jpg)`
+        });
+        const starter=new El().Div({
+          path: main,
+          cName: 'mediaStarter',
+          rtn: [],
+          onclick: (e) => {
+            if(e.button !== 0) return;
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            starter.remove();
+            main.style = '';
+            const embed=document.createElement('iframe');
+            embed.src=`https://www.youtube.com/embed/${o.embed.id}`;
+            embed.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
+            embed.width='100%';
+            embed.height='100%';
+            main.appendChild(embed);
+          }
+        });
+        new El().Div({
+          path: starter,
+          cName: 'btn'
+        });
+      }
+
+      iframe({
+        path: !comment ? path.parentNode : path,
+        ...!comment ? {addBefore: path} : {},
+        type: 'iframe',
+        embed:{
+          site: 'yt',
+          type: 'video',
+          id: video.getAttribute('data-video-service-id'),
+          thumbnail: video.getAttribute('data-video-thumbnail')
+        }
+      });
       !comment ? path.remove() : video.remove();
     }
   }
@@ -1331,39 +1429,56 @@
   }
 
   function checkComments(target){
-    function check(target, item){
-      function checkStatus(s, t, action){
-        s.favorite ? t.classList.add('favorite') : t.classList.remove('favorite');
-        s.ignored ? t.classList.add('ignored') : t.classList.remove('ignored');
-        s.blocked ? t.classList.add('blocked') : t.classList.remove('blocked');
+    function checkStatus(s, t, action){
+      function chk(mode, flag){
+        mainCfg.filters.comments.author[flag] !== 'none' ? t.classList[mode](flag, mainCfg.filters.comments.author[flag]) : t.classList[mode](flag);
       }
+      s.favorite ? t.classList.add('favorite') : t.classList.remove('favorite');
+      s.ignored ? chk('add', 'ignored') : chk('remove', 'ignored');
+      s.blocked ? chk('add', 'blocked') : chk('remove', 'blocked');
+    }
+    function check(target, item){
       if(!target) for(let i = 0, arr = document.querySelectorAll('.comment'), length = arr.length; i < length; i++){
         const media = arr[i].children[1].querySelector(`.comment__attaches`);
-        if(media && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
+        if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +arr[i].getAttribute('data-user_id'));
         if(!t) continue;
-        console.log('FOUNDED!!!!', t);
+        // console.log('FOUNDED!!!!', t);
         checkStatus(t.flags.comments, arr[i]);
+        if(t.info.mySubName) new El().Div({
+          path: arr[i].querySelector('.comment__detail'),
+          cName: 'mySubName',
+          text: t.info.mySubName
+        });
       }else{
+        const media = target.children[1].querySelector(`.comment__attaches`);
+        if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +target.getAttribute('data-user_id'));
-        console.log('FOUNDED!!!!', t);
+        if(!t) return;
+        // console.log('FOUNDED!!!!', t);
         checkStatus(t.flags.comments, target);
+        if(t.info.mySubName) new El().Div({
+          path: target.querySelector('.comment__detail'),
+          cName: 'mySubName',
+          text: t.info.mySubName
+        });
       }
     }
+
     console.log('Comments check...');
     if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
-      if(!mainCfg['database']['keepVars']['users']) new Odb()[mainCfg.database.data.db]({
-        run: 'get all',
-        type: 'users'
-      }).then(res => {
-        check(target, res);
-      }).catch(err => console.log(err));
-      else{
+      if(!mainCfg['database']['keepVars']['users']){
+        new Odb()[mainCfg.database.data.db]({
+          run: target ? 'get all':'find',
+          type: 'users',
+          target: target && target.getAttribute('data-user_id')
+        }).then(res => {
+          check(target, res);
+        }).catch(err => console.log(err));
+      }else{
         check(target, sData.users);
       }
-    }else{
-      check(target, sData.users);
-    }
+    };
   }
   async function checkFeeds({target, isFeed, fullCheck, data}){
     function typeOf(t){
@@ -1410,27 +1525,41 @@
       if(s.flags.blocked) action.remove;
     }
     function checkTitleText(t, type, att, action){
-      if(att.video && mainCfg.main.feeds.check.attachments.video.replace) videoReplace(att.video.path, att.video.video);
-      if(mainCfg.filters.feeds[type].title.active){
-        if(att.title){
-          if(filter.title && mainCfg.filters.feeds[type].title['words active'] && att.title.match(filter.title)) action.collapse + t.classList.add('disabled', 'title');
-        }else
-          mainCfg.filters.feeds[type].title.none === 'collapse' ? action.collapse + t.classList.add('disabled', 'noTitle') : action.delete;
+      if(att.video.length > 0 && mainCfg.main.feeds.check.attachments.video.replace) att.video.forEach(e => videoReplace(e.path, e.video));
+      if(att.title){
+        if(mainCfg.filters.feeds[type].title.active && filter.title && mainCfg.filters.feeds[type].title['words active'] && att.title.match(filter.title)) action.collapse + t.classList.add('disabled', 'title');
+      }else{
+        t.classList.add('disabled', 'notitle');
+        if(mainCfg.filters.feeds[type].title.none !== 'none') action[mainCfg.filters.feeds[type].title.none] = true;
       }
-      if(mainCfg.filters.feeds[type].text.active){
-        if(att.text){
-          if(filter.text && mainCfg.filters.feeds[type].text['words active'] && att.text.match(filter.text)) action.collapse + t.classList.add('disabled', 'text');
-        }else
-          mainCfg.filters.feeds[type].text.none === 'collapse' ? action.collapse + t.classList.add('disabled', 'noText') : action.delete;
+
+      if(att.text){
+        if(mainCfg.filters.feeds[type].text.active && filter.text && mainCfg.filters.feeds[type].text['words active'] && att.text.match(filter.text)) action.collapse + t.classList.add('disabled', 'text');
+      }else{
+        t.classList.add('disabled', 'noText');
+        if(mainCfg.filters.feeds[type].text.none !== 'none') action[mainCfg.filters.feeds[type].text.none] = true;
       }
     }
+    function checkAction(o){
+      if(o.action[mainCfg.filters.feeds[o.type].title.none]) o.t.classList.add(mainCfg.filters.feeds[o.type].title.none);
+      if(o.action[mainCfg.filters.feeds[o.type].title.some]) o.t.classList.add(mainCfg.filters.feeds[o.type].title.some);
+      if(o.action[mainCfg.filters.feeds[o.type].text.none]) o.t.classList.add(mainCfg.filters.feeds[o.type].text.none);
+      if(o.action[mainCfg.filters.feeds[o.type].text.some]) o.t.classList.add(mainCfg.filters.feeds[o.type].text.some);
+    }
     function chk(o){
+      if(!o.tg) return;
+      console.log('SS', data.subsites||sData.subsites)
+      console.log(data.subsites)
+      console.log(sData.subsites)
       const control = o.tg.querySelector(`.content-header__item--controls`).children[0],
         type = control.getAttribute('data-subsite-id') !== control.getAttribute('data-user-id') ? 'topic' : 'blog',
-        att = {},
+        att = {
+          video: []
+        },
         action = {},
         tag = {},
         header = o.tg.querySelector(`.content-header__info`),
+        // headerLink = o.tg.querySelector(`.content>.content-link`),
         container = isFeed ? o.tg.querySelector(`.content.content--full`) : o.tg.querySelector(`.content-container`),
         user = {
           id: control.getAttribute('data-user-id'),
@@ -1467,8 +1596,17 @@
           if(cn[c].children[0]) att.editorial = true;
         }
         if(cn[c].className.match('l-island-a') && cn[c].children[0] && cn[c].children[0].tagName === 'P') att.text = cn[c].children[0].textContent.trim();
-        if(cn[c].className.match('figure-image') && cn[c].querySelector(`.andropov_video`)) att.video = {path:cn[c], video:cn[c].querySelector(`.andropov_video`)};
+        if(cn[c].className.match(/figure-image|figure-video/) && cn[c].querySelector(`.andropov_video`)) att.video.push({path:cn[c], video:cn[c].querySelector(`.andropov_video`)});
       }
+
+      // header.onmousedown = (e) => {
+      //   if(e.button !== 0) return;
+      //   if(e.target.className.match(/content-header/)){
+      //     alert('Yo');
+      //     e.preventDefault();
+      //     headerLink.click();
+      //   }
+      // }
 
       o.tg.setAttribute('sID', sub.id);
       o.tg.setAttribute('uID', user.id);
@@ -1531,7 +1669,14 @@
 
         if(container) checkTitleText(o.tg, 'topics', att, action);
 
-        if(action.collapse) o.tg.classList.add('collapsed');
+        if(user.inBase){
+          if(!user.inBase.flags.topics.favorite){
+            checkAction({t:o.tg, action:action, type:'topics'});
+          }
+        }else{
+          checkAction({t:o.tg, action:action, type:'topics'});
+        }
+
       }else{
         // BLOG
         o.tg.setAttribute('type', 'blog');
@@ -1563,7 +1708,13 @@
 
         if(container) checkTitleText(o.tg, 'blogs', att, action);
 
-        if(action.collapse) o.tg.classList.add('collapsed');
+        if(user.inBase){
+          if(!user.inBase.flags.topics.favorite){
+            checkAction({t:o.tg, action:action, type:'blogs'});
+          }
+        }else{
+          checkAction({t:o.tg, action:action, type:'blogs'});
+        }
       }
 
       // mainFeed.appendChild(o.tg);
@@ -1571,6 +1722,15 @@
         new Feeds().feedButtons({
           path: control.parentNode,
           items: [
+            {
+              type: 'button',
+              cName: 'collapsed',
+              text: '↭\uFE0E',
+              title: 'Свернуть/развернуть фид',
+              onclick: () => {
+                o.tg.classList.toggle('collapsed');
+              }
+            },
             {
               type: 'button',
               cName: 'save',
@@ -1642,7 +1802,7 @@
                 }
               }
             },
-            ...mainCfg['feeds']['interface']['feedButtons']['readed'] ? [{
+            ...mainCfg.main.feeds.check.interface.feedButtons.readed ? [{
               type: 'button',
               cName: 'readed',
               text: '✔️',
@@ -1657,16 +1817,7 @@
                 });
               }
             }] : [],
-            {
-              type: 'button',
-              cName: 'collapsed',
-              text: '↭\uFE0E',
-              title: 'Свернуть/развернуть фид',
-              onclick: () => {
-                o.tg.classList.toggle('collapsed');
-              }
-            },
-            ...mainCfg['feeds']['interface']['feedButtons']['author actions'] ? [{
+            ...mainCfg.main.feeds.check.interface.feedButtons['author actions'] ? [{
               type: 'subBtn',
               text: '📓',
               title: 'Действия с автором',
@@ -1694,7 +1845,7 @@
                 }
               ]
             }] : [],
-            ...mainCfg['feeds']['interface']['feedButtons']['subsite actions'] ? [{
+            ...mainCfg.main.feeds.check.interface.feedButtons['subsite actions'] ? [{
               type: 'subBtn',
               text: '📚',
               title: 'Действия с подсайтом',
@@ -1779,6 +1930,8 @@
     }else
     chunkReader(target);
   }
+
+
   function obsFeeds(mode){
     new El().Obs({
       obs: obs,
@@ -1798,9 +1951,29 @@
       }
     });
   }
+  function obsComments(mode){
+    new El().Obs({
+      obs: obs,
+      target: document.querySelector(`.comments__content`),
+      check: true,
+      search: /comments__content/,
+      name: 'comments',
+      mode: mode,
+      cfg: {attributes: false, childList: true, subtree: false, characterData: false},
+      func: (item) => {
+        // console.log('OBS ', item);
+        if(!item.className) return;
+        if(item.className.match(/comment/)){
+          console.log('COMMENT', item.className);
+          checkComments(item);
+        }
+      }
+    });
+  }
 
 
   // new El().Css('DTF-User Block', css(mainCfg));
+  new El().Css('DTF-alerter', alerterCss(), true);
   new El().Css('DTF-core', mainCSS(), true);
   new El().Css('DTF-widgets', widgetCss(), true);
   new El().Css('DTF-ctxMenu', ctxMenuCss());
@@ -1820,10 +1993,10 @@
       new HeaderMenu().build({
         rect: e.target.getBoundingClientRect(),
         offset: e.target.offsetHeight,
-        uID: control.getAttribute('data-user-id'),
+        uID: control.getAttribute('data-user_id')||control.getAttribute('data-user-id'),
         cID: control.getAttribute('data-comment-id'),
         uName: e.target.textContent.trim(),
-        type: 'comment'});
+        type: 'user'});
     }else
     if(e.target.className === 'content-header-author__name'){
       e.preventDefault();
@@ -1844,12 +2017,14 @@
 
   function run(){
     const pageType = getPageType(document.location.href);
-    if(pageType.type && pageType.type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
+    if(!pageType.type) return;
+    if(mainCfg.feeds['where to react'][pageType.type]){
       pageType.type.match(/topic/) ? checkFeeds({isFeed:true}) : checkFeeds({});
       if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+      if(mainCfg.main.comments['working mode'].match(/obs/)) !obs.comments ? obsComments('start') : obsComments('restart');
       // if(mainCfg.main.comments['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
-    if(pageType.type && pageType.type.match(/topic/)){
+    if(pageType.type.match(/topic/)){
       checkComments();
       // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
@@ -1871,6 +2046,7 @@
 
   function runner(s){
     if(s.page !== 'def' && s.status !== 'ready') return;
+    // if(s.page !== 'def' && s.status !== 'ready') return;
     if(!db.init){
       console.log(`[Runner] Запуск...`);
       new Promise((res, err) => {
@@ -1881,7 +2057,21 @@
           console.log('Err');
         }else{
           db.init = true;
+          // mainCfg = structuredClone(res.data);
+
+          new El().Div({
+            path: document.body,
+            cName: 'dtf-alerterField',
+            id: 'dtf-alerterField'
+          });
           console.log(`[Runner] Скрипт успешно запущен!`, res);
+          // console.log('MAIN', mainCfg);
+
+          alerter({
+            title: '[Runner]',
+            text: `Скрипт успешно запущен!`,
+            timer: 5000
+          });
 
           new El().Css('DTF-User Block', css(mainCfg));
           new El().Css('feeds', feedsCss(mainCfg));
@@ -1965,20 +2155,19 @@
 
 
           if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') try{
-            // if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb().supabase({
-            //   run: 'get all',
-            //   type: 'feeds'
-            // });
+            if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb()[mainCfg.database.data.db]({
+              run: 'get all',
+              type: 'feeds'
+            })||[];
             if(mainCfg['database']['keepVars']['users']) sData.users = await new Odb()[mainCfg.database.data.db]({
               run: 'get all',
-              type: 'users',
-              db: db
-            });
-            console.log('USERS', sData.users)
-            // if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb().supabase({
-            //   run: 'get all',
-            //   type: 'subsites'
-            // });
+              type: 'users'
+            })||[];
+            // console.log('USERS', sData.users)
+            if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb()[mainCfg.database.data.db]({
+              run: 'get all',
+              type: 'subsites'
+            })||[];
           }catch(err){
             console.log('ERR', err);
           }
@@ -1992,55 +2181,6 @@
       run();
     }
 }
-
-  function runner1(s){
-    if(s.page !== 'def' && s.status !== 'ready') return;
-
-    if(!mainCfg){
-      console.log(`[Run] Starting...`);
-      new Db().run({mode:'start', cfg:config, settings:{}}).then(async res => {
-        if(res.result !== 'success') return;
-        if(res.process === 'init'){
-          console.log(`[Run] Скрипт успешно запущен!`);
-
-          new El().Css('DTF-User Block', css(mainCfg));
-          new El().Css('feeds', feedsCss(mainCfg));
-          new El().Css('users', usersCss(mainCfg));
-          new El().Css('dialog', dialogCss());
-          new El().Css('modal', modalCss());
-
-          // console.log('Updated CFG', mainCfg);
-
-          try{
-            if(mainCfg['database']['keepVars']['feeds']) sData.feeds = await new Odb().supabase({
-              run: 'get all',
-              type: 'feeds'
-            });
-            if(mainCfg['database']['keepVars']['users']) sData.users = await new Odb().supabase({
-              run: 'get all',
-              type: 'users'
-            });
-            if(mainCfg['database']['keepVars']['subsites']) sData.subsites = await new Odb().supabase({
-              run: 'get all',
-              type: 'subsites'
-            });
-            // if(mainCfg['database']['keepVars']['comments']) sData.comments = await new Odb().supabase({
-            //   run: 'get all',
-            //   type: 'comments'
-            // });
-          }catch(err){
-            console.log('ERR', err);
-          }
-
-          run();
-        }
-      })
-    }
-    else{
-      console.log(`[Run] Restarting...`);
-      run();
-    }
-  }
 
   new El().onPageLoad(runner);
 
