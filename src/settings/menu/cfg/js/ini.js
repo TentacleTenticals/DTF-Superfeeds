@@ -65,16 +65,12 @@ const sData = {
         }
     },
     'database': {
-        'settings': {
-            'online': false,
-            'db': 'none'
-        },
         'data': {
             'online': false,
             'db': 'none'
         },
         'keepVars': {
-            'subsites': false,
+            'subsites': true,
             'users': true,
             'feeds': false,
             'comments': false
@@ -216,10 +212,6 @@ const sData = {
     },
     'scriptInfo': {
         'name': 'DTF SuperFeeds',
-        'id': 'dtf-superFeeds',
-        storeName: 'DTF SuperFeeds cfg',
-        storeDesc: 'Настройки',
-        storeDatName: 'DTF SuperFeeds dat',
-        storeDatDesc: 'Данные'
+        'id': 'dtf-superFeeds'
     }
 };
