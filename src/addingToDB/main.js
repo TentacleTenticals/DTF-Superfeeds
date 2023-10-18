@@ -80,7 +80,7 @@ class AddEl{
           data.flags.comments[arr[i].children[0].value] = arr[i].children[0].checked;
         }
         p.parentNode.remove();
-        c.res(data);
+        c.res({process:'addOrUpdate', data:data});
         // setTimeout(() => {
         //   p.parentNode.remove();
         //   c.res(data);
@@ -234,7 +234,7 @@ class AddEl{
         }
         setTimeout(() => {
           p.parentNode.remove();
-          c.res(data);
+          c.res({process:'addOrUpdate', data:data});
         }, 500);
       },
       func: (m) => {
@@ -369,7 +369,7 @@ class AddEl{
         }
         setTimeout(() => {
           p.parentNode.remove();
-          c.res(data);
+          c.res({process:'addOrUpdate', data:data});
         }, 500);
       },
       func: (m) => {
