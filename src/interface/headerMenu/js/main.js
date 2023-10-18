@@ -573,22 +573,37 @@ class HeaderMenu{
     return check();
     // console.log('DATA', data);
   }
+  delete(o){
+    if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
+    new Odb()[mainCfg.database.data.db]({
+      run: 'delete',
+      type: o.type
+      target: o.target
+    }).then(db => {
+      if(!db){
+        this.upd(o.type, checkFeeds({fullCheck:true}));
+      }else{
+        sData[type] = db;
+        this.upd(o.type, checkFeeds({fullCheck:true}));
+      }
+    });
+  }
+  upd(type, run){
+    if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
+    else
+    new Odb()[mainCfg.database.data.db]({
+      run: 'get all',
+      type: type
+    }).then(db => {
+      if(!db){
+        run;
+      }else{
+        sData[type] = db;
+        run;
+      }
+    });
+  }
   build(o){
-    function upd(type, run){
-      if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
-      else
-      new Odb()[mainCfg.database.data.db]({
-        run: 'get all',
-        type: type
-      }).then(db => {
-        if(!db){
-          run;
-        }else{
-          sData[type] = db;
-          run;
-        }
-      });
-    }
     new CtxMenu().build({
       header: 'МЕНЮ УПРАВЛЕНИЯ',
       focus: true,
@@ -687,7 +702,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsites', checkFeeds({fullCheck:true}));
+                      this.upd('subsites', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -714,7 +729,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsites', checkFeeds({fullCheck:true}));
+                      this.upd('subsites', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -733,7 +748,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsites', checkFeeds({fullCheck:true}));
+                      this.upd('subsites', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -752,7 +767,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('subsites', checkFeeds({fullCheck:true}));
+                      this.upd('subsites', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -782,7 +797,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -809,7 +824,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -828,7 +843,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -847,7 +862,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -874,7 +889,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -893,7 +908,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -912,7 +927,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -939,7 +954,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -958,7 +973,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -977,7 +992,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('users', checkFeeds({fullCheck:true}));
+                      this.upd('users', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1007,7 +1022,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1034,7 +1049,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1053,7 +1068,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1072,7 +1087,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1091,7 +1106,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1110,7 +1125,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1129,7 +1144,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
@@ -1148,7 +1163,7 @@ class HeaderMenu{
                     this.alert(res);
                     const page = getPageType(document.location.href).type;
                     if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
-                      upd('feeds', checkFeeds({fullCheck:true}));
+                      this.upd('feeds', checkFeeds({fullCheck:true}));
                     }
                   }
                 });
