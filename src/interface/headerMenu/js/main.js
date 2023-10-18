@@ -574,23 +574,25 @@ class HeaderMenu{
     // console.log('DATA', data);
   }
   delete(o){
-    if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
-    new Odb()[mainCfg.database.data.db]({
-      run: 'delete',
-      type: o.type,
-      target: o.target
-    }).then(db => {
-      if(!db){
-        this.upd(o.type);
-        result({status:'success', process:'item deleting', type:o.type, id:o.target});
-      }else{
-        sData[type] = db;
-        this.upd(o.type);
-        result({status:'success', process:'item deleting', type:o.type, id:o.target});
-      }
-    });
+    return new Promise((result, error) => {
+      if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
+      new Odb()[mainCfg.database.data.db]({
+        run: 'delete',
+        type: o.type,
+        target: o.target
+      }).then(db => {
+        if(!db){
+          this.upd(o.type, false, result, error);
+          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
+        }else{
+          sData[type] = db;
+          this.upd(o.type, false, result, error);
+          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
+        }
+      });
+    }
   }
-  upd(type, run){
+  upd(type, run, res, err){
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
     else
     new Odb()[mainCfg.database.data.db]({
@@ -599,9 +601,11 @@ class HeaderMenu{
     }).then(db => {
       if(!db){
         if(run) run;
+        if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
       }else{
         sData[type] = db;
         if(run) run;
+        if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
       }
     });
   }
