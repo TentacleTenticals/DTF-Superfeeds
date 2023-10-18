@@ -67,11 +67,20 @@ class BookItem{
               func: (a) => {
                 new El().Button({
                   path: a,
+                  text: '🔗\uFE0E',
+                  title: 'Перейти',
+                  onclick: (e) => {
+                    window.open(`https://dtf.ru/u/${item.id}`, '_blank');
+                  }
+                });
+
+                new El().Button({
+                  path: a,
                   text: '💾',
                   title: 'Сохранить/обновить автора',
                   onclick: (e) => {
                     new Promise((res, err) => {
-                      new AddEl()['user']({item:{id:item.id}, res:res, err:err});
+                      new AddEl()['user']({item:{id:item.id}, res:res, err:err, db:true});
                     }).then(data => {
                       console.log(data);
                       if(data){
@@ -164,11 +173,20 @@ class BookItem{
               func: (a) => {
                 new El().Button({
                   path: a,
+                  text: '🔗\uFE0E',
+                  title: 'Перейти',
+                  onclick: (e) => {
+                    window.open(`https://dtf.ru/s/${item.id}`, '_blank');
+                  }
+                });
+
+                new El().Button({
+                  path: a,
                   text: '💾',
                   title: 'Сохранить/обновить подсайт',
                   onclick: (e) => {
                     new Promise((res, err) => {
-                      new AddEl()['subsite']({item:{id:item.id}, res:res, err:err});
+                      new AddEl()['subsite']({item:{id:item.id}, res:res, err:err, db:true});
                     }).then(data => {
                       console.log(data);
                       if(data){
@@ -280,11 +298,20 @@ class BookItem{
           func: (a) => {
             new El().Button({
               path: a,
+              text: '🔗\uFE0E',
+              title: 'Перейти',
+              onclick: (e) => {
+                window.open(`https://dtf.ru/${item.id}`, '_blank');
+              }
+            });
+
+            new El().Button({
+              path: a,
               text: '💾',
               title: 'Сохранить/обновить фид',
               onclick: (e) => {
                 new Promise((res, err) => {
-                  new AddEl()['feed']({item:{id:item.id}, res:res, err:err});
+                  new AddEl()['feed']({item:{id:item.id}, res:res, err:err, db:true});
                 }).then(data => {
                   console.log(data);
                   if(data){
