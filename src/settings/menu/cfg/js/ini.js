@@ -72,7 +72,7 @@ const sData = {
         'keepVars': {
             'subsites': true,
             'users': true,
-            'feeds': false,
+            'feeds': true,
             'comments': false
         },
         'saving': {
