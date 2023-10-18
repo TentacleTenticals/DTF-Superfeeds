@@ -201,6 +201,10 @@ class AddEl{
       path: document.body,
       title: 'Сохранение/обновление подсайта',
       db: c.db,
+      delete: (p) => {
+        p.parentNode.remove();
+        c.res({process:'delete', id:c.item.id});
+      },
       submit: (p) => {
         const data = {
           flags: {
@@ -347,6 +351,10 @@ class AddEl{
       path: document.body,
       title: 'Сохранение/обновление фида',
       db: c.db,
+      delete: (p) => {
+        p.parentNode.remove();
+        c.res({process:'delete', id:c.item.id});
+      },
       submit: (p) => {
         const data = {
           flags: {},
