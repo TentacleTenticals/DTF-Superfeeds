@@ -577,7 +577,7 @@ class HeaderMenu{
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
     new Odb()[mainCfg.database.data.db]({
       run: 'delete',
-      type: o.type
+      type: o.type,
       target: o.target
     }).then(db => {
       if(!db){
