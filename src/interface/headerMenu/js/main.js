@@ -590,7 +590,7 @@ class HeaderMenu{
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }
       });
-    }
+    })
   }
   upd(type, run, res, err){
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
