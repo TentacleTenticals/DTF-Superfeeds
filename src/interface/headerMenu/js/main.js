@@ -411,7 +411,7 @@ class HeaderMenu{
           result({status:'success', process:'item updating', type:o.type, id:o.id, item:obj});
         });
       }else{
-        this.getFeed(o.id).then(res => {
+        this.dtfApi({type:o.type, value:o.id}).then(res => {
           const obj = {
             id: o.id,
             flags: o.card ? o.card.flags : structuredClone(o.item.flags),
