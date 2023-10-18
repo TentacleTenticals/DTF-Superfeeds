@@ -28,6 +28,12 @@ class AddEl{
             c.func(fo);
           }
         });
+        if(!c.db) new El().Button({
+          path: m,
+          type: 'submit',
+          text: c.tDelete||'Удалить',
+          onclick: () => c.delete(m.children[1])
+        });
         new El().Button({
           path: m,
           type: 'submit',
@@ -41,6 +47,11 @@ class AddEl{
     this.modal({
       path: document.body,
       title: 'Сохранение/обновление пользователя',
+      db: c.db,
+      delete: (p) => {
+        p.parentNode.remove();
+        c.res({process:'delete', id:c.item.id});
+      },
       submit: (p) => {
         const data = {
           flags: {
@@ -68,10 +79,12 @@ class AddEl{
           if(arr[i].children[0].value === 'null') continue;
           data.flags.comments[arr[i].children[0].value] = arr[i].children[0].checked;
         }
-        setTimeout(() => {
-          p.parentNode.remove();
-          c.res(data);
-        }, 500);
+        p.parentNode.remove();
+        c.res(data);
+        // setTimeout(() => {
+        //   p.parentNode.remove();
+        //   c.res(data);
+        // }, 500);
       },
       func: (m) => {
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
@@ -187,6 +200,7 @@ class AddEl{
     this.modal({
       path: document.body,
       title: 'Сохранение/обновление подсайта',
+      db: c.db,
       submit: (p) => {
         const data = {
           flags: {
@@ -332,6 +346,7 @@ class AddEl{
    this.modal({
       path: document.body,
       title: 'Сохранение/обновление фида',
+      db: c.db,
       submit: (p) => {
         const data = {
           flags: {},
