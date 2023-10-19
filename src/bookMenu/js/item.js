@@ -84,14 +84,13 @@ class BookItem{
                     }).then(data => {
                       console.log(data);
                       if(data){
-                        new HeaderMenu().addOrUpdate({id:item.id, type:'users', card:data}).then(res => {
+                        new HeaderMenu()[data.process]({type:'users', id:item.id, target:item.id, card:data}).then(res => {
                           if(!res){
                             return;
                           }else{
                             const page = getPageType(document.location.href).type;
                             if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                               checkFeeds({fullCheck:true});
-                              console.log('user', sData.users);
                             }
                           }
                         });
@@ -190,7 +189,7 @@ class BookItem{
                     }).then(data => {
                       console.log(data);
                       if(data){
-                        new HeaderMenu().addOrUpdate({id:item.id, type:'subsites', card:data}).then(res => {
+                        new HeaderMenu()[data.process]({type:'subsites', id:item.id, target:item.id, card:data}).then(res => {
                           if(!res){
                             return;
                           }else{
@@ -315,14 +314,13 @@ class BookItem{
                 }).then(data => {
                   console.log(data);
                   if(data){
-                    new HeaderMenu().addOrUpdate({id:item.id, type:'feeds', card:data}).then(res => {
+                    new HeaderMenu()[data.process]({type:'feeds', id:item.id, target:item.id, card:data}).then(res => {
                       if(!res){
                         return;
                       }else{
                         const page = getPageType(document.location.href).type;
                         if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                           checkFeeds({fullCheck:true});
-                          console.log('feed', sData.feeds);
                         }
                       }
                     });
