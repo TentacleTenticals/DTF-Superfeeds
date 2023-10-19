@@ -582,11 +582,10 @@ class HeaderMenu{
         target: o.target
       }).then(db => {
         if(!db){
-          this.upd(o.type, false, result, error);
+          return this.upd(o.type, false, result, error);
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }else{
-          sData[type] = db;
-          this.upd(o.type, false, result, error);
+          return this.upd(o.type, false, result, error);
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }
       });
@@ -600,12 +599,12 @@ class HeaderMenu{
       type: type
     }).then(db => {
       if(!db){
-        if(run) run;
         if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
+        if(run) run;
       }else{
         sData[type] = db;
-        if(run) run;
         if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
+        if(run) run;
       }
     });
   }
