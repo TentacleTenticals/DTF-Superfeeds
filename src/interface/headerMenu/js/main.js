@@ -594,7 +594,7 @@ class HeaderMenu{
   upd(type, run, res, err){
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
     else
-    new Odb()[mainCfg.database.data.db]({
+    return new Odb()[mainCfg.database.data.db]({
       run: 'get all',
       type: type
     }).then(db => {
