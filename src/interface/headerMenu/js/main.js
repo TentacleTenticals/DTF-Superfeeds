@@ -576,7 +576,7 @@ class HeaderMenu{
   delete(o){
     return new Promise((result, error) => {
       if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
-      new Odb()[mainCfg.database.data.db]({
+      return new Odb()[mainCfg.database.data.db]({
         run: 'delete',
         type: o.type,
         target: o.target
