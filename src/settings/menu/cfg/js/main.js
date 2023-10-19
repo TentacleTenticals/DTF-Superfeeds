@@ -314,7 +314,25 @@ initMenu.setSettings = (m, cfg) => {
     items: [
       {
         t: 'separator',
+        text: 'Разное'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Отключить ссылку-переход при клике на фид',
+        name: 'block link',
+        group: 'feeds.check.interface.feedButtons',
+      },
+      {
+        t: 'separator',
         text: 'Интерфейс'
+      },
+      {
+        t: 'input',
+        type: 'checkbox',
+        label: 'Перейти на страницу',
+        name: 'goTo',
+        group: 'feeds.check.interface.feedButtons',
       },
       {
         t: 'input',
