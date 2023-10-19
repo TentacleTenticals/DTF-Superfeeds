@@ -576,7 +576,7 @@ class HeaderMenu{
   delete(o){
     return new Promise((result, error) => {
       if(!mainCfg.database.data.online && !mainCfg.database.keepVars[o.type]) return;
-      return new Odb()[mainCfg.database.data.db]({
+      new Odb()[mainCfg.database.data.db]({
         run: 'delete',
         type: o.type,
         target: o.target
@@ -587,7 +587,11 @@ class HeaderMenu{
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }else{
           console.log('Deleted!2');
-          return this.upd(o.type, false, result, error);
+          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
+          this.upd(o.type, false, result, error).then(db => {
+            console.log('d', db);
+            return result({status:'success', process:'item deleting', type:o.type, id:o.target});
+          })
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }
       });
@@ -601,12 +605,16 @@ class HeaderMenu{
       run: 'get all',
       type: type
     }).then(db => {
+      console.log('FEEDS', db)
+      console.log('RES', res)
       if(!db){
-        if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
+        if(res) return res({status:'success', process:'item deleting', type:type, id:o.target});
         if(run) run;
       }else{
         sData[type] = db;
-        if(res) return res({status:'success', process:'item deleting', type:o.type, id:o.target});
+        return {status:'success'};
+        // res({status:'success', process:'item deleting', type:type});
+        // return res({status:'success', process:'item deleting', type:type});
         if(run) run;
       }
     });
