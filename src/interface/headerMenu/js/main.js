@@ -582,9 +582,11 @@ class HeaderMenu{
         target: o.target
       }).then(db => {
         if(!db){
+          console.log('Deleted!1');
           return this.upd(o.type, false, result, error);
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }else{
+          console.log('Deleted!2');
           return this.upd(o.type, false, result, error);
           // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }
@@ -592,6 +594,7 @@ class HeaderMenu{
     })
   }
   upd(type, run, res, err){
+    console.log('upd');
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
     else
     return new Odb()[mainCfg.database.data.db]({
