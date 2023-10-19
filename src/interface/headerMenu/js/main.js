@@ -582,37 +582,30 @@ class HeaderMenu{
         target: o.target
       }).then(db => {
         if(!db){
-          console.log('Deleted!1');
-          return this.upd(o.type, false, result, error);
-          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
-        }else{
-          console.log('Deleted!2');
-          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
           this.upd(o.type, false, result, error).then(db => {
-            console.log('d', db);
+            return result({status:'fail', process:'item deleting', type:o.type, id:o.target});
+          })
+        }else{
+          this.upd(o.type, false, result, error).then(db => {
             return result({status:'success', process:'item deleting', type:o.type, id:o.target});
           })
-          // result({status:'success', process:'item deleting', type:o.type, id:o.target});
         }
       });
     })
   }
   upd(type, run, res, err){
-    console.log('upd');
     if(!mainCfg.database.data.online && !mainCfg.database.keepVars[type]) return run;
     else
     return new Odb()[mainCfg.database.data.db]({
       run: 'get all',
       type: type
     }).then(db => {
-      console.log('FEEDS', db)
-      console.log('RES', res)
       if(!db){
-        if(res) return res({status:'success', process:'item deleting', type:type, id:o.target});
+        return {status:'fail', process:'getting update'};
         if(run) run;
       }else{
         sData[type] = db;
-        return {status:'success'};
+        return {status:'success', process:'getting update'};
         // res({status:'success', process:'item deleting', type:type});
         // return res({status:'success', process:'item deleting', type:type});
         if(run) run;
