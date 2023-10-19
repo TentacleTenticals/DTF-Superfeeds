@@ -37,7 +37,8 @@ const sData = {
                 },
                 interface: {
                     feedButtons: {
-                        'readed': true,
+                        goTo: false,
+                        readed: true,
                         'author actions': false,
                         'subsite actions': false
                     }
