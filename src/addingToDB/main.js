@@ -81,10 +81,6 @@ class AddEl{
         }
         p.parentNode.remove();
         c.res({process:'addOrUpdate', data:data});
-        // setTimeout(() => {
-        //   p.parentNode.remove();
-        //   c.res(data);
-        // }, 500);
       },
       func: (m) => {
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
@@ -96,6 +92,7 @@ class AddEl{
           console.log('DBDBDBDSB', db);
           if(m.children[0].className && m.children[0].className === 'loading') m.children[0].remove();
           m.parentNode.children[0].textContent = `${!db ? 'Добавление':'Обновление'} пользователя`;
+          if(!c.db && !db) m.parentNode.children[m.parentNode.children.length-2].disabled = true;
           new El().Div({
             path: m,
             cName: 'flags',
@@ -232,10 +229,8 @@ class AddEl{
           if(arr[i].children[0].value === 'null') continue;
           data.flags.comments[arr[i].children[0].value] = arr[i].children[0].checked;
         }
-        setTimeout(() => {
-          p.parentNode.remove();
-          c.res({process:'addOrUpdate', data:data});
-        }, 500);
+        p.parentNode.remove();
+        c.res({process:'addOrUpdate', data:data});
       },
       func: (m) => {
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
@@ -246,6 +241,7 @@ class AddEl{
         }).then(db => {
           if(m.children[0].className && m.children[0].className === 'loading') m.children[0].remove();
           m.parentNode.children[0].textContent = `${!db ? 'Добавление':'Обновление'} подсайта`;
+          if(!c.db && !db) m.parentNode.children[m.parentNode.children.length-2].disabled = true;
           new El().Div({
             path: m,
             cName: 'flags',
@@ -367,10 +363,8 @@ class AddEl{
           if(arr[i].children[0].value === 'null') continue;
           data.flags[arr[i].children[0].value] = arr[i].children[0].checked;
         }
-        setTimeout(() => {
-          p.parentNode.remove();
-          c.res({process:'addOrUpdate', data:data});
-        }, 500);
+        p.parentNode.remove();
+        c.res({process:'addOrUpdate', data:data});
       },
       func: (m) => {
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') new Odb()[mainCfg.database.data.db]({
@@ -381,6 +375,7 @@ class AddEl{
         }).then(db => {
           if(m.children[0].className && m.children[0].className === 'loading') m.children[0].remove();
           m.parentNode.children[0].textContent = `${!db ? 'Добавление':'Обновление'} фида`;
+          if(!c.db && !db) m.parentNode.children[m.parentNode.children.length-2].disabled = true;
           new El().Div({
             path: m,
             cName: 'flags',
