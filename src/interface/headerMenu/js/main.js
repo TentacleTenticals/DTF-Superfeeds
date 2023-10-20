@@ -74,7 +74,7 @@ class HeaderMenu{
     };
     if(i.data.items && i.data.items.length > 0){
       // attachment.data.items = [];
-      for(let e = 0, arr = i.data.items, len = (mainCfg.database.saving.feeds.attachments.albums['max sz'] >= arr.length ? arr.length : mainCfg.database.saving.feeds.attachments.albums['max sz']); e < len; e++){
+      for(let e = 0, arr = i.data.items, len = (mainCfg.database.saving.feeds.attachments.albums['max size'] >= arr.length ? arr.length : mainCfg.database.saving.feeds.attachments.albums['max size']); e < len; e++){
         if(this.attachItem(arr[e])) attachment.items.push(this.attachItem(arr[e]));
       }
       // i.data.items.forEach((e, i) => {
@@ -220,7 +220,7 @@ class HeaderMenu{
                 if(res.blocks.length > 0){
                   // console.log('BLOCKS', res.blocks);
                   const list = [];
-                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
+                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max size'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max size']); i < len; i++){
                     if(arr[i].type.match(/media|text/)){
                       list.push(this.getAttach(arr[i]));
                     }else continue;
@@ -446,7 +446,7 @@ class HeaderMenu{
               attachments: (() => {
                 if(res.blocks.length > 0){
                   const list = [];
-                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max sz'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max sz']); i < len; i++){
+                  for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max size'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max size']); i < len; i++){
                     if(arr[i].type.match(/media|text/)){
                       list.push(this.getAttach(arr[i]));
                     }else continue;
