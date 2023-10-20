@@ -419,6 +419,7 @@ initMenu.setData = (m, cfg) => {
         titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
+          {text:'Прочитано', name:'readed'},
           {text:'Читаю', name:'onHold'},
           {text:'Запланировано', name:'planToRead'},
           {text:'Брошено', name:'dropped'},
