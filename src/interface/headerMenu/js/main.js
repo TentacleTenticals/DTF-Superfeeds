@@ -491,18 +491,6 @@ class HeaderMenu{
               if(db.status === 204){
                 console.log(`Success, ${i.type} is updated!!!`);
               }
-              // if(!mainCfg['database']['keepVars'][i.type]) new Odb().supabase({
-              //   run: 'get all',
-              //   type: i.type
-              // }).then(db => {
-              //   if(db){
-              //     result({status:'success', [i.type]:db});
-              //   }
-              // }).catch(er => {
-              //   console.log(er.code, er);
-              //   result({status:'success'});
-              // })
-              // else
               result({status:'success', process:i.process, type:i.type});
             }).catch(er => {
               console.log('Error at addOrUpdate...');
