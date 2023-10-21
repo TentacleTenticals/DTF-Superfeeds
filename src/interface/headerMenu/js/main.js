@@ -70,8 +70,13 @@ class HeaderMenu{
       type: i.type,
       hidden: i.hidden,
       text: i.data.text,
+      cover: i.data.cover,
       items: []
     };
+    if(i.type === 'audio'){
+      if(i.data.image) attachment.items.push(this.attachItem({image:i.data.image}));
+      if(i.data.audio) attachment.items.push(this.attachItem({audio:i.data.audio}));
+    }else
     if(i.data.items && i.data.items.length > 0){
       // attachment.data.items = [];
       for(let e = 0, arr = i.data.items, len = (mainCfg.database.saving.feeds.attachments.albums['max size'] >= arr.length ? arr.length : mainCfg.database.saving.feeds.attachments.albums['max size']); e < len; e++){
@@ -92,7 +97,17 @@ class HeaderMenu{
         'uuid': i.image.data['uuid'],
         'external_service': i.image.data['external_service']
       }
-    };
+    }
+    else
+    if(i.audio) return {
+      title: i.title,
+      type: i.audio.type,
+      data: {
+        'type': i.audio.data['type'],
+        'uuid': i.audio.data['uuid'],
+        'external_service': i.audio.data['external_service']
+      }
+    }
   }
   add(o){
     return new Promise((result, error) => {
@@ -410,8 +425,10 @@ class HeaderMenu{
           }
           result({status:'success', process:'item updating', type:o.type, id:o.id, item:obj});
         });
-      }else{
+      }else
+      if(o.type.match(/feeds/)){
         this.dtfApi({type:o.type, value:o.id}).then(res => {
+          console.log('FEED UPD', res);
           const obj = {
             id: o.id,
             flags: o.card ? o.card.flags : structuredClone(o.item.flags),
@@ -444,10 +461,11 @@ class HeaderMenu{
               isBlur: res.isBlur,
               keywords: res.keywords,
               attachments: (() => {
+                console.log('FEED U', res.blocks);
                 if(res.blocks.length > 0){
                   const list = [];
                   for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max size'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max size']); i < len; i++){
-                    if(arr[i].type.match(/media|text/)){
+                    if(arr[i].type.match(/media|audio|text/)){
                       list.push(this.getAttach(arr[i]));
                     }else continue;
                   }
