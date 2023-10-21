@@ -19,8 +19,7 @@
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/css/main.js
 //
 // Widget
-// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/libs/widget/panel.js
-// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/libs/widget/css/panel.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/widget/js/wItem.js
 //
 // Tabber
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/tabber/js/main.js
@@ -143,6 +142,9 @@
   }
 
   .feed__item.l-island-round .content-link {
+    ${mainCfg.main.feeds.check.interface.feedButtons['block link'] ?
+      `width: 0;
+      height: 0;`:''}
   }
   .feed__item.l-island-round .content-header {
   }
@@ -194,6 +196,7 @@
 
   .content-header__item--controls {
     display: flex;
+    align-items: center;
     gap: 0 5px;
   }
   .content-header__item--controls .feedButtons {
@@ -202,13 +205,16 @@
   .content-header__item--controls .etc_control {
     height: unset;
     order: 1;
+    z-index: 11;
   }
 
   .feedButtons {
     display: flex;
+    align-items: center;
     gap: 0 5px;
     margin: 0 6px 0 0;
   }
+
   .feedButtons .subBtn {
     position: relative;
     display: flex;
@@ -238,9 +244,22 @@
     box-shadow: 0 0 2px 1px rgb(0,0,0);
   }
 
-  .feedButtons .btn {
+  .feedButtons .goTo {
+    width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgb(182 239 215);
+    box-shadow: 0 0 3px 0px rgb(0,0,0);
+  }
+
+  .feedButtons .btn:not(.goTo) {
     aspect-ratio: 1/1;
     border-radius: 2px;
+    font-size: 14px;
+    line-height: 0;
+    padding: 1px;
+    text-align: center;
+    margin: auto;
     background-image: linear-gradient(315deg, rgb(187 187 187), transparent);
     box-shadow: 0 0 3px 0px rgb(0,0,0);
     cursor: pointer;
@@ -319,7 +338,6 @@
     padding: 20px 4px 0 4px;
     margin: unset !important;
     height: 50px;
-    box-shadow: 0px 3px 4px 0px rgb(173 173 173);
   }
 
   .cont {
@@ -818,7 +836,7 @@
     opacity: 1;
   }
 
-  .comment.blocked:is(.sp, .spText) .comment__text {
+  .comment:is(.blocked, .blockedText):is(.sp, .spText) .comment__text {
     position: relative;
     border-radius: 2px;
     font-size: 0;
@@ -836,15 +854,26 @@
     text-align: center;
     z-index: 1;
   }
-  .comment.blocked:is(.sp, .spText):hover .comment__text::before {
+  .comment:is(.blocked, .blockedText):is(.sp, .spText):hover .comment__text::before {
     display: none;
   }
 
-  .comment.blocked:is(.sp, .spText):hover :is(.comment__text, .comment__attaches) {
+  .comment:is(.blocked, .blockedText):is(.sp, .spText):hover :is(.comment__text, .comment__attaches) {
     background-color: unset;
     color: unset;
     font-size: unset;
     box-shadow: unset;
+  }
+
+  .comment.blockedText:is(.sp, .spText) .comment__text::before {
+    display: block;
+    position: absolute;
+    content: 'Текст заблокирован';
+    width: 100%;
+    color: rgb(0 0 0);
+    font-size: 12px;
+    text-align: center;
+    z-index: 1;
   }
 
   .usercard {
@@ -1146,7 +1175,7 @@
   online: 'supabase', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
       name: 'supabase',
-      dbID: '',
+      dbID: 'arlhhsiwqbpgujqzwgwj',
       get url(){
         return new Odb().getUrl(this.name, this.dbID);
       },
@@ -1155,24 +1184,8 @@
     }
   };
 
-  // const sData = {
-  //   users: [],
-  //   subsites: [],
-  //   feeds: [],
-  //   comments: []
-  // };
-
   let obs = {},
     widget;
-
-
-
-
-  // window.addEventListener('load', run);
-  // let data = {
-  //   'users': [],
-  //   'subsites': []
-  // };
 
   function videoReplace(path, video, comment){
     function player(o){
@@ -1429,19 +1442,49 @@
   }
 
   function checkComments(target){
-    function checkStatus(s, t, action){
+    const filter = {
+    };
+    if(mainCfg.filters.comments.text['words active']){
+      if(mainCfg.filters.comments.text.words.length > 0){
+        try{
+          const arr = mainCfg.filters.comments.text.words.filter(e => e).join('|');
+          if(arr) filter.text = new RegExp(arr, 'mi');
+        }catch (err){
+          new Alerter({
+            alert: true,
+            title: 'RegExp',
+            text: 'Ошибка создания comments text RegExp фильтра. Вы выбрали неверные слова/фразы.',
+            timer: 10000
+          })
+        }
+      }
+    }
+    function checkStatus(u, t, action){
       function chk(mode, flag){
         mainCfg.filters.comments.author[flag] !== 'none' ? t.classList[mode](flag, mainCfg.filters.comments.author[flag]) : t.classList[mode](flag);
       }
-      s.favorite ? t.classList.add('favorite') : t.classList.remove('favorite');
-      s.ignored ? chk('add', 'ignored') : chk('remove', 'ignored');
-      s.blocked ? chk('add', 'blocked') : chk('remove', 'blocked');
+      u.favorite ? t.classList.add('favorite') : t.classList.remove('favorite');
+      u.ignored ? chk('add', 'ignored') : chk('remove', 'ignored');
+      u.blocked ? chk('add', 'blocked') : chk('remove', 'blocked');
+    }
+    function checkText(u, t, action){
+      function chk(mode, flag){
+        mainCfg.filters.comments.text.some !== 'none' && t.classList[mode]('blockedText', mainCfg.filters.comments.text.some);
+      }
+      if(u){
+        !u.favorite && chk('add');
+      }else
+      chk('add');
     }
     function check(target, item){
       if(!target) for(let i = 0, arr = document.querySelectorAll('.comment'), length = arr.length; i < length; i++){
         const media = arr[i].children[1].querySelector(`.comment__attaches`);
+        const text = arr[i].children[1].querySelector(`.comment__text`);
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +arr[i].getAttribute('data-user_id'));
+        if(filter.text){
+          if(text && text.textContent.match(filter.text)) checkText(t?.flags?.comments, arr[i]);
+        }
         if(!t) continue;
         // console.log('FOUNDED!!!!', t);
         checkStatus(t.flags.comments, arr[i]);
@@ -1452,8 +1495,12 @@
         });
       }else{
         const media = target.children[1].querySelector(`.comment__attaches`);
+        const text = arr[i].children[1].querySelector(`.comment__text`);
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +target.getAttribute('data-user_id'));
+        if(filter.text){
+          if(mainCfg.filters.comments.text['words active'] && text && text.match(filter.text)) arr[i].classList.add('blockedText');
+        }
         if(!t) return;
         // console.log('FOUNDED!!!!', t);
         checkStatus(t.flags.comments, target);
@@ -1480,32 +1527,67 @@
       }
     };
   }
+
   async function checkFeeds({target, isFeed, fullCheck, data}){
+    const filter = {
+      topics: {},
+      blogs: {}
+    };
+    if(mainCfg.filters.feeds.topics.title['words active'] && mainCfg.filters.feeds.topics.title.words.length > 0){
+      try{
+        const arr = mainCfg.filters.feeds.topics.title.words.filter(e => e).join('|');
+        if(arr) filter.topics.title = new RegExp(arr, 'mi');
+      }catch (err){
+        new Alerter({
+          alert: true,
+          title: 'RegExp',
+          text: 'Ошибка создания topics title RegExp фильтра. Вы выбрали неверные слова/фразы.',
+          timer: 10000
+        })
+      }
+    }
+    if(mainCfg.filters.feeds.topics.text['words active'] && mainCfg.filters.feeds.topics.text.words.length > 0){
+      try{
+        const arr = mainCfg.filters.feeds.topics.text.words.filter(e => e).join('|');
+        if(arr) filter.topics.text = new RegExp(arr, 'mi');
+      }catch (err){
+        new Alerter({
+          alert: true,
+          title: 'RegExp',
+          text: 'Ошибка создания topics title RegExp фильтра. Вы выбрали неверные слова/фразы.',
+          timer: 10000
+        })
+      }
+    }
+    if(mainCfg.filters.feeds.blogs.title['words active'] && mainCfg.filters.feeds.blogs.title.words.length > 0){
+      try{
+        const arr = mainCfg.filters.feeds.blogs.title.words.filter(e => e).join('|');
+        if(arr) filter.blogs.title = new RegExp(arr, 'mi');
+      }catch (err){
+        new Alerter({
+          alert: true,
+          title: 'RegExp',
+          text: 'Ошибка создания blogs title RegExp фильтра. Вы выбрали неверные слова/фразы.',
+          timer: 10000
+        })
+      }
+    }
+    if(mainCfg.filters.feeds.blogs.text['words active'] && mainCfg.filters.feeds.blogs.text.words.length > 0){
+      try{
+        const arr = mainCfg.filters.feeds.blogs.text.words.filter(e => e).join('|');
+        if(arr) filter.blogs.text = new RegExp(arr, 'mi');
+      }catch (err){
+        new Alerter({
+          alert: true,
+          title: 'RegExp',
+          text: 'Ошибка создания blogs text RegExp фильтра. Вы выбрали неверные слова/фразы.',
+          timer: 10000
+        })
+      }
+    }
+
     function typeOf(t){
       return Object.prototype.toString.call(t).slice(8, -1).toLowerCase();
-    }
-    function getInfo(target){
-      let filter = /https:\/\/dtf\.ru\/(u\/|s\/|[^/]{2,})(\d*)-{0,1}([^]*)/gm;
-      let o;
-      target.replace(filter, (d, type, id, username) => {
-        if(type.match(/u\//) && id && username){
-          console.log('User');
-          o = {author:username, authorType:'User', authorID:id};
-        }else
-        if(type.match(/s\//) && !id && username){
-          console.log('Official subsite');
-          o = {author:username, authorType:'Official subsite', authorID:username};
-        }
-        if(type.match(/s\//) && id && username){
-          console.log('User subsite');
-          o = {author:username, authorType:'User subsite', authorID:id};
-        }else
-        if(!type.match(/u\/|s\//) && !id && !username){
-          console.log('DTF subsite');
-          o = {author:type, authorType:'DTF subsite', authorID:type};
-        }
-      })
-      return o;
     }
     function checkAS(u, type, item, who, action){
       const teq = type.charAt(0).toUpperCase() + type.slice(1);
@@ -1548,9 +1630,6 @@
     }
     function chk(o){
       if(!o.tg) return;
-      console.log('SS', data.subsites||sData.subsites)
-      console.log(data.subsites)
-      console.log(sData.subsites)
       const control = o.tg.querySelector(`.content-header__item--controls`).children[0],
         type = control.getAttribute('data-subsite-id') !== control.getAttribute('data-user-id') ? 'topic' : 'blog',
         att = {
@@ -1559,7 +1638,7 @@
         action = {},
         tag = {},
         header = o.tg.querySelector(`.content-header__info`),
-        // headerLink = o.tg.querySelector(`.content>.content-link`),
+        headerLink = o.tg.querySelector(`.content>.content-link`),
         container = isFeed ? o.tg.querySelector(`.content.content--full`) : o.tg.querySelector(`.content-container`),
         user = {
           id: control.getAttribute('data-user-id'),
@@ -1585,8 +1664,8 @@
           tabs;
       // console.log('u', u);
       // console.log('s', s);
-      if(user.inBase) console.log('User in base', user.inBase);
-      if(feed.inBase) console.log('Feed in base', feed.inBase);
+      // if(user.inBase) console.log('User in base', user.inBase);
+      // if(feed.inBase) console.log('Feed in base', feed.inBase);
 
       if(container) for(let c = 0, cn = container.children, len = cn.length; c < len; c++){
         // console.log('Container', cn[c]);
@@ -1719,9 +1798,29 @@
 
       // mainFeed.appendChild(o.tg);
       if(!o.tg.className.match('btns')){
+        // if(mainCfg.main.feeds.check.interface.feedButtons.goTo) new El().Button({
+        //   path: control.parentNode,
+        //   cName: 'goTo',
+        //   text: '🔗\uFE0E',
+        //   title: 'Открыть фид',
+        //   onclick: () => {
+        //     headerLink.click();
+        //   }
+        // });
         new Feeds().feedButtons({
           path: control.parentNode,
           items: [
+            ...mainCfg.main.feeds.check.interface.feedButtons.goTo && !o.isFeed ? [{
+              type: 'button',
+              cName: 'goTo',
+              text: '🔗\uFE0E',
+              title: 'Открыть фид',
+              onclick: () => {
+                headerLink.click();
+                // window.location.href = `${document.location.href}/${feed.id}`;
+                // window.open(`https://dtf.ru/${feed.id}`, '_blank');
+              }
+            }]:[],
             {
               type: 'button',
               cName: 'collapsed',
@@ -1757,8 +1856,9 @@
                     }).then(data => {
                       const page = getPageType(document.location.href);
                       console.log(data);
-                      new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
+                      if(mainCfg.database.data.online) new HeaderMenu()[data.process]({id:feed.id, target:feed.id, type:'feeds', card:data.data}).then(res => {
                         if(res){
+                          console.log('FEED R', res);
                           if(!page.type) return;
                           if(!mainCfg.feeds['where to react'][page.type]) return;
                           if(!page.type.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)) return;
@@ -1770,36 +1870,7 @@
                     console.log('Error at search...');
                     console.log(er.code, er);
                   });
-                }
-                else
-
-
-                if(!feed.inBase){
-                  console.log('No feed');
-                  new Promise((res, err) => {
-                    new AddEl()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id}, res:res, err:err});
-                  }).then(data => {
-                    console.log(data);
-                    new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
-                      console.log('RESSSSS', res);
-                      if(res){
-                        checkFeeds({fullCheck:true});
-                      }
-                    });
-                  });
-                }else{
-                  console.log('Feed in base');
-                  new Promise((res, err) => {
-                    new AddEl()['feed']({coord:e.target.getBoundingClientRect(), item:{id:feed.id, flags:feed.inBase.flags, info:feed.inBase.info}, res:res, err:err});
-                  }).then(data => {
-                    console.log(data);
-                    new HeaderMenu().addOrUpdate({id:feed.id, type:'feeds', card:data}).then(res => {
-                      if(res){
-                        checkFeeds({fullCheck:true, feeds:res.type});
-                      }
-                    });
-                  });
-                }
+                };
               }
             },
             ...mainCfg.main.feeds.check.interface.feedButtons.readed ? [{
@@ -1874,7 +1945,6 @@
     }
 
     let num = 0,
-      filter = {},
       location = getPageType(document.location.href),
       mainFeed;
 
@@ -1916,14 +1986,29 @@
         chk({tg:arr[i]});
       }
       if(!fullCheck){
+        const frag = new DocumentFragment();
+        // Array.from(chunk.children, (e) => {
+        //   console.log('FEED', e);
+        //   // frag.appendChild(e);
+        // })
+        for(let i = 0, arr = chunk.children, len = arr.length; i < len; i++){
+          // console.log('FEED', i);
+          if(i === len - 1){
+            // const ar = Array.from(arr);
+            // console.log('AR', ar);
+            frag.append(...arr);
+          }
+          // frag.appendChild(arr[i]);
+        }
+        console.log('FRAG', frag.children.length);
         chunk.classList.add('checked');
-        mainFeed.appendChild(chunk);
+        mainFeed.appendChild(frag);
       }
     }
     // if(!target && !target.children.length > 0) return;
     // console.log('Target', target);
     // console.log('TYYYYYYYYYYPE', Object.prototype.toString.call(target).slice(8, -1).toLowerCase());
-    if(isFeed) chk({tg:document.querySelector(`.l-entry.l-island-bg`)});
+    if(isFeed) chk({tg:document.querySelector(`.l-entry.l-island-bg`), isFeed: true});
     if(!fullCheck) for(let ci = 0, chunk = typeOf(target) === 'nodelist' ? target : [target], len = chunk.length; ci < len; ci++){
       console.log('CHUNK', chunk[ci]);
       chunkReader(chunk[ci]);
@@ -1975,13 +2060,19 @@
   // new El().Css('DTF-User Block', css(mainCfg));
   new El().Css('DTF-alerter', alerterCss(), true);
   new El().Css('DTF-core', mainCSS(), true);
-  new El().Css('DTF-widgets', widgetCss(), true);
+  // new El().Css('DTF-widgets', widgetCss(), true);
   new El().Css('DTF-ctxMenu', ctxMenuCss());
   new El().Css('DTF-profileCard', profilecardCss());
 
   new El().Css('tabber', tabberCss());
   new El().Css('bookMenu', bookMenuCss());
   // new El().Css('bookMenu', feedsCss());
+
+  new El().Div({
+    path: document.body,
+    cName: 'dtf-alerterField',
+    id: 'dtf-alerterField'
+  });
 
   document.body.oncontextmenu = (e) => {
     if(!e.target.className) return;
@@ -2059,15 +2150,10 @@
           db.init = true;
           // mainCfg = structuredClone(res.data);
 
-          new El().Div({
-            path: document.body,
-            cName: 'dtf-alerterField',
-            id: 'dtf-alerterField'
-          });
           console.log(`[Runner] Скрипт успешно запущен!`, res);
           // console.log('MAIN', mainCfg);
 
-          alerter({
+          new Alerter({
             title: '[Runner]',
             text: `Скрипт успешно запущен!`,
             timer: 5000
@@ -2079,79 +2165,79 @@
           new El().Css('dialog', dialogCss());
           new El().Css('modal', modalCss());
 
-          if(mainCfg.main.feeds['working mode'] === 'tags') new WidgetPanel({
-            bText: '🏷️',
-            hText: 'Лист тегов',
-            cName: 'tagList',
-            id: 'tagList',
-            items: (w) => {
-              new El().Div({
-                path: w,
-                cName: 'types',
-                func: (t) => {
-                  new El().Div({
-                    path: t,
-                    cName: 'header',
-                    text: 'Типы'
-                  });
-                  new El().Div({
-                    path: t,
-                    cName: 'list scrollLite'
-                  });
-                }
-              });
+          if(mainCfg.main.feeds['working mode'] === 'tags') new wItem({
+              bText: '🏷️',
+              hText: 'Лист тегов',
+              cName: 'tagList',
+              id: 'tagList',
+              items: (i) => {
+                new El().Div({
+                  path: i,
+                  cName: 'types',
+                  func: (t) => {
+                    new El().Div({
+                      path: t,
+                      cName: 'header',
+                      text: 'Типы'
+                    });
+                    new El().Div({
+                      path: t,
+                      cName: 'list scrollLite'
+                    });
+                  }
+                });
 
-              new El().Div({
-                path: w,
-                cName: 'subsites',
-                func: (s) => {
-                  new El().Div({
-                    path: s,
-                    cName: 'header',
-                    text: 'Подсайты'
-                  });
-                  new El().Div({
-                    path: s,
-                    cName: 'list scrollLite'
-                  });
-                }
-              });
+                new El().Div({
+                  path: i,
+                  cName: 'subsites',
+                  func: (s) => {
+                    new El().Div({
+                      path: s,
+                      cName: 'header',
+                      text: 'Подсайты'
+                    });
+                    new El().Div({
+                      path: s,
+                      cName: 'list scrollLite'
+                    });
+                  }
+                });
 
-              new El().Div({
-                path: w,
-                cName: 'authors',
-                func: (a) => {
-                  new El().Div({
-                    path: a,
-                    cName: 'header',
-                    text: 'Авторы'
-                  });
-                  new El().Div({
-                    path: a,
-                    cName: 'authorTypes',
-                    text: 'Статьи',
-                    func: (at) => {
-                      new El().Div({
-                        path: at,
-                        cName: 'list scrollLite'
-                      });
-                    }
-                  });
-                  new El().Div({
-                    path: a,
-                    cName: 'authorTypes',
-                    text: 'Блоги',
-                    func: (at) => {
-                      new El().Div({
-                        path: at,
-                        cName: 'list scrollLite'
-                      });
-                    }
-                  });
-                }
-              });
-            }
-          });
+                new El().Div({
+                  path: i,
+                  cName: 'authors',
+                  func: (a) => {
+                    new El().Div({
+                      path: a,
+                      cName: 'header',
+                      text: 'Авторы'
+                    });
+                    new El().Div({
+                      path: a,
+                      cName: 'authorTypes',
+                      text: 'Статьи',
+                      func: (at) => {
+                        new El().Div({
+                          path: at,
+                          cName: 'list scrollLite'
+                        });
+                      }
+                    });
+                    new El().Div({
+                      path: a,
+                      cName: 'authorTypes',
+                      text: 'Блоги',
+                      func: (at) => {
+                        new El().Div({
+                          path: at,
+                          cName: 'list scrollLite'
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
 
 
           if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') try{
