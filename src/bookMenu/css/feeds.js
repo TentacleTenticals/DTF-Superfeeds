@@ -134,7 +134,9 @@ const feedsCss = (c) => `
   background-image: linear-gradient(45deg, rgb(83 148 161), transparent);
 }
 
-
+.db-feed audio.attach {
+  margin: auto;
+}
 
 
 .db-feed .cont {
@@ -146,7 +148,7 @@ const feedsCss = (c) => `
   position: relative;
   margin: auto;
   max-width: ${c.database.bookMenu.feeds.attachments.visual.size.video['max width']}%;
-  box-shadow: 0px 0px 3px 1px rgb(0 0 0), 0px 0px 3px 1px rgb(255 255 255);
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0);
   z-index: 10;
   cursor: pointer;
 }
