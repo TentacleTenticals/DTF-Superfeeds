@@ -357,7 +357,12 @@ class BookItem{
       func: (a) => item.info.attachments.forEach(e => {
         if(e.type === 'media'){
           e.items.forEach(i => {
-            attachment({path:a, type:'media', i:i});
+            attachment({path:a, type:i.type, i:i});
+          })
+        }else
+        if(e.type === 'audio'){
+          e.items.forEach(i => {
+            attachment({path:a, type:i.type, i:i});
           })
         }else
         if(e.type === 'text'){
