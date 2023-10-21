@@ -148,11 +148,21 @@ const feedsCss = (c) => `
   position: relative;
   margin: auto;
   max-width: ${c.database.bookMenu.feeds.attachments.visual.size.video['max width']}%;
-  box-shadow: 0px 0px 3px 1px rgb(0 0 0);
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0), 0px 0px 3px 1px rgb(255 255 255);
   z-index: 10;
   cursor: pointer;
 }
-.db-feed .video-cont video {
+.db-feed .audio-cont {
+  display: inline-flex;
+  position: relative;
+  margin: auto;
+  min-width: ${c.database.bookMenu.feeds.attachments.visual.size.audio['max width']}%;
+  min-height: ${c.database.bookMenu.feeds.attachments.visual.size.audio['max height']}%;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0), 0px 0px 3px 1px rgb(255 255 255);
+  z-index: 10;
+  cursor: pointer;
+}
+.db-feed :is(.video-cont, .audio-cont) :is(video, audio) {
   max-width: inherit;
   max-height: inherit;
   margin: auto;
@@ -197,7 +207,7 @@ const feedsCss = (c) => `
   width: 35%;
   margin: 0px 0px 0px 10%;
 }
-.db-feed :is(.dtf-attach, .video-cont):hover .mediaStarter .btn {
+.db-feed :is(.dtf-attach, .video-cont, .audio-cont):hover .mediaStarter .btn {
   opacity: 0.6;
 }
 
