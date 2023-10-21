@@ -37,7 +37,6 @@ const sData = {
                 },
                 interface: {
                     feedButtons: {
-                        'block link': false,
                         goTo: false,
                         readed: true,
                         'author actions': false,
@@ -106,6 +105,10 @@ const sData = {
                         size: {
                             image: {
                                 'max width': '50'
+                            },
+                            audio: {
+                                'max width': '50',
+                                'max height': '50'
                             },
                             video: {
                                 'max width': '80',
