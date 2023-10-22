@@ -112,7 +112,7 @@ class BookItem{
         if(item.info.myComment) new El().Div({
           path: m,
           cName: 'comment',
-          text: item.info.myComment
+          text: `ℹ️: ${item.info.myComment}`
         });
 
         new El().Div({
@@ -218,7 +218,7 @@ class BookItem{
         if(item.info.myComment) new El().Div({
           path: m,
           cName: 'comment',
-          text: item.info.myComment
+          text: `ℹ️: ${item.info.myComment}`
         });
 
         new El().Div({
@@ -348,7 +348,7 @@ class BookItem{
     if(item.info.myComment) new El().Div({
       path: main,
       cName: 'comment',
-      text: item.info.myComment
+      text: `ℹ️: ${item.info.myComment}`
     });
 
     new El().Div({
