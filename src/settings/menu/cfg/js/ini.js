@@ -37,6 +37,7 @@ const sData = {
                 },
                 interface: {
                     feedButtons: {
+                        'block link': false,
                         goTo: false,
                         readed: true,
                         'author actions': false,
