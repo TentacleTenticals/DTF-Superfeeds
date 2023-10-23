@@ -128,7 +128,7 @@ class HeaderMenu{
                 }
               }||''
               ,
-              ...o.card ? o.card.info : {}
+              ...o.card ? o.card.data.info : {}
             },
             flags:{
               topics:{
@@ -146,7 +146,7 @@ class HeaderMenu{
                 ignored: false,
                 blocked: false
               },
-              ...o.card ? o.card.flags : {}
+              ...o.card ? o.card.data.flags : {}
             }
           };
           else
@@ -163,7 +163,7 @@ class HeaderMenu{
                   uuid: res.subsite.avatar.data.uuid
                 }
               }||'',
-              ...o.card ? o.card.info : {}
+              ...o.card ? o.card.data.info : {}
             },
             flags:{
               topics:{
@@ -181,7 +181,7 @@ class HeaderMenu{
                 ignored: false,
                 blocked: false
               },
-              ...o.card ? o.card.flags : {}
+              ...o.card ? o.card.data.flags : {}
             }
           };
           if(!o.card) obj.flags[o.r][o.key] ? obj.flags[o.r][o.key] = false : obj.flags[o.r][o.key] = true;
@@ -201,7 +201,7 @@ class HeaderMenu{
               favorite: false,
               ignored: false,
               blocked: false,
-              ...o.card ? o.card.flags : {}
+              ...o.card ? o.card.data.flags : {}
             },
             info: {
               author: {
@@ -243,7 +243,7 @@ class HeaderMenu{
                   return list;
                 }
               })(),
-              ...o.card ? o.card.info : {}
+              ...o.card ? o.card.data.info : {}
             }
           }
           if(!o.card) obj.flags[o.key] ? obj.flags[o.key] = false : obj.flags[o.key] = true;
@@ -384,7 +384,7 @@ class HeaderMenu{
           if(o.type === 'users'){
             obj = {
               id: o.id,
-              flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+              flags: o.card ? o.card.data.flags : structuredClone(o.item.flags),
               info: {
                 name: res.subsite.name,
                 created: res.subsite.created,
@@ -396,13 +396,13 @@ class HeaderMenu{
                     uuid: res.subsite.avatar.data.uuid
                   }
                 } : '',
-                ...o.card ? o.card.info : {}
+                ...o.card ? o.card.data.info : {}
               }
             };
           }else{
             obj = {
               id: o.id,
-              flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+              flags: o.card ? o.card.data.flags : structuredClone(o.item.flags),
               info: {
                 name: res.subsite.name,
                 created: res.subsite.created,
@@ -414,7 +414,7 @@ class HeaderMenu{
                     uuid: res.subsite.avatar.data.uuid
                   }
                 } : '',
-                ...o.card ? o.card.info : {}
+                ...o.card ? o.card.data.info : {}
               }
             };
           }
@@ -428,10 +428,9 @@ class HeaderMenu{
       }else
       if(o.type.match(/feeds/)){
         this.dtfApi({type:o.type, value:o.id}).then(res => {
-          console.log('FEED UPD', res);
           const obj = {
             id: o.id,
-            flags: o.card ? o.card.flags : structuredClone(o.item.flags),
+            flags: o.card ? o.card.data.flags : structuredClone(o.item.flags),
             info: {
               author: {
                 id: res.author.id,
@@ -461,7 +460,6 @@ class HeaderMenu{
               isBlur: res.isBlur,
               keywords: res.keywords,
               attachments: (() => {
-                console.log('FEED U', res.blocks);
                 if(res.blocks.length > 0){
                   const list = [];
                   for(let i = 0, arr = res.blocks, arrLen = arr.length - (res.keywords.length > 0 ? 1 : 0), len = (mainCfg.database.saving.feeds.attachments.items['max size'] >= arrLen ? arrLen : mainCfg.database.saving.feeds.attachments.items['max size']); i < len; i++){
@@ -472,7 +470,7 @@ class HeaderMenu{
                   return list;
                 }
               })(),
-              ...o.card ? o.card.info : {}
+              ...o.card ? o.card.data.info : {}
             }
           }
 
