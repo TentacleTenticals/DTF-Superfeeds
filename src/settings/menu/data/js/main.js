@@ -120,7 +120,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🔃',
+            label: '🆕',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -129,7 +129,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch',
+            cName: 'srch nl',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -302,7 +302,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🔃',
+            label: '🆕',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -311,7 +311,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch',
+            cName: 'srch nl',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -488,7 +488,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🔃',
+            label: '🆕',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -497,7 +497,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch',
+            cName: 'srch nl',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
