@@ -1375,16 +1375,6 @@
   function run(){
     const pageType = getPageType(document.location.href);
     if(!pageType.type) return;
-    if(mainCfg.feeds['where to react'][pageType.type]){
-      pageType.type.match(/topic/) ? checkFeeds({isFeed:true}) : checkFeeds({});
-      if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-      if(mainCfg.main.comments['working mode'].match(/obs/)) !obs.comments ? obsComments('start') : obsComments('restart');
-      // if(mainCfg.main.comments['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-    }
-    if(pageType.type.match(/topic/)){
-      checkComments();
-      // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
-    }
 
     if(mainCfg.main.feeds['working mode'] === 'tags'){
       const widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
@@ -1398,6 +1388,17 @@
       tabs.subsites.replaceChildren();
       tabs.topics.replaceChildren();
       tabs.blogs.replaceChildren();
+    }
+    
+    if(mainCfg.feeds['where to react'][pageType.type]){
+      pageType.type.match(/topic/) ? checkFeeds({isFeed:true}) : checkFeeds({});
+      if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+      if(mainCfg.main.comments['working mode'].match(/obs/)) !obs.comments ? obsComments('start') : obsComments('restart');
+      // if(mainCfg.main.comments['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
+    }
+    if(pageType.type.match(/topic/)){
+      checkComments();
+      // !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
     }
   }
 
