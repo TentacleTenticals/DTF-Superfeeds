@@ -54,7 +54,6 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'SUBSITES',
-        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'💘', name:'favorite'},
@@ -236,7 +235,6 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'USERS',
-        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'💘', name:'favorite'},
@@ -418,7 +416,6 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'FEEDS',
-        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'Читаю', name:'onHold'},
