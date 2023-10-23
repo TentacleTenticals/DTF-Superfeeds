@@ -204,7 +204,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'time',
-            label: [],
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -385,7 +385,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'time',
-            label: [],
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -419,7 +419,6 @@ initMenu.setData = (m, cfg) => {
         titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
-          {text:'Прочитано', name:'readed'},
           {text:'Читаю', name:'onHold'},
           {text:'Запланировано', name:'planToRead'},
           {text:'Брошено', name:'dropped'},
@@ -598,7 +597,7 @@ initMenu.setData = (m, cfg) => {
             path: panel,
             lName: 'full',
             type: 'time',
-            label: [],
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
