@@ -50,6 +50,10 @@ const feedsCss = (c) => `
   display: flex;
   gap: 0 5px;
 }
+.db-feed .header .actions button {
+  aspect-ratio: 1/1;
+  padding: 4px;
+}
 
 .db-feed .header .mask {
   display: flex;
