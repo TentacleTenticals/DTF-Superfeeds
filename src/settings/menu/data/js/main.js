@@ -203,8 +203,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
+            lName: 'full nl',
             type: 'time',
-            label: '⌚-📅 (начиная с...)',
+            label: '⌚ (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -213,9 +214,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full',
+            lName: 'full nl',
             type: 'date',
-            label: '⌚-📅 (начиная с...)',
+            label: '📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -384,8 +385,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
+            lName: 'full nl',
             type: 'time',
-            label: '⌚-📅 (начиная с...)',
+            label: '⌚ (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -394,9 +396,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full',
+            lName: 'full nl',
             type: 'date',
-            label: '⌚-📅 (начиная с...)',
+            label: '📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -595,9 +597,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full',
+            lName: 'full nl',
             type: 'time',
-            label: '⌚-📅 (начиная с...)',
+            label: '⌚ (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -606,9 +608,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full',
+            lName: 'full nl',
             type: 'date',
-            label: '⌚-📅 (начиная с...)',
+            label: '📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
