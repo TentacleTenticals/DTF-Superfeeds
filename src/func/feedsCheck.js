@@ -3,6 +3,22 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
       topics: {},
       blogs: {}
     };
+    let widget,
+        tabs,
+        location = getPageType(document.location.href),
+        mainFeed;
+
+    console.log('Checking feeds...');
+    mainFeed = new Feeds().build();
+    if(mainCfg.main.feeds['working mode'] === 'tags'){
+      widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
+      tabs = {
+        types: widget.children[1].children[0].children[1],
+        subsites: widget.children[1].children[1].children[1],
+        topics: widget.children[1].children[2].children[1].children[0],
+        blogs: widget.children[1].children[2].children[2].children[0]
+      }
+    };
     if(mainCfg.filters.feeds.topics.title['words active'] && mainCfg.filters.feeds.topics.title.words.length > 0){
       try{
         const arr = mainCfg.filters.feeds.topics.title.words.filter(e => e).join('|');
@@ -130,8 +146,6 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
             return (data.feeds||sData.feeds).find(el => el.id === this.id);
           }
         };
-      let widget,
-          tabs;
       // console.log('u', u);
       // console.log('s', s);
       // if(user.inBase) console.log('User in base', user.inBase);
@@ -159,16 +173,6 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
 
       o.tg.setAttribute('sID', sub.id);
       o.tg.setAttribute('uID', user.id);
-
-      if(mainCfg.main.feeds['working mode'] === 'tags'){
-        widget = document.getElementById('widgetPanel').children[1].querySelector(`.wl-item.tagList`);
-        tabs = {
-          types: widget.children[1].children[0].children[1],
-          subsites: widget.children[1].children[1].children[1],
-          topics: widget.children[1].children[2].children[1].children[0],
-          blogs: widget.children[1].children[2].children[2].children[0]
-        }
-      };
       // if(att.editorial) o.tg.setAttribute('author', 'editorial');
 
       // sub.id === user.id ? o.tg.setAttribute('type', 'blog') : (!att.editorial ? o.tg.setAttribute('type', 'topic') : o.tg.setAttribute('type', 'topic ✔️'));
@@ -413,13 +417,6 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
         o.tg.classList.add('btns');
       }
     }
-
-    let num = 0,
-      location = getPageType(document.location.href),
-      mainFeed;
-
-    console.log('Checking feeds...');
-    mainFeed = new Feeds().build();
 
     if(!data) data = {};
     if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none') try{
