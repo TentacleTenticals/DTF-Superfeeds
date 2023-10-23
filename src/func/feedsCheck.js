@@ -326,7 +326,7 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
                     }).then(data => {
                       const page = getPageType(document.location.href);
                       console.log(data);
-                      if(mainCfg.database.data.online) new HeaderMenu()[data.process]({id:feed.id, target:feed.id, type:'feeds', card:data.data}).then(res => {
+                      if(mainCfg.database.data.online) new HeaderMenu()[data.process]({id:feed.id, target:feed.id, type:'feeds', card:data}).then(res => {
                         if(res){
                           console.log('FEED R', res);
                           if(!page.type) return;
