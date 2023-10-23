@@ -88,6 +88,11 @@ class BookItem{
                           if(!res){
                             return;
                           }else{
+                            new Alerter({
+                              title: `[${data.process}]`,
+                              text: `Автор успешно обновлён!`,
+                              timer: 5000
+                            });
                             const page = getPageType(document.location.href).type;
                             if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                               checkFeeds({fullCheck:true});
@@ -193,6 +198,11 @@ class BookItem{
                           if(!res){
                             return;
                           }else{
+                            new Alerter({
+                              title: `[${data.process}]`,
+                              text: `Подсайт успешно обновлён!`,
+                              timer: 5000
+                            });
                             const page = getPageType(document.location.href).type;
                             if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                               checkFeeds({fullCheck:true});
@@ -318,6 +328,11 @@ class BookItem{
                       if(!res){
                         return;
                       }else{
+                        new Alerter({
+                          title: `[${data.process}]`,
+                          text: `Фид успешно обновлён!`,
+                          timer: 5000
+                        });
                         const page = getPageType(document.location.href).type;
                         if(page && page.match(/popular|^new$|^my new$|bookmarks|subsite|userpage|topic/)){
                           checkFeeds({fullCheck:true});
