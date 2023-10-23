@@ -553,7 +553,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Заголовок (Rxp)',
-            lName: 'full'
+            lName: 'full nl'
           });
           new El().Input({
             path: panel,
