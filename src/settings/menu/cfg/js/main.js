@@ -308,6 +308,65 @@ initMenu.setSettings = (m, cfg) => {
     path: m,
     groupName: 'main',
     cName: 'grid',
+    legend: 'Статус фидов',
+    info: 'Что делать с фидами, если...',
+    autocfg: [cfg, 'feeds.check.status'],
+    items: [
+      {
+        t: 'select',
+        label: 'Прочитано',
+        lName: 'full nl',
+        name: 'readed',
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide']
+            ]
+          }
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Игнорировано',
+        lName: 'full nl',
+        name: 'ignored',
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide']
+            ]
+          }
+        ]
+      },
+      {
+        t: 'select',
+        label: 'Блокировано',
+        lName: 'full nl',
+        name: 'blocked',
+        sub: [
+          {
+            label: 'Стандарт',
+            items: [
+              ['Ничего', 'none'],
+              ['Свернуть', 'collapse'],
+              ['Скрыть', 'hide']
+            ]
+          }
+        ]
+      }
+    ]
+  });
+
+  new El().Field({
+    path: m,
+    groupName: 'main',
+    cName: 'grid',
     legend: 'Просмотр фидов',
     info: 'Вид фидов',
     autocfg: [cfg],
@@ -558,65 +617,6 @@ initMenu.setSettings = (m, cfg) => {
         label: 'Цвет тегов',
         name: 'tag',
         group: 'bookMenu.feeds.attachments.visual.color'
-      }
-    ]
-  });
-
-  new El().Field({
-    path: m,
-    groupName: 'main',
-    cName: 'grid',
-    legend: 'Статус фидов',
-    info: 'Что делать с фидами, если...',
-    autocfg: [cfg, 'feeds.check.status'],
-    items: [
-      {
-        t: 'select',
-        label: 'Прочитано',
-        lName: 'full nl',
-        name: 'readed',
-        sub: [
-          {
-            label: 'Стандарт',
-            items: [
-              ['Ничего', 'none'],
-              ['Свернуть', 'collapse'],
-              ['Скрыть', 'hide']
-            ]
-          }
-        ]
-      },
-      {
-        t: 'select',
-        label: 'Игнорировано',
-        lName: 'full nl',
-        name: 'ignored',
-        sub: [
-          {
-            label: 'Стандарт',
-            items: [
-              ['Ничего', 'none'],
-              ['Свернуть', 'collapse'],
-              ['Скрыть', 'hide']
-            ]
-          }
-        ]
-      },
-      {
-        t: 'select',
-        label: 'Блокировано',
-        lName: 'full nl',
-        name: 'blocked',
-        sub: [
-          {
-            label: 'Стандарт',
-            items: [
-              ['Ничего', 'none'],
-              ['Свернуть', 'collapse'],
-              ['Скрыть', 'hide']
-            ]
-          }
-        ]
       }
     ]
   });
