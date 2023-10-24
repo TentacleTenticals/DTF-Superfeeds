@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://*dtf.ru/*
 // @grant       none
-// @version     1.0.6
+// @version     1.0.7
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -344,7 +344,7 @@
     overflow: hidden;
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-feed>.content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-header {
     position: relative;
     background-image: repeating-linear-gradient(135deg, transparent 40%, rgb(255 255 255 / 60%));
     padding: 20px 4px 0 4px;
