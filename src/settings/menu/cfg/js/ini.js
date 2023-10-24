@@ -43,6 +43,11 @@ const sData = {
                         'author actions': false,
                         'subsite actions': false
                     }
+                },
+                status: {
+                    watched: 'none',
+                    ignored: 'none',
+                    blocked: 'none'
                 }
             }
         },
