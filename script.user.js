@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0.0
+// @version     1.0.1
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -80,7 +80,7 @@
 //
 // Alerter
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/alerter/js/main.js
-// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/alerter/css/main.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/interface/alerter/css/main.js?
 // @license MIT
 // ==/UserScript==
 /* jshint esversion:8 */
