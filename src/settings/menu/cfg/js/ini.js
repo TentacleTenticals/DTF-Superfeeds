@@ -45,7 +45,7 @@ const sData = {
                     }
                 },
                 status: {
-                    watched: 'none',
+                    readed: 'none',
                     ignored: 'none',
                     blocked: 'none'
                 }
