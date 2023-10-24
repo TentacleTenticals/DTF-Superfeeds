@@ -46,13 +46,13 @@ class HeaderMenu{
   }
   alert(o){
     if(o.status === 'success'){
-      alerter({
+      new Alerter({
         title: `[AddOrUpdate]`,
         text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} успешно выполнено`,
         timer: 5000
       });
     }else{
-      alerter({
+      new Alerter({
         alert: true,
         title: `[AddOrUpdate]`,
         text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} не выполнено`,
