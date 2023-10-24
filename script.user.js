@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0.2
+// @version     1.0.3
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -1181,10 +1181,10 @@
   };
 
   db = {
-  online: '', /* Напишите имя базы данных для её использования */
+  online: '', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
       name: 'supabase',
-      dbID: '',
+      dbID: 'arlhhsiwqbpgujqzwgwj',
       get url(){
         return new Odb().getUrl(this.name, this.dbID);
       },
@@ -1238,7 +1238,7 @@
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +arr[i].getAttribute('data-user_id'));
         if(filter.text){
-          if(text && text.textContent.match(filter.text.textContent)) checkText(t?.flags?.comments, arr[i]);
+          if(text && text.textContent.match(filter.text)) checkText(t?.flags?.comments, arr[i]);
         }
         if(!t) continue;
         // console.log('FOUNDED!!!!', t);
@@ -1254,7 +1254,7 @@
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +target.getAttribute('data-user_id'));
         if(filter.text){
-          if(mainCfg.filters.comments.text['words active'] && text && text.match(filter.text.textContent)) arr[i].classList.add('blockedText');
+          if(mainCfg.filters.comments.text['words active'] && text && text.textContent.match(filter.text)) target.classList.add('blockedText');
         }
         if(!t) return;
         // console.log('FOUNDED!!!!', t);
@@ -1267,7 +1267,7 @@
       }
     }
 
-    console.log('Comments check...');
+    console.log('Comments check...', filter);
     if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
       if(!mainCfg['database']['keepVars']['users']){
         new Odb()[mainCfg.database.data.db]({
@@ -1389,7 +1389,7 @@
       tabs.topics.replaceChildren();
       tabs.blogs.replaceChildren();
     }
-    
+
     if(mainCfg.feeds['where to react'][pageType.type]){
       pageType.type.match(/topic/) ? checkFeeds({isFeed:true}) : checkFeeds({});
       if(mainCfg.main.feeds['working mode'].match(/obs|tags/)) !obs.feeds ? obsFeeds('start') : obsFeeds('restart');
