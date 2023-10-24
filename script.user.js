@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0.1
+// @version     1.0.2
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -1238,7 +1238,7 @@
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +arr[i].getAttribute('data-user_id'));
         if(filter.text){
-          if(text && text.textContent.match(filter.text)) checkText(t?.flags?.comments, arr[i]);
+          if(text && text.textContent.match(filter.text.textContent)) checkText(t?.flags?.comments, arr[i]);
         }
         if(!t) continue;
         // console.log('FOUNDED!!!!', t);
@@ -1254,7 +1254,7 @@
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +target.getAttribute('data-user_id'));
         if(filter.text){
-          if(mainCfg.filters.comments.text['words active'] && text && text.match(filter.text)) arr[i].classList.add('blockedText');
+          if(mainCfg.filters.comments.text['words active'] && text && text.match(filter.text.textContent)) arr[i].classList.add('blockedText');
         }
         if(!t) return;
         // console.log('FOUNDED!!!!', t);
