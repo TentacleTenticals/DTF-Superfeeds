@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0
+// @version     1.0.0
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -1181,7 +1181,7 @@
   };
 
   db = {
-  online: 'supabase', /* Напишите имя базы данных для использования */
+  online: '', /* Напишите имя базы данных для её использования */
     supabase: { /* Данные базы данных для логина */
       name: 'supabase',
       dbID: '',
@@ -1250,7 +1250,7 @@
         });
       }else{
         const media = target.children[1].querySelector(`.comment__attaches`);
-        const text = arr[i].children[1].querySelector(`.comment__text`);
+        const text = target.children[1].querySelector(`.comment__text`);
         if(media && media.children[0] && media.children[0].className && media.children[0].className.match(/andropov_video/)) videoReplace(media, media.children[0], true);
         const t = item.find(el => +el.id === +target.getAttribute('data-user_id'));
         if(filter.text){
