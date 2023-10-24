@@ -90,7 +90,10 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
       s.flags.onHold ? t.classList.add('onHold') : t.classList.remove('onHold');
       s.flags.favorite ? t.classList.add('favorite') : t.classList.remove('favorite');
       s.flags.ignored ? t.classList.add('ignored') : t.classList.remove('ignored');
-      if(s.flags.blocked) action.remove;
+      if(s.flags.readed && mainCfg.main.feeds.check.status.readed !== 'none') t.classList.add(mainCfg.main.feeds.check.status.readed);
+      if(s.flags.ignored && mainCfg.main.feeds.check.status.ignored !== 'none') t.classList.add(mainCfg.main.feeds.check.status.ignored);
+      if(s.flags.blocked && mainCfg.main.feeds.check.status.blocked !== 'none') t.classList.add(mainCfg.main.feeds.check.status.blocked);
+      // if(s.flags.blocked) action.remove;
     }
     function checkTitleText(t, type, att, action){
       if(att.video.length > 0 && mainCfg.main.feeds.check.attachments.video.replace) att.video.forEach(e => videoReplace(e.path, e.video));
@@ -297,11 +300,11 @@ async function checkFeeds({target, isFeed, fullCheck, data}){
             }]:[],
             {
               type: 'button',
-              cName: 'collapsed',
+              cName: 'collapse',
               text: '↭\uFE0E',
               title: 'Свернуть/развернуть фид',
               onclick: () => {
-                o.tg.classList.toggle('collapsed');
+                o.tg.classList.toggle('collapse');
               }
             },
             {
