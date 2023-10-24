@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://*dtf.ru/*
 // @grant       none
-// @version     1.0.5
+// @version     1.0.6
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -157,18 +157,21 @@
   .feed__item.l-island-round .content-header {
   }
 
-  .feed__item.l-island-round.collapsed {
+  .feed__item.l-island-round.collapse {
     max-height: 50px;
     overflow: hidden;
   }
-  .feed__item.l-island-round.collapsed .feedButtons .btn.collapsed {
+  .feed__item.l-island-round.hide {
+    display: none;
+  }
+  .feed__item.l-island-round.collapse .feedButtons .btn.collapse {
     filter: sepia(1);
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).inBase .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).inBase .content-feed>.content-header {
     background-image: repeating-linear-gradient(135deg, transparent 40%, rgb(255 255 255 / 60%));
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).inBase .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).inBase .content-feed>.content-header {
     background-color: rgb(200 213 207);
   }
 
@@ -188,7 +191,7 @@
     content: '🔖';
   }
 
-  .feed__item.l-island-round:is(.favoriteTopicsAuthor, .favoriteBlogsAuthor) .content-header-author__avatar::after {
+  .feed__item.l-island-round:is(.favoriteTopicsAuthor, .favoriteBlogsAuthor) .content-feed .content-header-author__avatar::after {
     display: none;
     top: -10%;
     left: 55%;
@@ -198,7 +201,7 @@
     line-height: 11px;
     z-index: 10;
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsAuthor .content-header-author__avatar::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsAuthor .content-feed .content-header-author__avatar::after {
     content: '💘';
   }
 
@@ -341,7 +344,7 @@
     overflow: hidden;
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-feed>.content-header {
     position: relative;
     background-image: repeating-linear-gradient(135deg, transparent 40%, rgb(255 255 255 / 60%));
     padding: 20px 4px 0 4px;
@@ -425,12 +428,12 @@
     order: 1;
     box-shadow: 0 0 3px 0px rgb(0,0,0);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-header-author__avatar {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-feed .content-header-author__avatar {
     border-radius: 50%;
     overflow: visible;
     box-shadow: 0 0 2px 0px rgb(0,0,0);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-header-author__avatar img {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg) .content-feed .content-header-author__avatar img {
     border-radius: 50%;
   }
   .dtf-feedsContainer {
@@ -561,7 +564,7 @@
     z-index: 10;
   }
 
-  .feed__item.l-island-round.collapsed .content-container {
+  .feed__item.l-island-round.collapse .content-container {
     height: 50px;
     overflow: hidden;
     box-shadow: inset 0 -10px 8px 0px rgb(195 191 191);
@@ -576,7 +579,7 @@
 
   :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg):is(.favoriteTopicsSubsite, .favoriteTopicsAuthor, .favoriteBlogsAuthor,
   .ignoredTopicsSubsite, .ignoredTopicsAuthor, .ignoredBlogsAuthor,
-  .blockedSubsite, .blockedTopicsAuthor, .blockedBlogsAuthor) .content-header::after {
+  .blockedSubsite, .blockedTopicsAuthor, .blockedBlogsAuthor) .content-feed>.content-header::after {
     display: flex;
     position: absolute;
     top: 2px;
@@ -617,112 +620,112 @@
     z-index: 10;
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).readed .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).readed .content-feed>.content-header {
     background-color: rgb(98 247 177);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).planToRead .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).planToRead .content-feed>.content-header {
     background-color: rgb(247 98 168);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).onHold .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).onHold .content-feed>.content-header {
     background-color: rgb(138 217 245);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).dropped .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).dropped .content-feed>.content-header {
     background-color: rgb(98 247 177);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favorite .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favorite .content-feed>.content-header {
     background-color: rgb(229 189 142);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignored .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignored .content-feed>.content-header {
     background-color: rgb(149 147 148);
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blocked .content-header {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blocked .content-feed>.content-header {
     background-color: rgb(166 171 170);
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsAuthor .content-feed>.content-header::after {
     content: '💘 Автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteBlogsAuthor .content-feed>.content-header::after {
     content: '💘 Автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite .content-feed>.content-header::after {
     content: '💘 Подсайт';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.favoriteTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.favoriteTopicsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт и автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.favoriteBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.favoriteBlogsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт и автор блогов';
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsAuthor .content-feed>.content-header::after {
     content: '💢 Автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredBlogsAuthor .content-feed>.content-header::after {
     content: '💢 Автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite .content-feed>.content-header::after {
     content: '💢 Подсайт';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.ignoredTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.ignoredTopicsAuthor .content-feed>.content-header::after {
     content: '💢 Подсайт и автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.ignoredBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.ignoredBlogsAuthor .content-feed>.content-header::after {
     content: '💢 Подсайт и автор блогов';
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedTopicsAuthor .content-feed>.content-header::after {
     content: '🈲 Автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedBlogsAuthor .content-feed>.content-header::after {
     content: '🈲 Автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite .content-feed>.content-header::after {
     content: '🈲 Подсайт';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedTopicsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт и автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedBlogsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт и автор блогов';
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.favoriteTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.favoriteTopicsAuthor .content-feed>.content-header::after {
     content: '💢 Подсайт, 💘 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.favoriteBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).ignoredTopicsSubsite.favoriteBlogsAuthor .content-feed>.content-header::after {
     content: '💢 Подсайт, 💘 автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.favoriteTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.favoriteTopicsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 💘 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.favoriteBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.favoriteBlogsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 💘 автор блогов';
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.ignoredTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.ignoredTopicsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт, 💢 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.ignoredBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.ignoredBlogsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт, 💢 автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.ignoredTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.ignoredTopicsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 💢 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.ignoredBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.ignoredBlogsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 💢 автор блогов';
   }
 
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.blockedTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.blockedTopicsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт, 🈲 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.blockedBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).favoriteTopicsSubsite.blockedBlogsAuthor .content-feed>.content-header::after {
     content: '💘 Подсайт, 🈲 автор блогов';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedTopicsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedTopicsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 🈲 автор статей';
   }
-  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedBlogsAuthor .content-header::after {
+  :is(.dtf-feedsContainer .feed__item.l-island-round, .l-entry.l-island-bg).blockedSubsite.blockedBlogsAuthor .content-feed>.content-header::after {
     content: '🈲 Подсайт, 🈲 автор блогов';
   }
 
@@ -1296,7 +1299,7 @@
         // console.log('OBS ', item);
         if(!item.className) return;
         if(item.className.match(/feed__chunk(?! checked)/)){
-          console.log('OBS', item.className);
+          // console.log('OBS', item.className);
           checkFeeds({target:item});
         }
       }
@@ -1315,7 +1318,7 @@
         // console.log('OBS ', item);
         if(!item.className) return;
         if(item.className.match(/comment/)){
-          console.log('COMMENT', item.className);
+          // console.log('COMMENT', item.className);
           checkComments(item);
         }
       }
