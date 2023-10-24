@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0.3
+// @version     1.0.4
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -1184,7 +1184,7 @@
   online: '', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
       name: 'supabase',
-      dbID: 'arlhhsiwqbpgujqzwgwj',
+      dbID: '',
       get url(){
         return new Odb().getUrl(this.name, this.dbID);
       },
