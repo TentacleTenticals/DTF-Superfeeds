@@ -46,13 +46,13 @@ class HeaderMenu{
   }
   alert(o){
     if(o.status === 'success'){
-      new Alerter({
+      alerter({
         title: `[AddOrUpdate]`,
         text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} успешно выполнено`,
         timer: 5000
       });
     }else{
-      new Alerter({
+      alerter({
         alert: true,
         title: `[AddOrUpdate]`,
         text: `${o.type} ${o.process === 'item adding' ? 'добавление итема' : 'обновление итема'} не выполнено`,
@@ -622,7 +622,7 @@ class HeaderMenu{
       focus: true,
       rect: o.rect,
       offset: o.offset,
-      // load: true,
+      load: true,
       autohide: true,
       onblur: () => {
         if(o.res) o.err('Menu closed!');
@@ -633,41 +633,45 @@ class HeaderMenu{
       },
       loadText: 'Load...',
       func: async (m) => {
-        // o.res('ok');
         if(!o.data) o.data = {};
         if(mainCfg.database.data.online && mainCfg.database.data.db !== 'none'){
-          if(mainCfg.database.keepVars['subsites'||'users'||'feeds']) try {
-            if(!db.name) return;
-            if(!o.data.subsites) o.data.subsite = await new Odb()[mainCfg.database.data.db]({
+          try {
+            if(!o.data.subsites && !mainCfg.database.keepVars['subsites']) o.data.subsite = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'subsites',
               rType: 'object',
               target: o.sID,
               db: db
             });
-            if(!o.data.users) o.data.user = await new Odb()[mainCfg.database.data.db]({
+            if(!o.data.users && !mainCfg.database.keepVars['users']) o.data.user = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'users',
               rType: 'object',
               target: o.uID,
               db: db
             });
-            if(!o.data.feeds) o.data.feed = await new Odb()[mainCfg.database.data.db]({
+            if(!o.data.feeds && !mainCfg.database.keepVars['feeds']) o.data.feed = await new Odb()[mainCfg.database.data.db]({
               run: 'find',
               type: 'feeds',
               rType: 'object',
               target: o.fID,
               db: db
             });
-            m.res('ok');
+
+            if(o.sID) this.subsite=o.data.subsite||(o.data.subsites||sData.subsites).find(el => el.id === o.sID.toString());
+            if(o.uID) this.user=o.data.user||(o.data.users||sData.users).find(el => el.id === o.uID.toString());
+            if(o.fID) this.feed=o.data.feed||(o.data.feeds||sData.feeds).find(el => el.id === o.fID.toString());
+            if(m.res) m.res('ok');
           }catch(err){
             console.log('ERR', err);
           }
-        }else if(m.res) m.res('ok');
+        }else{
+          if(o.sID) this.subsite=o.data.subsite||(o.data.subsites||sData.subsites).find(el => el.id === o.sID.toString());
+          if(o.uID) this.user=o.data.user||(o.data.users||sData.users).find(el => el.id === o.uID.toString());
+          if(o.fID) this.feed=o.data.feed||(o.data.feeds||sData.feeds).find(el => el.id === o.fID.toString());
 
-        if(o.sID) this.subsite=o.data.subsite||(o.data.subsites||sData.subsites).find(el => el.id === o.sID.toString());
-        if(o.uID) this.user=o.data.user||(o.data.users||sData.users).find(el => el.id === o.uID.toString());
-        if(o.fID) this.feed=o.data.feed||(o.data.feeds||sData.feeds).find(el => el.id === o.fID.toString());
+          if(m.res) m.res('ok');
+        }
       },
       items: [
         {
@@ -1280,7 +1284,7 @@ class HeaderMenu{
         left: ${o.rect.left}px;`
       ,
       onblur: (e) => {
-        if(o.autohide) e.target.remove();
+        // if(o.autohide) e.target.remove();
       },
       func: (m) => {
         attachment({
@@ -1341,12 +1345,12 @@ class HeaderMenu{
                 },
                 ...this.user ? [
                   {
-                    text: `Sub: ${this.user.info.mySubName}`,
+                    text: `🏷️+: ${this.user.info.mySubName}`,
                     title: 'Под-имя',
                     cName: 'texter scrollLite'
                   },
                   {
-                    text: `Cm: ${this.user.info.myComment}`,
+                    text: `📝: ${this.user.info.myComment}`,
                     title: 'Комментарий',
                     cName: 'texter scrollLite'
                   }
@@ -1367,7 +1371,7 @@ class HeaderMenu{
                       }
                     }] : [],
                     ...o.item.subsite.cover ? [{
-                      text: 'Cover',
+                      text: 'Обложка',
                       onclick: () => {
                         window.open(`https://leonardo.osnova.io/${o.item.subsite.cover.data.uuid}`, '_blank');
                       }
