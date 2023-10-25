@@ -1284,7 +1284,7 @@ class HeaderMenu{
         left: ${o.rect.left}px;`
       ,
       onblur: (e) => {
-        // if(o.autohide) e.target.remove();
+        if(o.autohide) e.target.remove();
       },
       func: (m) => {
         attachment({
