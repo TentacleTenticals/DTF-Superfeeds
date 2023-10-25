@@ -47,7 +47,7 @@ const profilecardCss = () => `
 .profileCard .texter {
   word-break: break-all;
   overflow: auto;
-  max-height: 50px;
+  max-height: 22px;
   box-shadow: inset 0 0 3px 0px rgb(0,0,0);
 }
 
