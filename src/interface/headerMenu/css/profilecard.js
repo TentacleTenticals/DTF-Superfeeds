@@ -6,7 +6,6 @@ const profilecardCss = () => `
   position: absolute;
   padding: 8px;
   min-width: 0;
-  max-width: 450px;
   background-color: rgb(0,0,0);
   color: rgb(255,255,255);
   box-shadow: 0 0 2px 1px rgb(255,255,255), 0 0 2px 1px rgb(0 0 0);
@@ -53,13 +52,18 @@ const profilecardCss = () => `
 }
 
 .profileCard ul.itemsList {
-  gap: 3px 3px;
+  gap: 1px 3px;
 }
 
 .profileCard .buttons button {
   background-color: rgb(0,0,0);
   color: rgb(255,255,255);
-  box-shadow: 0 0 2px 0px rgb(255,255,255);
+  border: unset;
+  padding: 2px 2px 2px 2px;
+  margin: auto;
+  height: min-content;
+  font-size: 11px;
+  box-shadow: 0 0 2px 1px rgb(255,255,255);
 }
 
 .profileCard .off {
