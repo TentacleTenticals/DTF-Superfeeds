@@ -400,7 +400,7 @@ class BookItem{
         new El().Div({
           path: tags,
           cName: 'tag',
-          text: e.name,
+          text: e,
           onclick: (e) => {
             if(e.button !== 0) return;
             let check;
