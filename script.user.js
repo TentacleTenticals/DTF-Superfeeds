@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://*dtf.ru/*
 // @grant       none
-// @version     1.0.8
+// @version     1.0.9
 // @author      Tentacle Tenticals
 // @description Скрипт для изменения системы фидов
 // @homepage    https://github.com/TentacleTenticals/DTF-Superfeeds
@@ -1184,7 +1184,7 @@
   };
 
   db = {
-  online: '', /* Напишите имя базы данных для использования */
+  online: 'supabase', /* Напишите имя базы данных для использования */
     supabase: { /* Данные базы данных для логина */
       name: 'supabase',
       dbID: '',
@@ -1346,7 +1346,7 @@
   document.body.oncontextmenu = (e) => {
     if(!e.target.className) return;
     if(e.button !== 2) return;
-    if(e.target.className === 'comment__author'){
+    if(e.target.className.match(/^comment__author$|^comment__avatar__image$/)){
       e.preventDefault();
       e.stopImmediatePropagation();
       const control = e.target.closest('.comment').querySelector(`.comment__action[air-module='module.etc_controls']`);
@@ -1357,8 +1357,8 @@
         cID: control.getAttribute('data-comment-id'),
         uName: e.target.textContent.trim(),
         type: 'user'});
-    }else
-    if(e.target.className === 'content-header-author__name'){
+    }
+    if(e.target.className.match(/^content-header-author__name$|^content-header-author__avatar$/)){
       e.preventDefault();
       e.stopImmediatePropagation();
       const control = e.target.closest('.content-header').querySelector(`.content-header__item--controls`).children[0];
