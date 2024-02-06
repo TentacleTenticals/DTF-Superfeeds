@@ -65,6 +65,7 @@ const profilecardCss = () => `
   height: min-content;
   font-size: 11px;
   box-shadow: 0 0 2px 1px rgb(255,255,255);
+  cursor: pointer;
 }
 
 .profileCard .off {
