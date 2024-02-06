@@ -461,7 +461,7 @@ initMenu.setData = (m, cfg) => {
                     return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id));
                   }).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
               }
-              console.log('TESTER', tester);
+              console.log('TESTER', tester());
       
               new BookMenu().itemList({
                 path: e.children[0],
