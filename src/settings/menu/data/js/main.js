@@ -54,6 +54,7 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'SUBSITES',
+        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'💘', name:'favorite'},
@@ -119,7 +120,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🆕',
+            label: '🔃',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -128,7 +129,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch nl',
+            cName: 'srch',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -202,9 +203,8 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
             type: 'time',
-            label: '⌚ (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -213,9 +213,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
+            lName: 'full',
             type: 'date',
-            label: '📅 (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -235,6 +235,7 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'USERS',
+        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'💘', name:'favorite'},
@@ -300,7 +301,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🆕',
+            label: '🔃',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -309,7 +310,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch nl',
+            cName: 'srch',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -383,9 +384,8 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
             type: 'time',
-            label: '⌚ (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -394,9 +394,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
+            lName: 'full',
             type: 'date',
-            label: '📅 (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -416,6 +416,7 @@ initMenu.setData = (m, cfg) => {
         path: path,
         cName: 'hor',
         title: 'FEEDS',
+        titleBtn: true,
         tabs: [
           {text:'Все', name:'all'},
           {text:'Читаю', name:'onHold'},
@@ -485,7 +486,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             type: 'checkbox',
-            label: '🆕',
+            label: '🔃',
             name: 'sort',
             lName: 'full',
             onchange: (e) => {
@@ -494,7 +495,7 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Button({
             path: panel,
-            cName: 'srch nl',
+            cName: 'srch',
             text: 'Поиск по списку',
             onclick: () => {
               this.clear(e, true);
@@ -536,9 +537,9 @@ initMenu.setData = (m, cfg) => {
                   if(search.sort === 'all' && search.type === 'all' && !search.tTitle && !search.subsite && !search.author && !search.myComment && !search.date && !search.time && !search.dateFrom && !search.tags.length > 0 && !search.ignoreTags.length > 0) return (items||sData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                   else return (items||sData.feeds).filter(i => {
                     return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id)) && (search.tTitle ? i.info.title.match(search.tTitle) : true) && (search.subsite ? this.id(search.subsite, search.sType, i.info.subsite) : true) && (search.author ? this.id(search.author, search.aType, i.info.author) : true) && (search.myComment ? i.info.myComment.match(search.myComment) : true) && (search.date ? this.getDate(i.info.date).match(search.date) : true) && (search.time ? this.getTime(i.info.date)[0] >= search.time.split(':')[0] && this.getTime(i.info.date)[1] >= search.time.split(':')[1] : true) && (search.dateFrom ? i.info.date*1000 >= search.dateFrom : true) && (search.tags.length > 0 ? search.tags.every(s => {
-                      return i.info.keywords.some(t => t.name === s)
+                      return i.info.keywords.some(t => t === s)
                     }) : true) && (search.ignoreTags.length > 0 ? search.ignoreTags.every(s => {
-                      return !i.info.keywords.some(t => t.name === s)
+                      return !i.info.keywords.some(t => t === s)
                     }) : true)
                   }).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
                 })(),
@@ -550,7 +551,7 @@ initMenu.setData = (m, cfg) => {
           new El().Input({
             path: panel,
             label: 'Заголовок (Rxp)',
-            lName: 'full nl'
+            lName: 'full'
           });
           new El().Input({
             path: panel,
@@ -594,9 +595,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
+            lName: 'full',
             type: 'time',
-            label: '⌚ (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
@@ -605,9 +606,9 @@ initMenu.setData = (m, cfg) => {
           });
           new El().Input({
             path: panel,
-            lName: 'full nl',
+            lName: 'full',
             type: 'date',
-            label: '📅 (начиная с...)',
+            label: '⌚-📅 (начиная с...)',
             onRclick: (e) => {
               e.preventDefault();
               e.target.value = '';
