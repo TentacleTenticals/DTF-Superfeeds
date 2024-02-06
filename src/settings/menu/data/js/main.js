@@ -454,14 +454,6 @@ initMenu.setData = (m, cfg) => {
       
               console.log(search);;
               // 46807
-
-              function tester(){
-                if(search.sort === 'all' && search.type === 'all') return (items||sData.feeds).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
-                  else return (items||sData.feeds).filter(i => {
-                    return this.sortie(i.flags, search.sort) && (search.type === 'all' ? true : (search.type === 'topics' ? i.info.subsite.id !== i.info.author.id : i.info.subsite.id === i.info.author.id));
-                  }).sort((a, b) => this.sortByValue(a, b, 'date', search.sortByDate));
-              }
-              console.log('TESTER', tester());
       
               new BookMenu().itemList({
                 path: e.children[0],
